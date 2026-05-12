@@ -1,0 +1,22 @@
+{
+    "name": "ti04/rota",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nicholas Oliveira",
+            "email": "nicholasluis@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "vimeo/psalm": "^6.16",
+        "phpstan/phpstan": "^2.1"
+    },
+    "require": {
+        "illuminate/database": "^13.7",
+        "firebase/php-jwt": "^7.0"
+    }
+}

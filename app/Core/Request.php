@@ -1,0 +1,150 @@
+<?php
+namespace App\Core;
+
+
+class Request {
+
+    private array $query;
+
+    private array $request;
+    private array $server;
+    private array $files;
+    private array $cookies;
+    private array $headers;
+    private ?array $json = null;
+
+
+    public function __construct()
+    {
+       $this->query = $_GET;
+       $this->request = $_POST;
+       $this->server = $_SERVER;
+       $this->files = $_FILES;
+       $this->cookies = $_COOKIE;
+       $this->headers = [];
+       $this->json = [];
+       $this->parseJsonInput();
+    }
+
+    private function parseJsonInput(): void
+    {
+        $contentType = $this->header('Content-Type');
+        
+        if ($contentType && str_contains($contentType, 'application/json')) {
+            $input = !(bool)file_get_contents('php://input') ? '' : (string)file_get_contents('php://input');
+            $this->json = json_decode($input, true);
+            
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                $this->json = null;
+            }
+        }
+    }
+
+
+    public function get(string $key,  mixed $default = null): mixed {
+        return $this->query[$key] ?? $default;
+    }
+
+    public function post(string $key,  mixed $default = null): mixed {
+        return $this->request[$key] ?? $default;
+    }
+
+    public function file(string $key) : ?array {
+        return $this->file[$key] ?? null;
+    }
+
+    public function getFiles() : array {
+        return $this->files;
+    }
+
+    public function cookie(string $key, mixed $default = null): mixed {
+        return $this->cookie[$key] ?? $default;
+    }
+
+    public function getCookies() : array {
+        return $this->cookies;
+    }
+
+    public function header(string $key, mixed $default = null) : mixed {
+        return $this->headers[$key] ?? $default;
+    }
+
+    public function getHeaders(): array {
+        return $this->headers;
+    }
+
+    public function request_method(): string {
+        return $this->server['REQUEST_METHOD'];
+    }
+
+    public function isMethod(string $method) : bool {
+        return \strtoupper($method) === $this->request_method();
+    }
+
+    public function isGet() : bool {
+        return $this->isMethod("GET");
+    }
+
+    public function isPost(): bool {
+        return $this->isMethod('POST');
+    }
+
+    public function isPut() : bool {
+        return $this->isMethod("GET");
+    }
+
+    public function isDelete(): bool {
+        return $this->isMethod('DELETE');
+    }
+    public function isPatch(): bool {
+        return $this->isMethod('PATCH');
+    }
+
+    public function getuserAgent(): ?string {
+        return $this->server['HTTP)SER_AGENT'] ?? null;
+    }
+
+    public function getUri(): string|bool {
+        return parse_url($this->server['REQUEST_URI'], \PHP_URL_PATH) ?? "/";
+    }
+
+
+    /**
+     * traz $_POST sem tratamento nenhum
+     * @return array
+     */
+    public function getBody(): array {
+        return $this->request;
+    }
+
+    /**
+     * traz os dados com tratamento de tipo apenas (sem filtro)
+     * @return  array | bool | null
+     */
+    public function getParsedBody(): array | bool | null{
+       
+        $method_filter = \INPUT_GET;
+
+        if($this->request_method() === "post" || $this->request_method() === "POST"){
+            $method_filter = \INPUT_POST;
+        }
+    
+        return \filter_input_array($method_filter, $this->request, true);
+    }
+    
+    /*
+    public function parse_headers(): array {
+        $headers = [];
+
+        foreach($this->server as $key => $value){
+
+            if(\str_starts_with($key, "HTTP_")){
+
+            }
+        }
+    }*/
+
+    
+
+
+}
