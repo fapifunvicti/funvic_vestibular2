@@ -2,7 +2,7 @@
 namespace App\Attributes;
 
 #[\Attribute(\Attribute::TARGET_METHOD)]
-class Route {
+class RouteAttribute {
     
     public function __construct(
         public string $path,

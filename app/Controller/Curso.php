@@ -1,19 +1,20 @@
 <?php
 namespace App\Controller;
 
-use App\Attributes\Route;
+use App\Attributes\RouteAttribute;
 use App\Core\Request;
 
 use App\Core\Template as Tpl;
 use App\Core\Response;
 use App\Core\Controller;
 use App\Core\DB;
-use App\Attributes\Middleware;
 
-#[Middleware(\App\Middleware\AuthMiddleware::class)]
+use App\Attributes\MiddlewareAttribute;
+
+#[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
 class Curso extends Controller {
     
-    #[Route("/curso", method:"GET")]
+    #[RouteAttribute("/curso", method:"GET")]
     public function index(Request $request, Response $response): Response {
         global $config;
         $tpl = new Tpl($request, $config);

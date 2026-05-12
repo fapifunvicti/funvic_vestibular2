@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Attributes\Route;
+use App\Attributes\RouteAttribute;
 use App\Core\Request;
 
 use App\Core\Template as Tpl;
@@ -12,7 +12,7 @@ use App\Middleware\SoapWrapper;
 
 class Home extends Controller {
 
-    #[Route("/", method:"GET|POST", is_regex: false)]
+    #[RouteAttribute("/", method:"GET|POST", is_regex: false)]
     public function index(Request $request, Response $response) : Response {
         global $config;
         $tpl = new Tpl($request, $config);
@@ -39,7 +39,7 @@ class Home extends Controller {
         //return $response->html($tpl->renderTemplate(), 200);
     }
 
-    #[Route("/hello2", 'GET')]
+    #[RouteAttribute("/hello2", 'GET')]
     public function hello2(Request $request, Response $response) : Response {
 
         //$soap = SoapWrapper::soap_criar_consulta_totvs("https://fundacaouniversitaria151485.rm.cloudtotvs.com.br:8051/wsConsultaSQL/MEX?wsdl", 'webserver', 'fjklçaJWWRYA$%us', true);

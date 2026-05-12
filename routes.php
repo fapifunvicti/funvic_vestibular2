@@ -1,8 +1,8 @@
 <?php
 namespace App;
 
-use App\Attributes\Middleware;
-use App\Attributes\Route;
+use App\Attributes\MiddlewareAttribute;
+use App\Attributes\RouteAttribute;
 use App\Core\Request;
 use App\Core\Response;
 
@@ -21,18 +21,18 @@ class Router {
 
         $middlewareClass = \array_map(
             fn($attr) => $attr->newInstance()->handler,
-            $reflectionClass->getAttributes(Middleware::class)
+            $reflectionClass->getAttributes(MiddlewareAttribute::class)
         );
         
         foreach($reflectionClass->getMethods() as $method){
-            $attributes = $method->getAttributes(Route::class);
+            $attributes = $method->getAttributes(RouteAttribute::class);
 
             foreach($attributes as $attr){
                     $route = $attr->newInstance();
 
 
                     $methodMiddlewares = array_map(fn($attr) => $attr->newInstance()->handler,
-                        $method->getAttributes(Middleware::class)
+                        $method->getAttributes(MiddlewareAttribute::class)
                     );
 
                     $this->routes[] = [
