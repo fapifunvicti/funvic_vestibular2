@@ -36,8 +36,9 @@ class QueryString {
         return \filter_var($this->get($key) ?? $default, \FILTER_SANITIZE_NUMBER_FLOAT | \FILTER_FLAG_ALLOW_FRACTION);
     } 
 
-    public function as_bool(string $key, int $default = 0): float{
-        return \filter_var($this->get($key) ?? $default, \FILTER_SANITIZE_NUMBER_FLOAT | \FILTER_FLAG_ALLOW_FRACTION);
+    public function as_bool(string $key, bool $default = false): bool {
+        if(!(bool)$this->get($key)) return $default;
+        return \filter_var($this->get($key), \FILTER_VALIDATE_BOOLEAN);
     } 
 
     public function as_str(string $key, string $default = ""): string {
