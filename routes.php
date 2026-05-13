@@ -106,7 +106,7 @@ class Router {
                 $requestHandler = new Request();
                 $responseHandler = new Response();
 
-                $controller =  $namespace_str . $className; //new $route['handler'][0]();
+                $controller =  new $route['handler'][0]();
                 $controller = new $controller();
                 $method_caller = $route['handler'][1];
 
@@ -119,7 +119,7 @@ class Router {
                                     $middleware = new $middlewareClass();
                                     return $middleware->handle($request, $next);
                                 };
-                            }, function(Request $request) use ($controller, $method_caller, $matches){
+                            }, function() use ($controller, $method_caller, $matches){
                                     return \call_user_func_array([$controller, $method_caller], $matches);
                             }
                             );
