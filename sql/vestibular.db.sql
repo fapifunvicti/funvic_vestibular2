@@ -85,8 +85,8 @@ CREATE TABLE IF NOT EXISTS "usuario" (
 );
 INSERT INTO "coligada" ("idcoligada","nome","ativo","criado_em","alterado_em","deletado_em") VALUES (3,'Pinda',1,'2026-05-11 20:05:17','2026-05-11 20:05:17',NULL),
  (4,'Mococa11',1,'2026-05-11 20:06:48','2026-05-11 20:17:31',NULL);
-INSERT INTO "curso" ("idcurso","nome","ativo","criado_em","alterado_em","deletado_em") VALUES (1,'Geral',1,'2026-05-11 20:19:11','2026-05-11 20:19:47',NULL),
- (2,'Medicina',1,'2026-05-11 20:19:59','2026-05-11 20:20:09',NULL);
+INSERT INTO "curso" ("idcurso","nome","ativo","criado_em","alterado_em","deletado_em") VALUES (1,'Todos111111','on','2026-05-11 20:19:11','2026-05-13 17:54:28',NULL),
+ (2,'Medicina1111','on','2026-05-11 20:19:59','2026-05-13 17:53:50',NULL);
 INSERT INTO "curso_disponivel" ("idcursodisponivel","curso_fk","coligada_fk","ensino_fk","nome","periodo","area","disponivel","ativo") VALUES (1,1,3,1,'Administração','Matutino','Humanas',1,1);
 INSERT INTO "menu_item" ("idmenu","pai_id","nome","url","ordem","ativo","inserido_em","alterado_em","deletado_em","dropdown") VALUES (1,NULL,'Início','/',0,1,'2026-05-12 13:24:28','2026-05-12 13:24:28',NULL,0),
  (2,NULL,'Inscreva-se','/inscreva-se',1,1,'2026-05-12 13:25:05','2026-05-12 13:25:05',NULL,0),
@@ -99,6 +99,7 @@ INSERT INTO "menu_item" ("idmenu","pai_id","nome","url","ordem","ativo","inserid
 INSERT INTO "processo_seletivo" ("idprocesso","fk_curso","fk_coligada","ensino_fk","data_prova","id_totvs","habilitar_resultado","data_resultado_inicio","data_resultado_fim","inserido_em","alterado_em","deletado_em") VALUES (1,1,3,1,'0',200,0,'2026-05-11 20:27:48',NULL,'2026-05-11 20:27:48','2026-05-11 20:27:48',NULL);
 INSERT INTO "tipo_ensino" ("idensino","nome","inserido_em","atualizado_em","deletado_em") VALUES (1,'Presencial','2026-05-12 17:35:38','2026-05-12 17:35:38',NULL),
  (2,'Semipresencial','2026-05-12 17:35:58','2026-05-12 17:35:58',NULL);
+INSERT INTO "usuario" ("idusuario","email","senha","permissao","ultimo_login","inserido_em","alterado_em","deletado_em") VALUES (1,'nicholasluis@gmail.com','$argon2id$v=19$m=65536,t=4,p=1$dW1QRFNuWHhwdGVMUFhqTA$uk0x6IcxB6Tngni9gGMji3wVS0ImPKDPweqoRox0Mzw',999,'2026-05-13 12:14:52','2026-05-13 12:14:52','2026-05-13 12:14:52',NULL);
 CREATE VIEW view_arvore_menu AS
 WITH RECURSIVE menu_tree AS (
     -- âncora: itens raiz
