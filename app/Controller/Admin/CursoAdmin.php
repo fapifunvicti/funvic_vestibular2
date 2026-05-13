@@ -14,6 +14,11 @@ class CursoAdmin extends Controller {
         global $config;
         $tpl = new \App\Core\Template($request, $config);
 
-        return $response->html("");
+        $tpl->addTemplate("admin/tpl/header.php")
+            ->addTemplate("admin/partes/topo.php")
+            ->addTemplate("admin/partes/menu.php")
+            ->addTemplate("admin/tpl/footer.php");
+
+        return $response->html($tpl->renderTemplate());
     }
 }
