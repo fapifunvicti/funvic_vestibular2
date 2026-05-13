@@ -16,8 +16,16 @@
         <tbody>
          <?php foreach($cursos as $curso): ?>
                 <tr>
-                    <td hx-swap="outerHTML" hx-get="" hx-trigger="click" hx-target="#link">
-                        <a id="link" href="javascript:void(0)"><?= h($curso->nome) ?></a>
+                    <td>
+                        <div hx-headers='{"Cache-Control": "no-cache"}'
+                             hx-push-url="false" 
+                             hx-target="this" 
+                             hx-swap="innerHTML" 
+                             hx-get="/admin/curso?editar=true&id=<?= h($curso->idcurso); ?>&_=<?= time();  ?>" 
+                             hx-trigger="click once" 
+                             >
+                            <?= h($curso->nome) ?>
+                        </div>
                     </td>
                     <td>
                         <div class="d-flex gap-3">
