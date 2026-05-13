@@ -72,6 +72,17 @@ CREATE TABLE IF NOT EXISTS "tipo_ensino" (
 	"deletado_em"	TEXT,
 	PRIMARY KEY("idensino" AUTOINCREMENT)
 );
+CREATE TABLE IF NOT EXISTS "usuario" (
+	"idusuario"	INTEGER NOT NULL,
+	"email"	TEXT NOT NULL,
+	"senha"	TEXT NOT NULL,
+	"permissao"	INTEGER NOT NULL DEFAULT 0,
+	"ultimo_login"	TEXT,
+	"inserido_em"	TEXT NOT NULL DEFAULT (datetime('now')),
+	"alterado_em"	TEXT DEFAULT (datetime('now')),
+	"deletado_em"	TEXT,
+	PRIMARY KEY("idusuario" AUTOINCREMENT)
+);
 INSERT INTO "coligada" ("idcoligada","nome","ativo","criado_em","alterado_em","deletado_em") VALUES (3,'Pinda',1,'2026-05-11 20:05:17','2026-05-11 20:05:17',NULL),
  (4,'Mococa11',1,'2026-05-11 20:06:48','2026-05-11 20:17:31',NULL);
 INSERT INTO "curso" ("idcurso","nome","ativo","criado_em","alterado_em","deletado_em") VALUES (1,'Geral',1,'2026-05-11 20:19:11','2026-05-11 20:19:47',NULL),
