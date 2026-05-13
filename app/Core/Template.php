@@ -27,7 +27,7 @@ final class Template {
         }
 
         if(\is_array($parameters) &&  $parameters){
-            \extract($parameters, \EXTR_SKIP);
+            \extract($parameters, \EXTR_OVERWRITE);
         }
     
         \ob_start();
@@ -55,6 +55,10 @@ final class Template {
         }
 
         return $result;
+    }
+
+    public function renderTemplateFile(string $path, ?array $params = null): string {
+        return $this->LoadTemplateToBuffer($path, $params);
     }
 
     /*
