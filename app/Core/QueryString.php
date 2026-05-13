@@ -14,6 +14,7 @@ class QueryString {
 
         \array_walk_recursive($this->params, function(&$value){
             $value = str_replace("\0", '', $value);
+            $value = \str_replace("../", '', $value);
             $value = \strip_tags($value);
             $value = \htmlentities($value, \ENT_QUOTES | \ENT_HTML5, 'UTF-8');
             $value = trim($value);
