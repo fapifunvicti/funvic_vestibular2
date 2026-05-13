@@ -15,6 +15,8 @@ class CursoAdmin extends Controller {
         $tpl = new \App\Core\Template($request, $config);
         \App\Core\DB::get();
 
+        $query = $request->query_string->all();
+
         $cursos = \App\Model\Curso::get()->all();
 
         $tpl->addTemplate("admin/tpl/header.php")
