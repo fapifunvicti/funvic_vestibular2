@@ -13,6 +13,8 @@ class Request {
     private array $headers;
     private ?array $json = null;
 
+    public readonly QueryString $query_string;
+
 
     public function __construct()
     {
@@ -24,6 +26,7 @@ class Request {
        $this->headers = [];
        $this->json = [];
        $this->parseJsonInput();
+       $this->query_string = new QueryString($_SERVER['QUERY_STRING'] ?? '');
     }
 
     private function parseJsonInput(): void
