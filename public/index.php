@@ -14,6 +14,7 @@ $router = new \App\Router();
 $router->registerController([
    \App\Controller\Home::class,
     App\Controller\Curso::class,
+    \App\Controller\Admin\CursoAdmin::class,
 ]);
 
 /**
