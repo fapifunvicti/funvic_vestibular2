@@ -1,4 +1,8 @@
 <?php
+$activate_session = false;
+if (session_status() !== PHP_SESSION_ACTIVE || session_status() === PHP_SESSION_NONE) {
+    $activate_session = true;
+}
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Container\Container;
@@ -14,6 +18,7 @@ if(!is_file(__DIR__ . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . 'au
 require_once "vendor/autoload.php";
 require_once "routes.php";
 
+
 if(!is_file(__DIR__ . DIRECTORY_SEPARATOR . "config.php")){
     exit("config.php faltando. por favor crie o arquivo para continuar");
 }
@@ -22,13 +27,15 @@ if(!is_file(__DIR__ . DIRECTORY_SEPARATOR . "config.php")){
 require_once __DIR__ .  DIRECTORY_SEPARATOR .  "config.php";
 require_once __DIR__ .  DIRECTORY_SEPARATOR .  "funcoes.inc.php";
 
-date_default_timezone_set($config->timezone);
-
-if (session_status() !== PHP_SESSION_ACTIVE || session_status() === PHP_SESSION_NONE) {
-   
+if($activate_session){
     session_name($config->session_name);
     session_start();
 }
+
+
+date_default_timezone_set($config->timezone);
+
+
 
 
 switch($config->modo){
