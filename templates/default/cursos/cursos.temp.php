@@ -1,7 +1,5 @@
 <?php
-require_once "bootstrap.php";
-include "layout/header.php";
-include "layout/menu.php";
+
 
 $cursosPresenciais = [
     ["nome"=>"Administração","link"=>"https://www.unifunvic.edu.br/administra%C3%A7%C3%A3o","disponibilidade"=>"Inscrições Abertas","area"=>"Humanas","periodo"=>"Noturno","ativo"=>false],
@@ -78,7 +76,7 @@ $cursosSemipresenciaisMococa = [
 
     <div class="text-left mt-5 pt-5" style="border-bottom: 5px solid #e5e5e5; margin-bottom: 20px; padding-bottom: 20px; margin-top: 50px;">
         <h1 style="font-size: 50px;"><b>CURSOS</b></h1>
-        <p class="sub-titulo">Para o <?php echo $nome_vestibular; ?></p>
+        <p class="sub-titulo">Para o Vestibular Teste</p>
     </div>
     <br>
 
@@ -192,5 +190,3 @@ $cursosSemipresenciaisMococa = [
 	
 	
 </main>
-
-<?php include "layout/footer.php" ?>
