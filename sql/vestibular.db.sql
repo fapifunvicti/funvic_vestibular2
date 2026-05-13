@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS "processo_seletivo" (
 	"idprocesso"	INTEGER NOT NULL,
 	"fk_curso"	INTEGER NOT NULL,
 	"fk_coligada"	INTEGER NOT NULL,
+	"ensino_fk"	INTEGER DEFAULT 1,
 	"data_prova"	TEXT NOT NULL,
 	"id_totvs"	INTEGER NOT NULL DEFAULT (0),
 	"habilitar_resultado"	INTEGER DEFAULT 0,
@@ -59,6 +60,7 @@ CREATE TABLE IF NOT EXISTS "processo_seletivo" (
 	"alterado_em"	TEXT NOT NULL DEFAULT (datetime('now')),
 	"deletado_em"	TEXT,
 	PRIMARY KEY("idprocesso" AUTOINCREMENT),
+	FOREIGN KEY("ensino_fk") REFERENCES "tipo_ensino"("idensino"),
 	CONSTRAINT "processo_seletivo_coligada_FK" FOREIGN KEY("fk_coligada") REFERENCES "coligada"("idcoligada"),
 	CONSTRAINT "processo_seletivo_curso_FK" FOREIGN KEY("fk_curso") REFERENCES "curso"("idcurso")
 );
@@ -83,7 +85,7 @@ INSERT INTO "menu_item" ("idmenu","pai_id","nome","url","ordem","ativo","inserid
  (6,NULL,'Resultados','/resultados',5,0,'2026-05-12 13:27:51','2026-05-12 13:27:51',NULL,0),
  (7,3,'Data da Prova','/data-prova',0,1,'2026-05-12 13:28:56','2026-05-12 13:28:56',NULL,0),
  (8,3,'Informacoes','/',0,1,'2026-05-12 17:02:58','2026-05-12 17:02:58',NULL,0);
-INSERT INTO "processo_seletivo" ("idprocesso","fk_curso","fk_coligada","data_prova","id_totvs","habilitar_resultado","data_resultado_inicio","data_resultado_fim","inserido_em","alterado_em","deletado_em") VALUES (1,1,3,'0',200,0,'2026-05-11 20:27:48',NULL,'2026-05-11 20:27:48','2026-05-11 20:27:48',NULL);
+INSERT INTO "processo_seletivo" ("idprocesso","fk_curso","fk_coligada","ensino_fk","data_prova","id_totvs","habilitar_resultado","data_resultado_inicio","data_resultado_fim","inserido_em","alterado_em","deletado_em") VALUES (1,1,3,1,'0',200,0,'2026-05-11 20:27:48',NULL,'2026-05-11 20:27:48','2026-05-11 20:27:48',NULL);
 INSERT INTO "tipo_ensino" ("idensino","nome","inserido_em","atualizado_em","deletado_em") VALUES (1,'Presencial','2026-05-12 17:35:38','2026-05-12 17:35:38',NULL),
  (2,'Semipresencial','2026-05-12 17:35:58','2026-05-12 17:35:58',NULL);
 CREATE VIEW view_arvore_menu AS

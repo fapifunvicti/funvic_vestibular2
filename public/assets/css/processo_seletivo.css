@@ -1,0 +1,66 @@
+.w-100 {
+    width: 100%;
+}
+
+
+.cursos-grid-container {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1rem;
+	
+}
+
+
+.cursos-grid-item {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+	border-radius: 8px;
+	background-color: #f8f9fa;
+	
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.flex-item {
+    flex: 1 1 200px;
+    min-width: 200px;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.button-container a {
+    flex: 1 1 0;          /* Faz os links se expandirem igualmente */
+    text-decoration: none;
+}
+
+.button-container a button {
+    width: 100%;          /* Faz os botões ocuparem toda a largura do link */
+    white-space: nowrap;  /* Impede quebra de linha no texto do botão */
+}
+
+.container-error {
+    background-color: #f8d7da;
+    padding: 1rem;
+    border-radius: 6px;
+    color: #721c24;
+    margin-top: 1rem;
+}
+
+.text-center {
+    text-align: center;
+}
