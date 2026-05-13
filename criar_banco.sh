@@ -1,7 +1,7 @@
 #!/bin/env bash
 
-arquivo_db="vestibular1.db"
-folder="db1"
+arquivo_db="vestibular.db"
+folder="db"
 db_path="$folder/$arquivo_db"
 sql_dump="sql/vestibular.db.sql"
 
