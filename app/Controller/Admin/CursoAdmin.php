@@ -38,6 +38,7 @@ class CursoAdmin extends Controller {
                     $editar = \App\Model\Curso::find($post['id']);
 
                     $editar->nome = $post['nome'];
+                    $editar->ativo = $post['ativo'];
                     $editar->save();
 
                     $html = $tpl->renderTemplateFile("admin/cursos/campo_nome_editavel.php", ['modo_editar' => false, 'curso' => $editar]);

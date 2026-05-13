@@ -9,10 +9,18 @@
 
 <form hx-post="/admin/curso">
     <input type="hidden" name="form" value="editar">
+    <input type="hidden" name="ativo" value="0">
     <input type="hidden" name="id" value="<?= h($curso->idcurso); ?>">
-<div class="d-flex gap-3 mb-3">
+<div class="mb-3">
     <input required type="text" value="<?= h($curso->nome);  ?>" pattern="[a-zA-Z0-9 ]+" name="nome">
 </div>
+
+<div class="mb-3">
+
+    <input class="form-check-input"  <?= $curso->ativo ? "checked" : ""; ?> type="checkbox" name="ativo" id="ativo" >
+    <label class="form-check-label"  for="ativo">Ativo</label>
+</div>
+
 <div class="mb-3">
     <button type="submit">Editar</button>
 </div>
