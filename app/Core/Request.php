@@ -148,6 +148,43 @@ class Request {
     }*/
 
     
+    public function  is_ajax_request(bool $debug = false): bool {
 
+        //ignora todas verificacoes para fins de debug (nao esquecer de usar debug false em produção)
+        if($debug){
+            return true;
+        }
+
+        // Verifica o header mais comum
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+            return true;
+        }
+        
+        // Verifica se é uma requisição JSON
+        $contentType = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : '';
+        if (strpos($contentType, 'application/json') !== false) {
+            return true;
+        }
+        
+        // Verifica outros headers comuns em AJAX
+        if (isset($_SERVER['HTTP_AJAX'])) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    public function is_htmx(): bool {
+        return ($_SERVER['HTTP_HX_REQUEST'] ?? '') === "true";
+    }
+
+    public function htmx_trigger(): ? string {
+        return $_SERVER['HTTP_HX_TRIGGER'] ?? null;
+    }
+
+    public function htmx_target(): ? string {
+        return $_SERVER['HTTP_HX_TRIGGER'] ?? null;
+    }
 
 }
