@@ -14,15 +14,15 @@ use App\Attributes\MiddlewareAttribute;
 #[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
 class Curso extends Controller {
     
-    #[RouteAttribute("/curso", method:"GET")]
+    #[RouteAttribute("/cursos", method:"GET")]
     public function index(Request $request, Response $response): Response {
         global $config;
         $tpl = new Tpl($request, $config);
         
-        $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
+        $tpl->addTemplate("header.php", ['titulo' => "Cursos Disponíveis"])
             ->addTemplate("partes/menu.inc.php")
             ->addTemplate("partes/banner.inc.php")
-            ->addTemplate("cursos/index.php")
+            ->addTemplate("cursos/cursos.temp.php")
             ->addTemplate("footer.php");
 
         return $response->html($tpl->renderTemplate(), 200);
