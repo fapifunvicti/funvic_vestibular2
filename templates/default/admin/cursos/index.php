@@ -10,28 +10,32 @@
         <thead>
             <tr>
                 <th>CURSO</th>
-                <th>AÇÕES</th>
+                <th>ATIVO</th>
             </tr>
         </thead>
         <tbody>
          <?php foreach($cursos as $curso): ?>
-                <tr>
-                    <td>
-                        <div hx-headers='{"Cache-Control": "no-cache"}'
+                <tr
+                    hx-headers='{"Cache-Control": "no-cache"}'
                              hx-push-url="false" 
-                             hx-target="this" 
+                             hx-target="#coluna-<?= h($curso->idcurso); ?>" 
                              hx-swap="innerHTML" 
                              hx-get="/admin/curso?editar=true&id=<?= h($curso->idcurso); ?>&_=<?= time();  ?>" 
                              hx-trigger="click once" 
-                             >
-                            <?= h($curso->nome) ?>
+                >
+                    <td>
+
+                        <div id="coluna-<?= h($curso->idcurso); ?>">
+                            <a href="javascript:void(0)"> 
+                            <?= h($curso->nome) ?></a>
                         </div>
                     </td>
                     <td>
-                        <div class="d-flex gap-3">
-                            <button class="btn btn-primary">aaa</button>
-                        </div>
-                       
+                        <?php if($curso->ativo >= 1):  ?>
+                            <span class="badge text-bg-danger">Ativado</span>
+                        <?php else:  ?>
+                             <span class="badge text-bg-danger">Desativado</span>
+                        <?PHP  endif; ?>
                     </td>
                 </tr>
         <?php endforeach; ?>
