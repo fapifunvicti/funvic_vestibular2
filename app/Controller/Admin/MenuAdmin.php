@@ -18,7 +18,7 @@ class MenuAdmin extends Controller {
 
         $query = $request->query_string;
 
-        if($query->has('editar') && $query->is_int('id')){
+        if($query->has('editar') && $query->is_int('id') && $request->is_htmx()){
             $id =    $query->as_int('id');
            // $editar = $query->as_bool('editar');
 
