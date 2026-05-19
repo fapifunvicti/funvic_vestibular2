@@ -22,13 +22,19 @@ class CursoAdmin extends Controller {
 
 
             $post = $request->getParsedBody();
+            $editar = $request->query_string->as_bool('editar');
 
             switch($post['form']){
-                default:
-                    $response->setStatusCode(404)->send();
-                    return $response->html("");
 
                 case 'editar':
+                    if(isset($query['editar']) && !(bool)$query['editar']){
+                        $html = $tpl->renderTemplateFile("admin/cursos/campo_nome_editavel.php", ['modo_editar' => false, 'curso' => 0]);
+                        $response->setStatusCode(404)
+                                ->header("HX-Redirect", "/admin/curso")
+                                ->send();
+                        return $response->html("");
+                    }
+
                     $curso_dados  = new \App\Model\Curso();
                     $dados = $curso_dados->where('idcurso', '=', $post['id'])->get()->first();
                     if(!$curso_dados){
@@ -44,8 +50,10 @@ class CursoAdmin extends Controller {
                     $html = $tpl->renderTemplateFile("admin/cursos/campo_nome_editavel.php", ['modo_editar' => false, 'curso' => $editar]);
                     return $response->html($html);
             }
-
+        
         }
+
+        
 
 
         if(isset($query['editar']) &&  $request->query_string->as_bool('editar') === true ){
@@ -75,8 +83,8 @@ class CursoAdmin extends Controller {
 
         $cursos = \App\Model\Curso::cursor();
 
-        $tpl->addTemplate("admin/tpl/header.php")
-            ->addTemplate("admin/partes/topo.php")
+        $tpl->addTemplate("admin/tpl/header.php", ['titulo' => "CURSOS"])
+            ->addTemplate("admin/partes/topo.php", ['titulo' => "CURSOS DISPONIVEIS"])
             ->addTemplate("admin/partes/menu.php")
             ->addTemplate("admin/cursos/index.php", ['cursos' => $cursos])
             ->addTemplate("admin/tpl/footer.php");
