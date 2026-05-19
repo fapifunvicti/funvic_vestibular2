@@ -24,6 +24,24 @@ class QueryString {
 
     }
 
+    public function is_int(string $key) : bool {
+        return \is_int($this->get($key)) || is_numeric($this->get($key));
+    }
+
+    public function is_bool(string $key) : bool {
+        return \is_bool($this->get($key));
+    }
+
+    public function is_string(string $key) : bool {
+        return \is_string($this->get($key));
+    }
+
+    public function is_object(string $key): bool {
+        return \is_object($this->get($key));
+    }
+
+
+
     public function get(string $key, mixed $default = null): mixed {
             return $this->params[$key] ?? $default;
     }
