@@ -20,15 +20,9 @@ class MenuAdmin extends Controller {
 
         if($query->has('editar') && $query->is_int('id') && $request->is_htmx()){
             $id =    $query->as_int('id');
-           // $editar = $query->as_bool('editar');
-
             $menu = new \App\Model\MenuItem()->where('idmenu','=', $id)->first();
-
             $menuList = new \App\Model\ArvoreMenuView()->cursor();
-
             $html = $tpl->renderTemplateFile("admin/menu/form_editar.php", ['menu' => $menu, 'lista_menu' => $menuList ]);
-
-
             return $response->html($html);
         }
 
