@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class MenuItem extends Model
 {
     protected $table    = 'menu_item';
+    protected $primaryKey = 'idmenu';
     protected $fillable = ['pai_id', 'nome', 'url', 'ordem', 'ativo'];
 
     const CREATED_AT = 'inserido_em';
