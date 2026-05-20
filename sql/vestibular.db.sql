@@ -85,17 +85,17 @@ CREATE TABLE IF NOT EXISTS "usuario" (
 );
 INSERT INTO "coligada" ("idcoligada","nome","ativo","criado_em","alterado_em","deletado_em") VALUES (3,'Pinda',1,'2026-05-11 20:05:17','2026-05-11 20:05:17',NULL),
  (4,'Mococa11',1,'2026-05-11 20:06:48','2026-05-11 20:17:31',NULL);
-INSERT INTO "curso" ("idcurso","nome","ativo","criado_em","alterado_em","deletado_em") VALUES (1,'Todos111111','on','2026-05-11 20:19:11','2026-05-13 17:54:28',NULL),
+INSERT INTO "curso" ("idcurso","nome","ativo","criado_em","alterado_em","deletado_em") VALUES (1,'Geral','on','2026-05-11 20:19:11','2026-05-19 13:15:49',NULL),
  (2,'Medicina1111','on','2026-05-11 20:19:59','2026-05-13 17:53:50',NULL);
 INSERT INTO "curso_disponivel" ("idcursodisponivel","curso_fk","coligada_fk","ensino_fk","nome","periodo","area","disponivel","ativo") VALUES (1,1,3,1,'Administração','Matutino','Humanas',1,1);
-INSERT INTO "menu_item" ("idmenu","pai_id","nome","url","ordem","ativo","inserido_em","alterado_em","deletado_em","dropdown") VALUES (1,NULL,'Início','/',0,1,'2026-05-12 13:24:28','2026-05-12 13:24:28',NULL,0),
- (2,NULL,'Inscreva-se','/inscreva-se',1,1,'2026-05-12 13:25:05','2026-05-12 13:25:05',NULL,0),
- (3,NULL,'Informações','javascript:void(0);',2,1,'2026-05-12 13:25:45','2026-05-12 13:25:45',NULL,1),
- (4,NULL,'Manual do Candidato','javascript:void(0);',3,1,'2026-05-12 13:26:30','2026-05-12 13:26:30',NULL,0),
- (5,NULL,'Cursos','/cursos',4,1,'2026-05-12 13:27:16','2026-05-12 13:27:16',NULL,0),
- (6,NULL,'Resultados','/resultados',5,0,'2026-05-12 13:27:51','2026-05-12 13:27:51',NULL,0),
- (7,3,'Data da Prova','/data-prova',0,1,'2026-05-12 13:28:56','2026-05-12 13:28:56',NULL,0),
- (8,3,'Informacoes','/',0,1,'2026-05-12 17:02:58','2026-05-12 17:02:58',NULL,0);
+INSERT INTO "menu_item" ("idmenu","pai_id","nome","url","ordem","ativo","inserido_em","alterado_em","deletado_em","dropdown") VALUES (1,NULL,'Início','/',0,1,'2026-05-12 13:24:28','2026-05-20 15:34:18',NULL,0),
+ (2,NULL,'Inscreva-se','/inscreva-se',1,1,'2026-05-12 13:25:05','2026-05-20 15:40:23',NULL,0),
+ (3,NULL,'Informações','javascript:void(0);',2,1,'2026-05-12 13:25:45','2026-05-20 15:35:14',NULL,1),
+ (4,3,'Manual do Candidato','javascript:void(0);',3,1,'2026-05-12 13:26:30','2026-05-20 16:42:10',NULL,0),
+ (5,NULL,'Cursos','/cursos',4,1,'2026-05-12 13:27:16','2026-05-20 15:56:51',NULL,0),
+ (6,3,'Resultados','/resultados',5,0,'2026-05-12 13:27:51','2026-05-12 13:27:51',NULL,0),
+ (7,3,'Data da Prova','/data-prova',6,1,'2026-05-12 13:28:56','2026-05-12 13:28:56',NULL,0),
+ (8,NULL,'Informacoes','/',7,1,'2026-05-12 17:02:58','2026-05-20 15:56:08',NULL,0);
 INSERT INTO "processo_seletivo" ("idprocesso","fk_curso","fk_coligada","ensino_fk","data_prova","id_totvs","habilitar_resultado","data_resultado_inicio","data_resultado_fim","inserido_em","alterado_em","deletado_em") VALUES (1,1,3,1,'0',200,0,'2026-05-11 20:27:48',NULL,'2026-05-11 20:27:48','2026-05-11 20:27:48',NULL);
 INSERT INTO "tipo_ensino" ("idensino","nome","inserido_em","atualizado_em","deletado_em") VALUES (1,'Presencial','2026-05-12 17:35:38','2026-05-12 17:35:38',NULL),
  (2,'Semipresencial','2026-05-12 17:35:58','2026-05-12 17:35:58',NULL);
@@ -105,7 +105,8 @@ WITH RECURSIVE menu_tree AS (
     -- âncora: itens raiz
     SELECT idmenu, pai_id, nome, url, ordem, ativo, inserido_em, alterado_em, deletado_em, 	dropdown, 0 AS nivel
     FROM menu_item
-    WHERE pai_id IS NULL AND ativo = 1
+    WHERE pai_id IS NULL 
+	-- AND ativo = 1
 
     UNION ALL
 
@@ -113,7 +114,7 @@ WITH RECURSIVE menu_tree AS (
     SELECT m.idmenu, m.pai_id, m.nome, m.url, m.ordem, m.ativo, m.inserido_em, m.alterado_em, m.deletado_em, m.dropdown, mt.nivel + 1
     FROM menu_item m
     JOIN menu_tree mt ON m.pai_id = mt.idmenu
-    WHERE m.ativo = 1
+    -- WHERE m.ativo = 1
 )
 SELECT
     idmenu,
