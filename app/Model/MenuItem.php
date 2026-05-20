@@ -7,7 +7,7 @@ class MenuItem extends Model
 {
     protected $table    = 'menu_item';
     protected $primaryKey = 'idmenu';
-    protected $fillable = ['pai_id', 'nome', 'url', 'ordem', 'ativo'];
+    protected $fillable = ['pai_id', 'nome', 'url', 'ordem', 'ativo', 'dropdown'];
 
     const CREATED_AT = 'inserido_em';
     const UPDATED_AT = 'alterado_em';
