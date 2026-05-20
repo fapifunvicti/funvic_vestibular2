@@ -18,7 +18,7 @@
 
             <?php foreach($menu_raiz as $menu): ?>
 
-                <?php if(!$menu->dropdown): ?>
+                <?php if(!$menu->dropdown && $menu->nivel == 0): ?>
                 <li class="nav-item">
                     <a class="nav-link <?php echo $menu->estilo; ?>" href="<?php echo $menu->url ?>">
                         <b><?php echo h($menu->nome); ?></b>
@@ -30,17 +30,24 @@
                                 <b><?php echo h($menu->nome); ?></b>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="<?=  "dropDown-". $menu->idmenu; ?>">
-                                    <?php $submenu_itens = \App\Model\ArvoreMenuView::filhosDe($menu->idmenu)->cursor(); ?>
+
+                                    <?php 
+                                        $submenu_itens = new \App\Model\MenuItem();
+                                        $submenu_itens = $submenu_itens->where('pai_id','=', $menu->idmenu)->cursor();
+                                         //\App\Model\ArvoreMenuView::filhosDe($menu->pai_id)->get();     
+                                    ?>
                                      <?php foreach ($submenu_itens as $submenu): ?>
                                        
                                         <a class="dropdown-item" href="<?=  $submenu->url ?>"> <?=   h($submenu->nome) ?></a>
-                                    <?php endforeach; ?>                              
+                                    
+                                    <?php endforeach; ?>                    
                                   
                             </div>
                         </li>
-             
-                <?php endif; ?>
+                                        
+            <?php endif; ?>
             <?php endforeach; ?>
+            
         </ul>
     </div>
 </nav>
