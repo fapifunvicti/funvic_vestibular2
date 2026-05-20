@@ -21,7 +21,7 @@
             <?php foreach($lista_menu as $lista): ?>
                 <option 
                 <?php if($menu->pai_id != null && $menu->pai_id === $lista->idmenu) echo "selected" ?>
-                value="<?= h($menu->idmenu);  ?>"><?= h($lista->idmenu); ?> - <?= h($lista->nome) ?>: <?= h($lista->ativo ? "Ativo" : "Desativado") ?> </option>
+                value="<?= h($lista->idmenu);  ?>"><?= h($lista->idmenu); ?> - <?= h($lista->nome) ?>: <?= h($lista->ativo ? "Ativo" : "Desativado") ?> </option>
             <?php endforeach; ?>
 
         </select>
