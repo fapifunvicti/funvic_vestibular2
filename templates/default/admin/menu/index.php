@@ -29,7 +29,8 @@
             <td>
                 <?php 
                     if($m->pai_id !== null){
-                        $filho = new \App\Model\ArvoreMenuView()->where('idmenu', '=', $m->pai_id)->first();
+                        $arvoreView = new \App\Model\ArvoreMenuView();
+                        $filho = $arvoreView->where('idmenu', '=', $m->pai_id)->first();
                         echo '<p class="fw-bold"><strong>'.$filho->nome.'</strong></p>';
                     }else {
                         echo '<p class="fw-normal">Nenhum</p>';
