@@ -21,13 +21,17 @@
             <?php foreach($lista_menu as $lista): ?>
                 <option 
                 <?php if($menu->pai_id != null && $menu->pai_id === $lista->idmenu) echo "selected" ?>
-                value=""><?= h($lista->idmenu); ?> - <?= h($lista->nome) ?>: <?= h($lista->ativo ? "Ativo" : "Desativado") ?> </option>
+                value="<?= h($menu->idmenu);  ?>"><?= h($lista->idmenu); ?> - <?= h($lista->nome) ?>: <?= h($lista->ativo ? "Ativo" : "Desativado") ?> </option>
             <?php endforeach; ?>
 
         </select>
     </div>
 
-
+    <div class="mb-3">
+        
+        <input  <?= $menu->dropdown ? 'checked' : '';   ?> class="form-check-control" type="checkbox" name="dropdown" id="dropdown-<?= h($menu->idmenu);  ?>">
+        <label class="form-check-label" for="dropdown-<?= h($menu->idmenu);  ?>">Habilitar Dropdown</label>
+    </div>
 
     <div class="mb-3">
         <button type="submit">Editar</button>
