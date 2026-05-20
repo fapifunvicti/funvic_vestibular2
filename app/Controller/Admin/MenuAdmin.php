@@ -10,7 +10,7 @@ use App\Core\Response;
 class MenuAdmin extends Controller {
 
 
-    #[RouteAttribute("/admin/menu", method:"GET")]
+    #[RouteAttribute("/admin/menu", method:"GET|POST")]
     public function index(Request $request, Response $response): Response {
         global $config;
         $tpl = new \App\Core\Template($request, $config);
@@ -20,13 +20,33 @@ class MenuAdmin extends Controller {
 
         if($query->has('editar') && $query->is_int('id') && $request->is_htmx()){
             $id =    $query->as_int('id');
-            $menu = new \App\Model\MenuItem()->where('idmenu','=', $id)->first();
-            $menuList = new \App\Model\ArvoreMenuView()->cursor();
+            $menuModel = new \App\Model\MenuItem();
+            $menu = $menuModel->where('idmenu','=', $id)->first();
+
+
+            $menuList = new \App\Model\ArvoreMenuView();
+            $menuList = $menuList->cursor();
             $html = $tpl->renderTemplateFile("admin/menu/form_editar.php", ['menu' => $menu, 'lista_menu' => $menuList ]);
             return $response->html($html);
         }
 
         
+        if($request->isPost()){
+            $post = $request->getParsedBody();
+
+            $menuModel = \App\Model\MenuItem::find($post['id']); 
+
+            $menuModel->nome = $post['nome'];
+            $menuModel->pai_id = (int)$post['pai'] === 0 ? NULL :  (int)$post['pai'];
+
+            if(!$menuModel->save()){
+                $response->redirect("/admin/menu")->send();
+                return  $response->html("");
+            }
+
+             $response->redirect("/admin/menu")->send();
+             return  $response->html("");;
+        }
 
 
         $menu = new \App\Model\ArvoreMenuView();
