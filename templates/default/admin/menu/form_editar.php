@@ -5,13 +5,13 @@
  * @var array   $lista_menu
  */
 ?>
-<form hx-post="/admin/menu" action="">
+<form method="post" action="/admin/menu">
     <input type="hidden" name="form" value="editar">
-    <input type="hidden" name="id" value="<?= h($menu->editar);  ?>">
+    <input type="hidden" name="id" value="<?= h($menu->idmenu);  ?>">
 
     <div class="mb-3">
         <label class="form-label" for="nome">Nome:</label>
-        <input class="form-control" required type="text" value="<?= h($menu->nome);  ?>" pattern="[a-zA-Z0-9\s]+" id="nome" name="nome">
+        <input class="form-control" required type="text" value="<?= h($menu->nome);  ?>" pattern="[\p{L}\p{N}\- ]+" id="nome" name="nome">
     </div>
 
     <div class="mb-3">
@@ -27,8 +27,10 @@
         </select>
     </div>
 
+
+
     <div class="mb-3">
-        
+        <button type="submit">Editar</button>
     </div>
 
 </form>
