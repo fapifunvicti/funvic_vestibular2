@@ -1,4 +1,6 @@
 <?php
+
+use App\Model\MenuItem;
     /***
      * @var  object $menu
      */
@@ -9,6 +11,7 @@
         <tr>
             <th>Nome:</th>
             <th>Submenu:</th>
+            <th>Dropdown Ativo</th>
             <th>Ativo</th>
             <th>Menu Pai:</th>
         </tr>
@@ -28,16 +31,19 @@
             </td>
             <td>
                 <?php 
-                    if($m->pai_id !== null){
-                        $arvoreView = new \App\Model\ArvoreMenuView();
-                        $filho = $arvoreView->where('idmenu', '=', $m->pai_id)->first();
-                        echo '<p class="fw-bold"><strong>'.$filho->nome.'</strong></p>';
-                    }else {
-                        echo '<p class="fw-normal">Nenhum</p>';
+                    if($m->nivel > 0){
+                        $filho = new MenuItem();
+                        $filho = $filho->where('idmenu', '=', $m->pai_id)->get()->first();
 
+                        if($filho){
+                             echo '<p class="fw-bold"><strong>'.$filho->nome.'</strong></p>';
+                        }else {
+                             echo '<p class="fw-bold"><strong>Nenhum</strong></p>';
+                        }
                     }
                 ?>
             </td>
+            <td><?= $m->dropdown ? 'Sim' : 'Não' ?></td>
             <td><p><?= $m->ativo ? "Ativado" : 'Desativado'; ?></p> </td>
             <td>
                 <?= $m->pai_id == NULL ? "Pai" : "Filho";   ?>
@@ -49,6 +55,7 @@
         <tr>
             <th>Nome:</th>
             <th>Submenus:</th>
+            <th>Dropdown</th>
             <th>Ativo</th>
             <th>Menu Pai:</th>
         </tr>
