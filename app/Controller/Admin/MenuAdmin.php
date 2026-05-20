@@ -34,7 +34,7 @@ class MenuAdmin extends Controller {
         if($request->isPost()){
             $post = $request->getParsedBody();
 
-            $menuModel = \App\Model\MenuItem::find($post['id']); 
+            $menuModel = \App\Model\MenuItem::find((int)$post['id']); 
 
             $menuModel->nome = $post['nome'];
             $pai_id = (int)$post['pai'] === 0 ? NULL :  (int)$post['pai'];
