@@ -44,8 +44,11 @@ class Home extends Controller {
         //return $response->html($tpl->renderTemplate(), 200);
     }
 
-    #[RouteAttribute('/\/informacoes\/(\d+)/', 'GET', is_regex: true)]
+    #[RouteAttribute('/informacoes/{id:int}', 'GET', is_regex: true)]
     public function hello2(Request $request, Response $response) : Response {
+
+
+        print($request->get_uri_args()[0]);
 
         //$soap = SoapWrapper::soap_criar_consulta_totvs("https://fundacaouniversitaria151485.rm.cloudtotvs.com.br:8051/wsConsultaSQL/MEX?wsdl", 'webserver', 'fjklçaJWWRYA$%us', true);
         //$out = SoapWrapper::soap_call_funcao($soap, 'EDUSQL.001', 'RealizarConsultaSQLContexto', 1, "CODCOLIGADA=1;IDPROCESSOSELETIVO=149;CPF=41094143855");
