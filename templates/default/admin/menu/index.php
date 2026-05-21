@@ -4,6 +4,9 @@ use App\Model\MenuItem;
     /***
      * @var  object $menu
      */
+
+
+    
 ?>
 <div class="main-content" id="mainContent">
 <table class="table table-striped">
@@ -11,6 +14,7 @@ use App\Model\MenuItem;
         <tr>
             <th>Nome:</th>
             <th>Submenu:</th>
+            <th>Ordem</th>
             <th>Dropdown Ativo</th>
             <th>Ativo</th>
             <th>Menu Pai:</th>
@@ -37,11 +41,16 @@ use App\Model\MenuItem;
 
                         if($filho){
                              echo '<p class="fw-bold"><strong>'.$filho->nome.'</strong></p>';
-                        }else {
-                             echo '<p class="fw-bold"><strong>Nenhum</strong></p>';
                         }
+                    }else {
+                        echo '<p class="fw-regular">Nenhum</p>';
                     }
                 ?>
+            </td>
+            <td>
+                <div class="mb-3">
+                    <?=  h($m->ordem); ?>
+                </div>
             </td>
             <td><?= $m->dropdown ? 'Sim' : 'Não' ?></td>
             <td><p><?= $m->ativo ? "Ativado" : 'Desativado'; ?></p> </td>
