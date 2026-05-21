@@ -26,7 +26,7 @@ class MenuAdmin extends Controller {
 
             $menuList = new \App\Model\ArvoreMenuView();
             $menuList = $menuList->cursor();
-            $html = $tpl->renderTemplateFile("admin/menu/form_editar.php", ['menu' => $menu, 'lista_menu' => $menuList ]);
+            $html = $tpl->renderTemplateFile("admin/menu/form_editar.php", ['editar' => true, 'menu' => $menu, 'lista_menu' => $menuList ]);
             return $response->html($html);
         }
 
@@ -34,19 +34,45 @@ class MenuAdmin extends Controller {
         if($request->isPost()){
             $post = $request->getParsedBody();
 
-            $menuModel = \App\Model\MenuItem::find((int)$post['id']); 
+            switch($post['form']){
+                case 'editar':
+                {
+                    $menuModel = \App\Model\MenuItem::find((int)$post['id']); 
+                    $menuModel->nome = $post['nome'];
+                    $pai_id = (int)$post['pai'] === 0 ? NULL :  (int)$post['pai'];
+                    $menuModel->pai_id =  $pai_id;
+                    $menuModel->dropdown = (int)$post['dropdown'];
+                    $menuModel->ativo = (int)$post['ativo'];
+                    $menuModel->ordem = (int)$post['ordem'];
 
-            $menuModel->nome = $post['nome'];
-            $pai_id = (int)$post['pai'] === 0 ? NULL :  (int)$post['pai'];
-            $menuModel->pai_id =  $pai_id;
-            $menuModel->dropdown = (int)$post['dropdown'];
-            $menuModel->ativo = (int)$post['ativo'];
+                    if(!$menuModel->save()){
+                        $response->redirect("/admin/menu")->send();
+                        return  $response->html("");
+                    }
+                }
+                break;
+
+                case 'cadastrar':
+                {
+                    $menuModel = new \App\Model\MenuItem();
+                    $menuModel->nome = $post['nome'];
+                    $menuModel->pai_id = (int)$post['pai'] === 0 ? NULL :  (int)$post['pai'];
+                    $menuModel->dropdown = (int)$post['dropdown'];
+                    $menuModel->ativo = (int)$post['ativo'];
+                    $menuModel->ordem = (int)$post['ordem'];
+
+                    if(!$menuModel->save()){
+                        $response->redirect("/admin/menu")->send();
+                        return  $response->html("");
+                    }
 
 
-            if(!$menuModel->save()){
-                $response->redirect("/admin/menu")->send();
-                return  $response->html("");
+                }
+                break;
+
             }
+
+
 
              $response->redirect("/admin/menu")->send();
              return  $response->html("");;
@@ -55,11 +81,13 @@ class MenuAdmin extends Controller {
 
         $menu = new \App\Model\ArvoreMenuView();
 
-    
+        $menuList = new \App\Model\ArvoreMenuView();
+        $menuList = $menuList->cursor();    
 
         $tpl->addTemplate("admin/tpl/header.php", ['titulo' => "MENU"])
             ->addTemplate("admin/partes/topo.php", ['titulo' => "MENU DO SITE"])
             ->addTemplate("admin/partes/menu.php")
+            ->addTemplate("admin/menu/form_editar.php", ['editar' => false, 'menu' => $menu, 'lista_menu' => $menuList])
             ->addTemplate("admin/menu/index.php", ['menu' => $menu])
             ->addTemplate("admin/tpl/footer.php");
         return $response->html($tpl->renderTemplate());
