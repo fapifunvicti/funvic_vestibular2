@@ -16,6 +16,7 @@ class Home extends Controller {
     public function index(Request $request, Response $response) : Response {
         global $config;
         $tpl = new Tpl($request, $config);
+        \App\Core\DB::get();
 
       if($request->isPost()){
             $capsule = DB::get();
@@ -29,17 +30,21 @@ class Home extends Controller {
       }
 
 
+      $viewProcesso = new \App\Model\ProcessoView();
+      $listaColigada = new \App\Model\Coligada();
+
+
         $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
             ->addTemplate("partes/menu.inc.php")
             ->addTemplate("partes/banner.inc.php")
-            ->addTemplate("home/index.php")
+            ->addTemplate("home/index.php", ['processos' => $viewProcesso, 'coligadas' => $listaColigada])
             ->addTemplate("footer.php");
 
         return $response->html($tpl->renderTemplate(), 200);
         //return $response->html($tpl->renderTemplate(), 200);
     }
 
-    #[RouteAttribute("/hello2", 'GET')]
+    #[RouteAttribute('/\/informacoes\/(\d+)/', 'GET', is_regex: true)]
     public function hello2(Request $request, Response $response) : Response {
 
         //$soap = SoapWrapper::soap_criar_consulta_totvs("https://fundacaouniversitaria151485.rm.cloudtotvs.com.br:8051/wsConsultaSQL/MEX?wsdl", 'webserver', 'fjklçaJWWRYA$%us', true);
