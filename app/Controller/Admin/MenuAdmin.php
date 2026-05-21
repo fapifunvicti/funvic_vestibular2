@@ -39,6 +39,9 @@ class MenuAdmin extends Controller {
             $menuModel->nome = $post['nome'];
             $pai_id = (int)$post['pai'] === 0 ? NULL :  (int)$post['pai'];
             $menuModel->pai_id =  $pai_id;
+            $menuModel->dropdown = (int)$post['dropdown'];
+            $menuModel->ativo = (int)$post['ativo'];
+
 
             if(!$menuModel->save()){
                 $response->redirect("/admin/menu")->send();
