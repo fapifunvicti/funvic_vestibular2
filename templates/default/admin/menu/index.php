@@ -53,7 +53,10 @@ use App\Model\MenuItem;
                 </div>
             </td>
             <td><?= $m->dropdown ? 'Sim' : 'Não' ?></td>
-            <td><p><?= $m->ativo ? "Ativado" : 'Desativado'; ?></p> </td>
+            <td><?= $m->ativo 
+                    ? '<span class="badge badge-success">Ativado</span>' 
+                    : '<span class="badge badge-danger">Desativado</span>'; ?>
+            </td>
             <td>
                 <?= $m->pai_id == NULL ? "Pai" : "Filho";   ?>
             </td>
