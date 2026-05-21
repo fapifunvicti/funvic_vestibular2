@@ -50,19 +50,22 @@ CREATE TABLE IF NOT EXISTS "processo_seletivo" (
 	"idprocesso"	INTEGER NOT NULL,
 	"fk_curso"	INTEGER NOT NULL,
 	"fk_coligada"	INTEGER NOT NULL,
-	"ensino_fk"	INTEGER DEFAULT 1,
-	"data_prova"	TEXT NOT NULL,
-	"id_totvs"	INTEGER NOT NULL DEFAULT (0),
-	"habilitar_resultado"	INTEGER DEFAULT 0,
-	"data_resultado_inicio"	TEXT NOT NULL DEFAULT (datetime('now')),
+	"fk_ensino"	INTEGER NOT NULL DEFAULT (1),
+	"nome"	TEXT,
+	"data_prova"	TEXT DEFAULT (datetime('now')),
+	"id_totvs"	INTEGER DEFAULT (0),
+	"habilitar_resultado"	INTEGER DEFAULT (0),
+	"data_resultado_inicio"	TEXT DEFAULT (datetime('now')),
 	"data_resultado_fim"	TEXT,
 	"inserido_em"	TEXT NOT NULL DEFAULT (datetime('now')),
 	"alterado_em"	TEXT NOT NULL DEFAULT (datetime('now')),
 	"deletado_em"	TEXT,
+	"categoria"	INTEGER DEFAULT (1),
+	"tipo_resultado"	INTEGER DEFAULT (0),
 	PRIMARY KEY("idprocesso" AUTOINCREMENT),
-	FOREIGN KEY("ensino_fk") REFERENCES "tipo_ensino"("idensino"),
 	CONSTRAINT "processo_seletivo_coligada_FK" FOREIGN KEY("fk_coligada") REFERENCES "coligada"("idcoligada"),
-	CONSTRAINT "processo_seletivo_curso_FK" FOREIGN KEY("fk_curso") REFERENCES "curso"("idcurso")
+	CONSTRAINT "processo_seletivo_curso_FK" FOREIGN KEY("fk_curso") REFERENCES "curso"("idcurso"),
+	FOREIGN KEY("fk_ensino") REFERENCES "tipo_ensino"("idensino")
 );
 CREATE TABLE IF NOT EXISTS "tipo_ensino" (
 	"idensino"	INTEGER,
@@ -83,20 +86,23 @@ CREATE TABLE IF NOT EXISTS "usuario" (
 	"deletado_em"	TEXT,
 	PRIMARY KEY("idusuario" AUTOINCREMENT)
 );
-INSERT INTO "coligada" ("idcoligada","nome","ativo","criado_em","alterado_em","deletado_em") VALUES (3,'Pinda',1,'2026-05-11 20:05:17','2026-05-11 20:05:17',NULL),
- (4,'Mococa11',1,'2026-05-11 20:06:48','2026-05-11 20:17:31',NULL);
+INSERT INTO "coligada" ("idcoligada","nome","ativo","criado_em","alterado_em","deletado_em") VALUES (2,'Mococa',1,'2026-05-11 20:06:48','2026-05-21 13:18:58',NULL),
+ (3,'Pinda',1,'2026-05-11 20:05:17','2026-05-11 20:05:17',NULL);
 INSERT INTO "curso" ("idcurso","nome","ativo","criado_em","alterado_em","deletado_em") VALUES (1,'Geral','on','2026-05-11 20:19:11','2026-05-19 13:15:49',NULL),
- (2,'Medicina1111','on','2026-05-11 20:19:59','2026-05-13 17:53:50',NULL);
+ (2,'Medicina','on','2026-05-11 20:19:59','2026-05-21 13:42:20',NULL);
 INSERT INTO "curso_disponivel" ("idcursodisponivel","curso_fk","coligada_fk","ensino_fk","nome","periodo","area","disponivel","ativo") VALUES (1,1,3,1,'Administração','Matutino','Humanas',1,1);
-INSERT INTO "menu_item" ("idmenu","pai_id","nome","url","ordem","ativo","inserido_em","alterado_em","deletado_em","dropdown") VALUES (1,NULL,'Início','/',0,1,'2026-05-12 13:24:28','2026-05-20 15:34:18',NULL,0),
- (2,NULL,'Inscreva-se','/inscreva-se',1,1,'2026-05-12 13:25:05','2026-05-20 15:40:23',NULL,0),
- (3,NULL,'Informações','javascript:void(0);',2,1,'2026-05-12 13:25:45','2026-05-20 15:35:14',NULL,1),
- (4,3,'Manual do Candidato','javascript:void(0);',3,1,'2026-05-12 13:26:30','2026-05-20 16:42:10',NULL,0),
+INSERT INTO "menu_item" ("idmenu","pai_id","nome","url","ordem","ativo","inserido_em","alterado_em","deletado_em","dropdown") VALUES (1,NULL,'Início','/',0,1,'2026-05-12 13:24:28','2026-05-21 09:45:36',NULL,0),
+ (2,3,'Inscreva-se','/inscreva-se',1,1,'2026-05-12 13:25:05','2026-05-20 16:57:49',NULL,0),
+ (3,NULL,'Informações','javascript:void(0);',1,1,'2026-05-12 13:25:45','2026-05-21 09:39:36',NULL,1),
+ (4,NULL,'Manual do Candidato','javascript:void(0);',1,1,'2026-05-12 13:26:30','2026-05-21 09:39:50',NULL,0),
  (5,NULL,'Cursos','/cursos',4,1,'2026-05-12 13:27:16','2026-05-20 15:56:51',NULL,0),
- (6,3,'Resultados','/resultados',5,0,'2026-05-12 13:27:51','2026-05-12 13:27:51',NULL,0),
- (7,3,'Data da Prova','/data-prova',6,1,'2026-05-12 13:28:56','2026-05-12 13:28:56',NULL,0),
- (8,NULL,'Informacoes','/',7,1,'2026-05-12 17:02:58','2026-05-20 15:56:08',NULL,0);
-INSERT INTO "processo_seletivo" ("idprocesso","fk_curso","fk_coligada","ensino_fk","data_prova","id_totvs","habilitar_resultado","data_resultado_inicio","data_resultado_fim","inserido_em","alterado_em","deletado_em") VALUES (1,1,3,1,'0',200,0,'2026-05-11 20:27:48',NULL,'2026-05-11 20:27:48','2026-05-11 20:27:48',NULL);
+ (6,3,'Resultados','/resultados',5,0,'2026-05-12 13:27:51','2026-05-20 16:50:28',NULL,0),
+ (7,3,'Data da Prova','/data-prova',6,1,'2026-05-12 13:28:56','2026-05-20 16:50:40',NULL,0),
+ (8,NULL,'Informacoes','/',7,1,'2026-05-12 17:02:58','2026-05-20 15:56:08',NULL,0),
+ (9,NULL,'TESTE',NULL,5,0,'2026-05-21 09:24:35','2026-05-21 10:04:43',NULL,1);
+INSERT INTO "processo_seletivo" ("idprocesso","fk_curso","fk_coligada","fk_ensino","nome","data_prova","id_totvs","habilitar_resultado","data_resultado_inicio","data_resultado_fim","inserido_em","alterado_em","deletado_em","categoria","tipo_resultado") VALUES (2,1,2,1,NULL,'2026-05-21 13:54:04',0,0,'2026-05-21 13:54:04',NULL,'2026-05-21 13:54:04','2026-05-21 14:03:49',NULL,1,0),
+ (3,1,3,1,'TESTE','2026-05-21 14:02:50',0,0,'2026-05-21 14:02:50',NULL,'2026-05-21 14:02:50','2026-05-21 14:02:50',NULL,1,0),
+ (4,1,3,2,NULL,NULL,200,0,'2026-05-11 20:27:48',NULL,'2026-05-11 20:27:48','2026-05-21 14:38:08',NULL,1,0);
 INSERT INTO "tipo_ensino" ("idensino","nome","inserido_em","atualizado_em","deletado_em") VALUES (1,'Presencial','2026-05-12 17:35:38','2026-05-12 17:35:38',NULL),
  (2,'Semipresencial','2026-05-12 17:35:58','2026-05-12 17:35:58',NULL);
 INSERT INTO "usuario" ("idusuario","email","senha","permissao","ultimo_login","inserido_em","alterado_em","deletado_em") VALUES (1,'nicholasluis@gmail.com','$argon2id$v=19$m=65536,t=4,p=1$dW1QRFNuWHhwdGVMUFhqTA$uk0x6IcxB6Tngni9gGMji3wVS0ImPKDPweqoRox0Mzw',999,'2026-05-13 12:14:52','2026-05-13 12:14:52','2026-05-13 12:14:52',NULL);
@@ -131,6 +137,22 @@ SELECT
     nivel
 FROM menu_tree
 ORDER BY nivel, ordem;
+CREATE VIEW view_processo_seletivo AS
+SELECT 
+ processo_seletivo.*,
+ curso.nome as curso_nome,
+ coligada.nome as coligada_nome,
+ tipo_ensino.nome as ensino_nome,
+ 
+ strftime("%d/%m/%Y %H:%M:%S", processo_seletivo.data_prova) AS data_prova_fmt,
+ strftime("%d/%m/%Y", processo_seletivo.data_resultado_inicio) AS data_resultado_inicio_fmt,
+ strftime("%d/%m/%Y", processo_seletivo.data_resultado_fim) AS data_resultado_fim_fmt
+  
+ 
+FROM processo_seletivo
+LEFT JOIN curso ON curso.idcurso = processo_seletivo.fk_curso
+LEFT JOIN coligada ON coligada.idcoligada = processo_seletivo.fk_coligada
+LEFT JOIN tipo_ensino ON tipo_ensino.idensino = processo_seletivo.fk_ensino;
 CREATE TRIGGER alteracao_coligada
 AFTER UPDATE ON coligada
 FOR EACH ROW                          -- dispara uma vez por linha alterada
