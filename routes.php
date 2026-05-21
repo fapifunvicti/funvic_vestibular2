@@ -5,6 +5,7 @@ use App\Attributes\MiddlewareAttribute;
 use App\Attributes\RouteAttribute;
 use App\Core\Request;
 use App\Core\Response;
+use App\Core\RouteBuilder;
 
 class Router {
     private array $routes = [];
@@ -95,12 +96,14 @@ class Router {
             //     $group = '/'.$group; 
            // }
 
-           
+            $routeBuilder = new RouteBuilder();
+            $pattern = $routeBuilder->build($route['path']);
 
-            $pattern = "#^" . preg_replace('/\{[a-z]+\}/', '([^/]+)',  $route['path']) . "$#";
+            //$pattern = "#^" . preg_replace('/\{[a-z]+\}/', '([^/]+)',  $route['path']) . "$#";
 
 
             if(preg_match($pattern, $uri, $matches)){
+                //remove o primeiro registro nao tem utilidade no momento
                 array_shift($matches);
 
                 $requestHandler = new Request();
@@ -110,8 +113,17 @@ class Router {
                 $controller = new $controller();
                 $method_caller = $route['handler'][1];
 
-                $matches[] = $requestHandler;
-                $matches[] = $responseHandler;
+                $requestHandler->set_uri_args($matches);
+
+
+                $route_params = [
+                   $requestHandler,
+                   $responseHandler,
+                   $matches ?? null
+                ];
+
+                //$matches[] = $requestHandler;
+                //$matches[] = $responseHandler;
 
                 $pipeline = \array_reduce(array_reverse($route['middlewares']),
                             function (callable $next, string $middlewareClass) use($matches, $controller, $method_caller){
@@ -119,8 +131,8 @@ class Router {
                                     $middleware = new $middlewareClass();
                                     return $middleware->handle($request, $next);
                                 };
-                            }, function() use ($controller, $method_caller, $matches){
-                                    return \call_user_func_array([$controller, $method_caller], $matches);
+                            }, function() use ($controller, $method_caller, $matches, $route_params){
+                                    return \call_user_func_array([$controller, $method_caller], $route_params);
                             }
                             );
 
