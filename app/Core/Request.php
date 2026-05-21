@@ -15,6 +15,7 @@ class Request {
 
     public readonly QueryString $query_string;
 
+    private array $uri_args;
 
     public function __construct()
     {
@@ -185,6 +186,15 @@ class Request {
 
     public function htmx_target(): ? string {
         return $_SERVER['HTTP_HX_TRIGGER'] ?? null;
+    }
+
+    public function set_uri_args(array $args){
+        $this->uri_args = $args;
+    }
+
+    public function get_uri_args(): array {
+        return $this->uri_args;
+
     }
 
 }
