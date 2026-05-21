@@ -8,6 +8,8 @@
 <form method="post" action="/admin/menu">
     <input type="hidden" name="form" value="editar">
     <input type="hidden" name="id" value="<?= h($menu->idmenu);  ?>">
+    <input type="hidden" name="dropdown" value="0">
+    <input type="hidden" name="ativo" value="0">
 
     <div class="mb-3">
         <label class="form-label" for="nome">Nome:</label>
@@ -28,10 +30,15 @@
     </div>
 
     <div class="mb-3">
-        
-        <input  <?= $menu->dropdown ? 'checked' : '';   ?> class="form-check-control" type="checkbox" name="dropdown" id="dropdown-<?= h($menu->idmenu);  ?>">
+        <input  <?= $menu->dropdown ? 'checked' : '';   ?> value="1" class="form-check-control" type="checkbox" name="dropdown" id="dropdown-<?= h($menu->idmenu);  ?>">
         <label class="form-check-label" for="dropdown-<?= h($menu->idmenu);  ?>">Habilitar Dropdown</label>
     </div>
+
+    <div class="mb-3">
+        <input  <?= $menu->ativo ? 'checked' : '';   ?> value="1" class="form-check-control" type="checkbox" name="ativo" id="ativo-<?= h($menu->idmenu);  ?>">
+        <label class="form-check-label" for="ativo-<?= h($menu->idmenu);  ?>">Ativo</label>
+    </div>
+
 
     <div class="mb-3">
         <button type="submit">Editar</button>
