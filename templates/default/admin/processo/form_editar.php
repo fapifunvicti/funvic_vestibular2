@@ -1,0 +1,7 @@
+<?php
+
+/***
+ * @var bool $editar
+ */
+    
+?>
