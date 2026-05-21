@@ -87,9 +87,9 @@ class Router {
 
           
             //aqui prepara a requisição checa regez da URL
-            $group = \mb_strtolower($route['group']);
-            $namespace_str = "\\App\\Controller\\";
-            $className = $route['group'];
+            //$group = \mb_strtolower($route['group']);
+            //$namespace_str = "\\App\\Controller\\";
+            //$className = $route['group'];
 
             //if(!\str_starts_with($group,'/')){
             //     $group = '/'.$group; 
