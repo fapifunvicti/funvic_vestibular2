@@ -46,7 +46,7 @@ class Home extends Controller {
     }
 
     #[RouteAttribute('/informacoes/{id:int}', 'GET', is_regex: true)]
-    public function hello2(Request $request, Response $response) : Response {
+    public function informacoes(Request $request, Response $response) : Response {
         global $config;
         $tpl = new Tpl($request, $config);
         \App\Core\DB::get();
@@ -89,5 +89,50 @@ class Home extends Controller {
 
     }
 
+    #[RouteAttribute('/resultado', 'GET')]
+    public function listar_resultados(Request $request, Response $response) : Response {
 
+        global $config;
+        $tpl = new Tpl($request, $config);
+        \App\Core\DB::get();
+
+
+        $processos = new \App\Model\ProcessoView()
+                    ->where('habilitar_resultado','>', 0)
+                    ->whereNull('deletado_em');
+     
+
+        $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
+            ->addTemplate("partes/menu.inc.php")
+            ->addTemplate("partes/banner.inc.php")
+            ->addTemplate("home/resultado.php", ['processos' => $processos])
+            ->addTemplate("footer.php");
+
+
+        return $response->html($tpl->renderTemplate());
+
+    }
+
+    #[RouteAttribute('/resultado/{id:int}', 'GET', is_regex: true)]
+    public function resultados(Request $request, Response $response) : Response {
+
+        global $config;
+        $tpl = new Tpl($request, $config);
+        \App\Core\DB::get();
+        $args = $request->get_uri_args();
+
+        $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
+            ->addTemplate("partes/menu.inc.php")
+            ->addTemplate("partes/banner.inc.php")
+            ->addTemplate("home/resultado.php")
+            ->addTemplate("footer.php");
+
+
+        if(!isset($args[0])){
+
+        }
+
+        return $response->html("");
+
+    }
 }
