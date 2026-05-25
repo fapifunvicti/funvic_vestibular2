@@ -9,6 +9,7 @@ use App\Core\Response;
 use App\Core\Controller;
 use App\Core\DB;
 use App\Middleware\SoapWrapper;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Home extends Controller {
 
@@ -46,9 +47,30 @@ class Home extends Controller {
 
     #[RouteAttribute('/informacoes/{id:int}', 'GET', is_regex: true)]
     public function hello2(Request $request, Response $response) : Response {
+        global $config;
+        $tpl = new Tpl($request, $config);
+        \App\Core\DB::get();
+        $args = $request->get_uri_args();
+
+        $processo = \App\Model\ProcessoView::find((int)$args[0]);
+        if(!$processo){
+            $response->setStatusCode(404)->send();
+            return $response->html("");
+        }
+        
+
+        $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
+            ->addTemplate("partes/menu.inc.php")
+            ->addTemplate("partes/banner.inc.php")
+            ->addTemplate("home/informacoes.php", ['processo' => $processo->get()->first() ])
+            ->addTemplate("footer.php");
 
 
-        print($request->get_uri_args()[0]);
+        
+        return $response->html($tpl->renderTemplate());
+
+
+
 
         //$soap = SoapWrapper::soap_criar_consulta_totvs("https://fundacaouniversitaria151485.rm.cloudtotvs.com.br:8051/wsConsultaSQL/MEX?wsdl", 'webserver', 'fjklçaJWWRYA$%us', true);
         //$out = SoapWrapper::soap_call_funcao($soap, 'EDUSQL.001', 'RealizarConsultaSQLContexto', 1, "CODCOLIGADA=1;IDPROCESSOSELETIVO=149;CPF=41094143855");
@@ -62,7 +84,9 @@ class Home extends Controller {
         $tpl->LoadTemplate("home/index2.php");
         $tpl->LoadTemplate("footer.php");
         return;*/
-        return $response->html("");
+
+
+
     }
 
 
