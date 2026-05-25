@@ -3,7 +3,7 @@
         <!-- <img class="banner__subtitulo" src="./images/2025_antecipado/aberta.png" alt="Subtítulo"> -->
         <img class="banner__logo" src="/images/2026_2semestre/logo.png" alt="Logo Vestibular">
         <div class="banner__botoes">
-            <a href="#inscricoes" class="botao__inscricao"><img src="./images/2026_2semestre/inscrevase.png"></a>
+            <a href="#inscricoes" class="botao__inscricao"><img src="/images/2026_2semestre/inscrevase.png"></a>
             <!-- <a href="./cursos.php" class="botao__cursos">Ver cursos</a> -->
         </div>
     </div>
