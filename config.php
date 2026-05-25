@@ -4,7 +4,7 @@ if(isset($config)) unset($config);
 
 
 $config = new App\Core\Config();
-$config->url = "http://localhost:8000";
+$config->url = "http://10.0.3.65:8000";
 $config->root_path = __DIR__;
 $config->template_dir = "default";
 $config->template_path = $config->root_path . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $config->template_dir;
