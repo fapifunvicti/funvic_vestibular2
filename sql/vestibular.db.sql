@@ -96,13 +96,13 @@ INSERT INTO "menu_item" ("idmenu","pai_id","nome","url","ordem","ativo","inserid
  (3,NULL,'Informações','javascript:void(0);',1,1,'2026-05-12 13:25:45','2026-05-21 09:39:36',NULL,1),
  (4,NULL,'Manual do Candidato','javascript:void(0);',1,1,'2026-05-12 13:26:30','2026-05-21 09:39:50',NULL,0),
  (5,NULL,'Cursos','/cursos',4,1,'2026-05-12 13:27:16','2026-05-20 15:56:51',NULL,0),
- (6,3,'Resultados','/resultados',5,0,'2026-05-12 13:27:51','2026-05-20 16:50:28',NULL,0),
+ (6,NULL,'Resultados','/resultado',8,1,'2026-05-12 13:27:51','2026-05-25 12:28:23',NULL,0),
  (7,3,'Data da Prova','/data-prova',6,1,'2026-05-12 13:28:56','2026-05-20 16:50:40',NULL,0),
- (8,NULL,'Informacoes','/',7,1,'2026-05-12 17:02:58','2026-05-20 15:56:08',NULL,0),
+ (8,NULL,'Informacoes','/',7,0,'2026-05-12 17:02:58','2026-05-25 11:12:20',NULL,1),
  (9,NULL,'TESTE',NULL,5,0,'2026-05-21 09:24:35','2026-05-21 10:04:43',NULL,1);
-INSERT INTO "processo_seletivo" ("idprocesso","fk_curso","fk_coligada","fk_ensino","nome","data_prova","id_totvs","habilitar_resultado","data_resultado_inicio","data_resultado_fim","inserido_em","alterado_em","deletado_em","categoria","tipo_resultado") VALUES (2,1,2,1,NULL,'2026-05-21 13:54:04',0,0,'2026-05-21 13:54:04',NULL,'2026-05-21 13:54:04','2026-05-21 14:03:49',NULL,1,0),
- (3,1,3,1,'TESTE','2026-05-21 14:02:50',0,0,'2026-05-21 14:02:50',NULL,'2026-05-21 14:02:50','2026-05-21 14:02:50',NULL,1,0),
- (4,1,3,2,NULL,NULL,200,0,'2026-05-11 20:27:48',NULL,'2026-05-11 20:27:48','2026-05-21 14:38:08',NULL,1,0);
+INSERT INTO "processo_seletivo" ("idprocesso","fk_curso","fk_coligada","fk_ensino","nome","data_prova","id_totvs","habilitar_resultado","data_resultado_inicio","data_resultado_fim","inserido_em","alterado_em","deletado_em","categoria","tipo_resultado") VALUES (2,1,2,1,'Vestibular 2 Semetre','2026-05-21 13:54:04',200,1,'2026-05-21 13:54:04',NULL,'2026-05-21 13:54:04','2026-05-25 16:53:19',NULL,3,0),
+ (3,1,3,1,'TESTE','2026-05-21 14:02:50',0,1,'2026-05-21 14:02:50',NULL,'2026-05-21 14:02:50','2026-05-25 17:06:39',NULL,1,0),
+ (4,1,3,2,NULL,NULL,200,1,'2026-05-11 20:27:48',NULL,'2026-05-11 20:27:48','2026-05-25 17:06:42',NULL,1,0);
 INSERT INTO "tipo_ensino" ("idensino","nome","inserido_em","atualizado_em","deletado_em") VALUES (1,'Presencial','2026-05-12 17:35:38','2026-05-12 17:35:38',NULL),
  (2,'Semipresencial','2026-05-12 17:35:58','2026-05-12 17:35:58',NULL);
 INSERT INTO "usuario" ("idusuario","email","senha","permissao","ultimo_login","inserido_em","alterado_em","deletado_em") VALUES (1,'nicholasluis@gmail.com','$argon2id$v=19$m=65536,t=4,p=1$dW1QRFNuWHhwdGVMUFhqTA$uk0x6IcxB6Tngni9gGMji3wVS0ImPKDPweqoRox0Mzw',999,'2026-05-13 12:14:52','2026-05-13 12:14:52','2026-05-13 12:14:52',NULL);
