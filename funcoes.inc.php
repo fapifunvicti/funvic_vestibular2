@@ -118,7 +118,7 @@ function url_strip(string $url) : string {
 }
 
 
-function get_url(?string $url = null, ?bool $hide_url = false){
+function get_url(?string $url = null, ?bool $hide_url = false):string {
     global $config;
 
     if(!$url){
