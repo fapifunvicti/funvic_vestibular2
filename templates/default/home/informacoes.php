@@ -4,176 +4,23 @@
      */
 
     $data_prova = explode(" ", $processo->data_prova_fmt);
-    $data = $data_prova[0];
+    $data = NULL; //$data_prova[0];
     $hora = $data_prova[1];
 
 ?>
-    <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 2rem 0;
-        }
-        
-        .main-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-            animation: fadeIn 0.5s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .header-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 2rem;
-            color: white;
-        }
-        
-        .content-section {
-            padding: 2rem;
-        }
-        
-        .info-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid #667eea;
-            transition: transform 0.2s;
-        }
-        
-        .info-card:hover {
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .info-card h4 {
-            color: #667eea;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        
-        .info-card i {
-            margin-right: 10px;
-            color: #667eea;
-        }
-        
-        .azul {
-            color: #667eea;
-            font-weight: 600;
-        }
-        
-        .aviso {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            border-radius: 10px;
-            margin: 1.5rem 0;
-        }
-        
-        .aviso h4 {
-            color: #856404;
-            margin-bottom: 0;
-        }
-        
-        .btn-voltar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            padding: 12px 30px;
-            font-weight: 600;
-            transition: transform 0.2s;
-        }
-        
-        .btn-voltar:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .data-prova {
-            font-size: 1.2rem;
-            background: rgba(255,255,255,0.2);
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            margin-bottom: 1rem;
-        }
-        
-        .link-info {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .link-info:hover {
-            color: #764ba2;
-            text-decoration: underline;
-        }
-        
-        .whatsapp-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #25D366;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.2s;
-        }
-        
-        .whatsapp-link:hover {
-            transform: scale(1.05);
-            color: white;
-            background: #128C7E;
-        }
-        
-        hr {
-            margin: 2rem 0;
-            background: linear-gradient(to right, #667eea, transparent);
-            height: 2px;
-        }
-        
-        .badge-medicina {
-            background: #ff6b6b;
-            color: white;
-            font-size: 0.8rem;
-            padding: 0.3rem 0.6rem;
-            border-radius: 50px;
-            margin-left: 10px;
-        }
-        
-        @media (max-width: 768px) {
-            .content-section {
-                padding: 1.5rem;
-            }
-            
-            .header-gradient {
-                padding: 1.5rem;
-            }
-        }
-    </style>
-  <main role="main">
+<link rel="stylesheet" href="/assets/css/informacoes.css">
+    <main class="mb-3" role="main">
         <div class="container">
             <div class="main-card">
                 <!-- Cabeçalho com gradiente -->
                 <div class="header-gradient">
                     <div class="d-flex justify-content-between align-items-center flex-wrap">
                         <div>
+                            <?php if($data): ?>
                             <div class="data-prova">
                                 <i class="fas fa-calendar-alt"></i> Data da Prova: <?= h($data); ?>
                             </div>
+                            <?php endif; ?>
                             <h1 class="display-4 fw-bold mb-0">
                                 INFORMAÇÕES
                                 <br>
@@ -188,6 +35,26 @@
 
                 <!-- Conteúdo -->
                 <div class="content-section">
+                    <!-- SEÇÃO DO BOTÃO INSCREVA-SE (DESTACADA) -->
+                    <div class="inscricao-section">
+                        <h3>
+                            <i class="fas fa-pen-ruler"></i> 
+                            Garanta sua vaga agora!
+                        </h3>
+                        <p>
+                            As inscrições estão abertas por tempo limitado. 
+                            Não perca essa oportunidade de transformar seu futuro!
+                        </p>
+                        
+                        <!-- Botão Grande e Destacado -->
+                        <a href="./inscrever.php" class="btn btn-inscrever">
+                            <i class="fas fa-arrow-right-to-bracket"></i>
+                            INSCREVA-SE AGORA
+                            <i class="fas fa-rocket"></i>
+                        </a>
+                        
+                    </div>
+
                     <!-- Alerta de atraso -->
                     <div class="alert alert-info border-0 rounded-3 shadow-sm mb-4" role="alert">
                         <i class="fas fa-clock"></i> <strong class="azul">Lembre-se, não se atrase!</strong>
