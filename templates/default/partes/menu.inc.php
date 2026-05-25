@@ -6,7 +6,7 @@
 
 <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top" style="border-bottom: 5px solid red; justify-content: space-between;">
     <a class="navbar-brand" href="/">
-        <img src="images/logo.png" alt="Vestibular FUNVIC" style="padding-top: 10px;">
+        <img src="/images/logo.png" alt="Vestibular FUNVIC" style="padding-top: 10px;">
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
