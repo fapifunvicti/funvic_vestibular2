@@ -20,6 +20,12 @@
         <input class="form-control" required type="text"  value="<?= h($menu->nome);  ?>" pattern="[\p{L}\p{N}\- ]+" id="nome" name="nome">
     </div>
 
+
+    <div class="mb-3">
+        <label class="form-label" for="url">URL:</label>
+        <input class="form-control" required type="text"  value="<?= h($menu->url) ?? "/";  ?>"  id="url" name="url">
+    </div>
+
     <div class="mb-3">
         <label class="form-label" for="pai">Menu Pai</label>
         <select class="form-select" name="pai" id="pai">
@@ -69,6 +75,11 @@
             <label class="form-label" for="nome">Nome:</label>
             <input placeholder="Digite nome do menu" class="form-control" required type="text" value="" pattern="[\p{L}\p{N}\- ]+" id="nome" name="nome">
         </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="url">URL:</label>
+        <input class="form-control" required type="text"  value="/"  id="url" name="url">
+    </div>
 
         <div class="mb-3">
             <label class="form-label" for="pai">Menu Pai</label>

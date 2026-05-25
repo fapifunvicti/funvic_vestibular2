@@ -44,6 +44,7 @@ class MenuAdmin extends Controller {
                     $menuModel->dropdown = (int)$post['dropdown'];
                     $menuModel->ativo = (int)$post['ativo'];
                     $menuModel->ordem = (int)$post['ordem'];
+                    $menuModel->url = $post['url'];
 
                     if(!$menuModel->save()){
                         $response->redirect("/admin/menu")->send();
@@ -60,6 +61,7 @@ class MenuAdmin extends Controller {
                     $menuModel->dropdown = (int)$post['dropdown'];
                     $menuModel->ativo = (int)$post['ativo'];
                     $menuModel->ordem = (int)$post['ordem'];
+                    $menuModel->url = $post['url'];
 
                     if(!$menuModel->save()){
                         $response->redirect("/admin/menu")->send();
