@@ -7,6 +7,11 @@
     $data = NULL; //$data_prova[0];
     $hora = $data_prova[1];
 
+    $id = $processo->id_totvs ?? "0";
+    $categoria = $processo->categoria ?? "1";
+
+    $link_inscricao = "https://fundacaouniversitaria151485.rm.cloudtotvs.com.br/FrameHTML/web/app/Edu/PortalProcessoSeletivo/?c=1&f=1&ct={$categoria}&ps={$id}#/es/inscricoeswizard/dados-basicos";
+
 ?>
 <link rel="stylesheet" href="/assets/css/informacoes.css">
     <main class="mb-3" role="main">
@@ -47,7 +52,7 @@
                         </p>
                         
                         <!-- Botão Grande e Destacado -->
-                        <a href="./inscrever.php" class="btn btn-inscrever">
+                        <a target="_blank" href="<?= $link_inscricao  ?>" class="btn btn-inscrever">
                             <i class="fas fa-arrow-right-to-bracket"></i>
                             INSCREVA-SE AGORA
                             <i class="fas fa-rocket"></i>
