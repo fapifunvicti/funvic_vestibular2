@@ -21,6 +21,7 @@ class ProcessoAdmin extends Controller {
         $tpl->addTemplate("admin/tpl/header.php", ['titulo' => "PROCESSOS SELETIVOS"])
             ->addTemplate("admin/partes/topo.php", ['titulo' => "PROCESSOS SELETIVOS"])
             ->addTemplate("admin/partes/menu.php")
+            ->addTemplate("admin/processo/form_editar.php", ['editar' => false])
             ->addTemplate("admin/processo/index.php", ['ensino' => $ensino])
             ->addTemplate("admin/tpl/footer.php");
 
