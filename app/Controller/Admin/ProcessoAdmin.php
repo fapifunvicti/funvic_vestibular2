@@ -5,6 +5,8 @@ use App\Attributes\RouteAttribute;
 use App\Core\Controller;
 use App\Core\Request;
 use App\Core\Response;
+use DateTime;
+use DateTimeZone;
 use Exception;
 use Illuminate\Database\QueryException;
 
@@ -52,18 +54,42 @@ class ProcessoAdmin extends Controller {
             switch($post['form']){
                 case 'editar':
                     {
-                        $processo = new \app\Model\ProcessoSeletivo();
+
+                        $now = new DateTime('now', new DateTimeZone($config->timezone));
+
+                        $processo = \app\Model\ProcessoSeletivo::find($id);
                         $processo->nome = $post['nome'];
                         $processo->fk_curso = (int)$post['curso'];
                         $processo->fk_coligada = (int)$post['coligada'];
                         $processo->fk_ensino = (int)$post['ensino'];
+                        $processo->data_prova = $post['dataprova'];
+                        $processo->id_totvs = (int)$post['idtotvs'] ?? 0;
+                        $processo->habilitar_resultado = (int)$post['resultado'] > 0 ? 1 : 0;
+                        $processo->data_resultado_inicio = $post['datainicio'];
+                        $processo->data_resultado_fim = $post['datafim'];
+                        $processo->categoria = $post['categoriaid'];
+                        $processo->habilitar_resultado = (int)$post['resultado'] > 0 ? 1 : 0;
+                        
+                        if(isset($post['ativo']) && (int)$post['ativo'] === 0){
+                            $processo->deletado_em = $now->format("Y-m-d H:i:s");
+                        }else {
+                            $processo->deletado_em = null;
+                        }
+
+                        
+
+                        if(!$processo->save()){
+                            $response->redirect("/admin/processo", 302)->send();
+                            return  $response->html("");
+                        }
+
+
+                        $response->redirect("/admin/processo", 302)->send();
+                        return  $response->html("");
+
                     }
                 break;
             }
-
-
-
-
 
             return $response->html("");
         }
@@ -95,7 +121,7 @@ class ProcessoAdmin extends Controller {
                                                                         'coligada' => $coligada,
                                                                         'ensino' => $ensino
                                                                     ])
-            ->addTemplate("admin/processo/index.php", ['ensino' => $ensino])
+            //->addTemplate("admin/processo/index.php", ['ensino' => $ensino])
             ->addTemplate("admin/tpl/footer.php");
 
             return $response->html($tpl->renderTemplate());
