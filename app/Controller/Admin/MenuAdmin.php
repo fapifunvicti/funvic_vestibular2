@@ -38,6 +38,12 @@ class MenuAdmin extends Controller {
                 case 'editar':
                 {
                     $menuModel = \App\Model\MenuItem::find((int)$post['id']); 
+
+                    if(!$menuModel){
+                        $response->redirect("/admin/menu")->send();
+                        return $response->html("");
+                    }
+
                     $menuModel->nome = $post['nome'];
                     $pai_id = (int)$post['pai'] === 0 ? NULL :  (int)$post['pai'];
                     $menuModel->pai_id =  $pai_id;

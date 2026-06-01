@@ -5,11 +5,12 @@ use App\Attributes\RouteAttribute;
 use App\Core\Controller;
 use App\Core\Request;
 use App\Core\Response;
-
+use Exception;
+use Illuminate\Database\QueryException;
 
 class ProcessoAdmin extends Controller {
 
-     #[RouteAttribute("/admin/processo", method: "GET|POST")]
+     #[RouteAttribute("/admin/processo", method: "GET")]
      public function index(Request $request, Response $response): Response {
         global $config;
         $tpl = new \App\Core\Template($request, $config);
@@ -27,5 +28,66 @@ class ProcessoAdmin extends Controller {
 
         return $response->html($tpl->renderTemplate());
      }
+
+
+     #[RouteAttribute("/admin/processo/editar/{id:int}", method: "GET|POST")]
+     public function editar(Request $request, Response $response): Response {
+        global $config;
+        $tpl = new \App\Core\Template($request, $config);
+        \App\Core\DB::get();
+
+
+        if($request->isPost()){
+            $id = $request->get_uri_args()[0] ?? null;
+            $post = $request->getParsedBody();
+
+            $processo = \App\Model\ProcessoSeletivo::find($id);
+
+            if(!$processo){
+                $response->redirect("/admin/processo", 302)->send();
+                return  $response->html("");
+            }
+
+
+
+
+
+
+            return $response->html("");
+        }
+
+        $ensino = \App\Model\Ensino::all();
+        $id = (int)$request->get_uri_args()[0] ?? null;
+        $processo = \App\Model\ProcessoView::find($id);
+
+
+        $curso    = \App\Model\Curso::all();
+        $coligada = \App\Model\Coligada::all();
+        $ensino   = \App\Model\Ensino::all(); 
+
+        if(!$processo){
+                $response->redirect("/admin/processo", 302)->send();
+                return $response->getContent();
+        }
+
+        //$processo = $processo->first();
+
+        $tpl->addTemplate("admin/tpl/header.php", ['titulo' => "Editar {$processo->nome}"])
+            ->addTemplate("admin/partes/topo.php", ['titulo' => " EDITAR - {$processo->nome}"])
+            ->addTemplate("admin/partes/menu.php")
+            ->addTemplate("admin/processo/form_editar.php", ['editar' => true, 
+                                                                        'processo'=> $processo,
+                                                                        'curso' => $curso,
+                                                                        'coligada' => $coligada,
+                                                                        'ensino' => $ensino
+                                                                    ])
+            ->addTemplate("admin/processo/index.php", ['ensino' => $ensino])
+            ->addTemplate("admin/tpl/footer.php");
+
+            return $response->html($tpl->renderTemplate());
+        
+      
+     }
+
 
 }
