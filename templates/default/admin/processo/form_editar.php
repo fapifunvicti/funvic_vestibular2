@@ -159,8 +159,8 @@ $now = new DateTime('now', new DateTimeZone($timezone));
             </div>
 
             <div class="mb-3">
-                <label class="form-select-label" for="coligada">Tipo de Ensino</label>
-                <select class="form-select" name="coligada" id="coligada">
+                <label class="form-select-label" for="ensino">Tipo de Ensino</label>
+                <select class="form-select" name="ensino" id="ensino">
                     <option value="0">Nenhum</option>
                 </select>
             </div>
