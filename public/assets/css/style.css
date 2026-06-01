@@ -796,3 +796,13 @@ a:hover{
 .borda-entre-coluna > [class*='col-']:first-child:before {
    display: none;
 }
+
+
+
+.bg_tabela_erro {
+    background-color: #f5dfdf !important;
+}
+
+.bg_tabela_sucesso {
+    background-color: #cdf7cc !important;
+}
