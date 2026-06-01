@@ -20,19 +20,19 @@ $now = new DateTime('now', new DateTimeZone($timezone));
 
 <div class="main-content" id="mainContent">
     <form action="/admin/processo/editar/<?= h($processo->idprocesso); ?>" method="post">
-            <input type="hidden" name="form" value="cadastrar">
+            <input type="hidden" name="form" value="editar">
             <input type="hidden" name="dropdown" value="0">
             <input type="hidden" name="ativo" value="0">
             <input type="hidden" name="tiporesultado" value="0">
 
             <div class="mb-3">
                 <label class="form-label" for="nome">Nome:</label>
-                <input placeholder="Digite nome do processo seletivo" class="form-control" required type="text" value="<?= h($processo->nome);  ?>" pattern="[\p{L}\p{N}\- ]+" id="nome" name="nome">
+                <input placeholder="Digite nome do processo seletivo" class="form-control" required type="text" value="<?= h($processo->nome ?? "Sem Nome");  ?>" pattern="[\p{L}\p{N}\- ]+" id="nome" name="nome">
             </div>
 
             <div class="mb-3">
                 <label class="form-label" for="dataprova">Data Prova:</label>
-                <input  placeholder="Digite data de prova" class="form-control" required type="datetime-local" value="<?= h($processo->data_prova);  ?>" pattern="[\p{L}\p{N}\- ]+" id="dataprova" name="dataprova">
+                <input  placeholder="Digite data de prova" class="form-control" required type="datetime-local" value="<?= h($processo->data_prova ?? "1970-01-01 00:00:00");  ?>" pattern="[\p{L}\p{N}\- ]+" id="dataprova" name="dataprova">
             </div>
 
 
@@ -66,8 +66,8 @@ $now = new DateTime('now', new DateTimeZone($timezone));
             </div>
 
             <div class="mb-3">
-                <label class="form-select-label" for="coligada">Tipo de Ensino</label>
-                <select class="form-select" name="coligada" id="coligada">
+                <label class="form-select-label" for="ensino">Tipo de Ensino</label>
+                <select class="form-select" name="ensino" id="ensino">
                     <?php foreach($ensino as $e): ?>
                     <option <?php $e->idensino === $processo->ensino_fk ? 'selected' : '' ?> value="<?= h($e->idensino);  ?>"><?= h($e->nome); ?></option>
                     <?php endforeach; ?>
@@ -78,11 +78,11 @@ $now = new DateTime('now', new DateTimeZone($timezone));
             <div class="mb-3">
                 <div class="mb-3 g-3">
                     <label class="form-label" for="nome">ID TOTVS</label>
-                    <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="<?= h($processo->id_totvs); ?>" pattern="[\d+]" id="nome" name="nome">
+                    <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="<?= h($processo->id_totvs); ?>" pattern="[\d+]" id="idtotvs" name="idtotvs">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="nome">Categoria ID</label>
-                    <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="<?= h($processo->categoria); ?>" pattern="[\d+]" id="nome" name="nome">
+                    <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="<?= h($processo->categoria); ?>" pattern="[\d+]" id="categoriaid" name="categoriaid">
                 </div>
             </div>
 
@@ -169,11 +169,11 @@ $now = new DateTime('now', new DateTimeZone($timezone));
             <div class="mb-3">
                 <div class="mb-3 g-3">
                     <label class="form-label" for="nome">ID TOTVS</label>
-                    <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="0" pattern="[\d+]" id="nome" name="nome">
+                    <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="0" pattern="[\d+]" id="idtotvs" name="idtotvs">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="nome">Categoria ID</label>
-                    <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="1" pattern="[\d+]" id="nome" name="nome">
+                    <label class="form-label" for="categoriaid">Categoria ID</label>
+                    <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="1" pattern="[\d+]" id="categoriaid" name="categoriaid">
                 </div>
             </div>
 
