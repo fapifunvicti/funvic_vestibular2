@@ -26,7 +26,7 @@
 
         <?php  foreach($coligada as $c): ?>
         <tr>
-            <td><?= h($c->nome ?? "Sem Nome");  ?></td>
+            <td><a href="/admin/processo/editar/<?= h($c->idprocesso) ?>"><?= h($c->nome ?? "Sem Nome");  ?></a></td>
             <td>
                 <div class="mb-3">
                     <?= h($c->data_prova_fmt) ?>
