@@ -97,9 +97,10 @@ class Home extends Controller {
         \App\Core\DB::get();
 
 
-        $processos = new \App\Model\ProcessoView()
-                    ->where('habilitar_resultado','>', 0)
-                    ->whereNull('deletado_em');
+        $processos = new \App\Model\ProcessoView();
+        $processos->where('habilitar_resultado','>', 0)
+                  ->whereNull('deletado_em');
+                  
      
 
         $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
