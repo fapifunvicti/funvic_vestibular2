@@ -24,6 +24,7 @@ $now = new DateTime('now', new DateTimeZone($timezone));
             <input type="hidden" name="dropdown" value="0">
             <input type="hidden" name="ativo" value="0">
             <input type="hidden" name="tiporesultado" value="0">
+            <input type="hidden" name="resultado" value="0">
 
             <div class="mb-3">
                 <label class="form-label" for="nome">Nome:</label>
