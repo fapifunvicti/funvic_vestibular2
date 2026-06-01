@@ -49,6 +49,18 @@ class ProcessoAdmin extends Controller {
             }
 
 
+            switch($post['form']){
+                case 'editar':
+                    {
+                        $processo = new \app\Model\ProcessoSeletivo();
+                        $processo->nome = $post['nome'];
+                        $processo->fk_curso = (int)$post['curso'];
+                        $processo->fk_coligada = (int)$post['coligada'];
+                        $processo->fk_ensino = (int)$post['ensino'];
+                    }
+                break;
+            }
+
 
 
 
@@ -72,8 +84,10 @@ class ProcessoAdmin extends Controller {
 
         //$processo = $processo->first();
 
-        $tpl->addTemplate("admin/tpl/header.php", ['titulo' => "Editar {$processo->nome}"])
-            ->addTemplate("admin/partes/topo.php", ['titulo' => " EDITAR - {$processo->nome}"])
+        $titulo = $processo->nome ?? "Sem Nome";
+
+        $tpl->addTemplate("admin/tpl/header.php", ['titulo' => "Editar {$titulo}"])
+            ->addTemplate("admin/partes/topo.php", ['titulo' => " EDITAR - {$titulo}"])
             ->addTemplate("admin/partes/menu.php")
             ->addTemplate("admin/processo/form_editar.php", ['editar' => true, 
                                                                         'processo'=> $processo,
