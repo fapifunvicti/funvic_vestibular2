@@ -16,6 +16,7 @@
             <th>Data da Prova</th>
             <th>ID TOTVS / ID Categoria:</th>
             <th>Resultado:</th>
+            <th>Status:</th>
         </tr>
     </thead>
 
@@ -25,8 +26,18 @@
         ?>
 
         <?php  foreach($coligada as $c): ?>
-        <tr>
-            <td><a href="/admin/processo/editar/<?= h($c->idprocesso) ?>"><?= h($c->nome ?? "Sem Nome");  ?></a></td>
+        
+        <?php
+            $css = 'p-3 mb-2 bg_tabela_sucesso text-info'; //'p-3 mb-2 bg-primary bg-gradient text-white';
+            $link_css = 'p-3 link-danger';
+            if($c->deletado_em != null){
+                $css = 'p-3 mb-2 bg_tabela_erro  text-danger';
+                $link_css = 'p-3 link-info';
+            }
+        ?>
+
+        <tr class="<?= $css ?>">
+            <td><a class="<?= $link_css  ?>" href="/admin/processo/editar/<?= h($c->idprocesso) ?>"><?= h($c->nome ?? "Sem Nome");  ?></a></td>
             <td>
                 <div class="mb-3">
                     <?= h($c->data_prova_fmt) ?>
@@ -41,6 +52,7 @@
                 <?= $c->tipo_resultado == 0 ? "Tipo: Local" : "Tipo: Via TOTVS"  ?>
                 </p>
             </td>
+            <td><?= $c->deletado_em === null ? "Ativo" : "Desativado"  ?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>
