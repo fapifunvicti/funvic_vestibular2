@@ -13,4 +13,7 @@ class ProcessoSeletivo extends Model {
                             'categoria', 'tipo_resultado'
     ];
 
+    const CREATED_AT = 'inserido_em';
+    const UPDATED_AT = 'alterado_em';
+
 }
