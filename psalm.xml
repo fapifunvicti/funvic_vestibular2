@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <psalm
-    errorLevel="0"
+    errorLevel="1"
     resolveFromConfigFile="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
@@ -14,7 +14,7 @@
         <ignoreFiles>
             <directory name="vendor" />
              <directory name="sql" />
-              <directory name="public/assets" />
+              <directory name="public" />
         </ignoreFiles>
     </projectFiles>
 
