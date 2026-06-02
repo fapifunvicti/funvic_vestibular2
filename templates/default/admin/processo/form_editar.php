@@ -33,18 +33,18 @@ $now = new DateTime('now', new DateTimeZone($timezone));
 
             <div class="mb-3">
                 <label class="form-label" for="dataprova">Data Prova:</label>
-                <input  placeholder="Digite data de prova" class="form-control" required type="datetime-local" value="<?= h($processo->data_prova ?? "1970-01-01 00:00:00");  ?>" pattern="[\p{L}\p{N}\- ]+" id="dataprova" name="dataprova">
+                <input  placeholder="Digite data de prova" class="form-control" required type="datetime-local" value="<?= h($processo->data_prova ?? "1970-01-01 00:00:00");  ?>"  id="dataprova" name="dataprova">
             </div>
 
 
             <div class="mb-3">
                 <label class="form-label" for="datainicio">Data Início do Resultado:</label>
-                <input  placeholder="Digite data inicio" class="form-control" required type="datetime-local" value="<?= h($processo->data_resultado_inicio ?? "0000-00-00" );  ?>" pattern="[\p{L}\p{N}\- ]+" id="datainicio" name="datainicio">
+                <input  placeholder="Digite data inicio" class="form-control" required type="datetime-local" value="<?= h($processo->data_resultado_inicio ?? "0000-00-00" );  ?>"  id="datainicio" name="datainicio">
             </div>
 
             <div class="mb-3">
                 <label class="form-label" for="datafim">Data de Fim do Resultado:</label>
-                <input  placeholder="Digite data fim" class="form-control" type="datetime-local" value="<?= h($processo->data_resultado_fim ?? "0000-00-00 00:00:00" );  ?>" pattern="[\p{L}\p{N}\- ]+" id="datafim" name="datafim">
+                <input  placeholder="Digite data fim" class="form-control" type="datetime-local" value="<?= h($processo->data_resultado_fim ?? "0000-00-00 00:00:00" );  ?>"  id="datafim" name="datafim">
             </div>
 
             <div class="mb-3">
@@ -119,10 +119,12 @@ $now = new DateTime('now', new DateTimeZone($timezone));
 
 <?php else: ?>
 <div class="main-content" id="mainContent">
-    <form action="/admin/processo" method="post">
+    <form action="/admin/processo/cadastrar" method="post">
             <input type="hidden" name="form" value="cadastrar">
             <input type="hidden" name="dropdown" value="0">
             <input type="hidden" name="ativo" value="0">
+            <input type="hidden" name="tiporesultado" value="0">
+            <input type="hidden" name="resultado" value="0">
 
             <div class="mb-3">
                 <label class="form-label" for="nome">Nome:</label>
@@ -131,30 +133,34 @@ $now = new DateTime('now', new DateTimeZone($timezone));
 
             <div class="mb-3">
                 <label class="form-label" for="dataprova">Data Prova:</label>
-                <input  placeholder="Digite data de prova" class="form-control" required type="datetime-local" value="" pattern="[\p{L}\p{N}\- ]+" id="dataprova" name="dataprova">
+                <input  placeholder="Digite data de prova" class="form-control" required type="datetime-local" value=""  id="dataprova" name="dataprova">
             </div>
 
             <div class="mb-3">
                 <label class="form-label" for="datainicio">Data de Início</label>
-                <input  placeholder="Digite data inicio" class="form-control" required type="datetime-local" value="" pattern="[\p{L}\p{N}\- ]+" id="datainicio" name="datainicio">
+                <input  placeholder="Digite data inicio" class="form-control" required type="datetime-local" value=""  id="datainicio" name="datainicio">
             </div>
 
             <div class="mb-3">
                 <label class="form-label" for="datafim">Data de Fim</label>
-                <input  placeholder="Digite data fim" class="form-control" required type="datetime-local" value="" pattern="[\p{L}\p{N}\- ]+" id="datafim" name="datafim">
+                <input  placeholder="Digite data fim" class="form-control" required type="datetime-local" value=""  id="datafim" name="datafim">
             </div>
 
             <div class="mb-3">
                 <label class="form-select-label" for="curso">Tipo de Curso</label>
                 <select class="form-select" name="curso" id="curso">
-                    <option value="0">Nenhum</option>
+                    <?php foreach($curso as $c): ?>
+                    <option value="<?= h($c->idcurso);  ?>"><?= h($c->nome); ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
 
             <div class="mb-3">
                 <label class="form-select-label" for="coligada">Coligada</label>
                 <select class="form-select" name="coligada" id="coligada">
-                    <option value="0">Nenhum</option>
+                    <?php foreach($coligada as $c): ?>
+                    <option  value="<?= h($c->idcoligada);  ?>"><?= h($c->nome); ?></option>
+                    <?php endforeach; ?>
                 </select>
 
             </div>
@@ -162,10 +168,11 @@ $now = new DateTime('now', new DateTimeZone($timezone));
             <div class="mb-3">
                 <label class="form-select-label" for="ensino">Tipo de Ensino</label>
                 <select class="form-select" name="ensino" id="ensino">
-                    <option value="0">Nenhum</option>
+                    <?php foreach($ensino as $e): ?>
+                    <option  value="<?= h($e->idensino);  ?>"><?= h($e->nome); ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
-
 
             <div class="mb-3">
                 <div class="mb-3 g-3">
@@ -197,6 +204,11 @@ $now = new DateTime('now', new DateTimeZone($timezone));
             <input checked  value="1" class="form-check-control" type="checkbox" name="ativo" id="ativo">
             <label class="form-check-label" for="ativo">Ativo</label>
             <small id="dropdownHelp" class="form-text text-muted">Se Desabilitado nao aparece mais no site principal</small>
+        </div>
+
+
+        <div class="mb-3">
+            <button class="btn btn-primary" type="submit">Cadastrar novo Processo!</button>
         </div>
 
     </form>
