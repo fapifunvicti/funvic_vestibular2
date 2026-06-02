@@ -7,7 +7,6 @@ use App\Core\Request;
 use App\Core\Response;
 use DateTime;
 use DateTimeZone;
-use Exception;
 use Illuminate\Database\QueryException;
 
 class ProcessoAdmin extends Controller {
@@ -18,18 +17,99 @@ class ProcessoAdmin extends Controller {
         $tpl = new \App\Core\Template($request, $config);
         \App\Core\DB::get();
 
+        //$alert = new \App\Libs\Alert($config, $tpl, "admin/partes/alert_model.php");
 
-        $ensino = \App\Model\Ensino::all();
+
+        $curso    = \App\Model\Curso::all();
+        $coligada = \App\Model\Coligada::all();
+        $ensino   = \App\Model\Ensino::all(); 
 
         $tpl->addTemplate("admin/tpl/header.php", ['titulo' => "PROCESSOS SELETIVOS"])
             ->addTemplate("admin/partes/topo.php", ['titulo' => "PROCESSOS SELETIVOS"])
             ->addTemplate("admin/partes/menu.php")
-            ->addTemplate("admin/processo/form_editar.php", ['editar' => false])
-            ->addTemplate("admin/processo/index.php", ['ensino' => $ensino])
+            //->addTemplate("admin/processo/form_editar.php", ['editar' => false,
+            //                                                 'ensino' => $ensino,
+            //                                                 'curso' => $curso,
+            //                                                 'coligada' => $coligada,])
+
+           // ->addTemplate(\App\Libs\Alert::Success($alert, "danger", "Houve um Erro!", "AAAA"))
+            ->addTemplate("admin/processo/index.php", ['ensino' => $ensino,
+                                                        'alerta' => ''])
+
             ->addTemplate("admin/tpl/footer.php");
 
         return $response->html($tpl->renderTemplate());
      }
+
+
+        #[RouteAttribute("/admin/processo/cadastrar", method: "GET|POST")]
+        public function cadastrar(Request $request, Response $response): Response {
+            global $config;
+            $tpl = new \App\Core\Template($request, $config);
+            \App\Core\DB::get();
+
+
+            if($request->isPost()){
+
+                $post = $request->getParsedBody();
+
+                switch($post['form']){
+                    case 'cadastrar':
+                        {
+                            $now = new DateTime('now', new DateTimeZone($config->timezone));
+                            $processo = new \App\Model\ProcessoSeletivo();
+
+                            $processo->nome = $post['nome'];
+                            $processo->nome = $post['nome'];
+                            $processo->fk_curso = (int)$post['curso'];
+                            $processo->fk_coligada = (int)$post['coligada'];
+                            $processo->fk_ensino = (int)$post['ensino'];
+                            $processo->data_prova = $post['dataprova'];
+                            $processo->id_totvs = (int)$post['idtotvs'] ?? 0;
+                            $processo->habilitar_resultado = (int)$post['resultado'] > 0 ? 1 : 0;
+                            $processo->data_resultado_inicio = $post['datainicio'];
+                            $processo->data_resultado_fim = $post['datafim'];
+                            $processo->categoria = $post['categoriaid'];
+                            $processo->habilitar_resultado = (int)$post['resultado'] > 0 ? 1 : 0;
+
+                            if(!$processo->save()){
+                                $response->redirect("/admin/processo", 302)->send();
+                                return  $response->html("");
+                            }
+
+
+                            $response->redirect("/admin/processo", 302)->send();
+                            return  $response->html("");
+                        }
+                    break;
+                }
+
+            }
+
+
+
+            $curso    = \App\Model\Curso::all();
+            $coligada = \App\Model\Coligada::all();
+            $ensino   = \App\Model\Ensino::all(); 
+
+
+        $tpl->addTemplate("admin/tpl/header.php", ['titulo' => "PROCESSOS SELETIVOS"])
+            ->addTemplate("admin/partes/topo.php", ['titulo' => "PROCESSOS SELETIVOS"])
+            ->addTemplate("admin/partes/menu.php")
+            ->addTemplate("admin/processo/form_editar.php", ['editar' => false,
+                                                             'ensino' => $ensino,
+                                                             'curso' => $curso,
+                                                             'coligada' => $coligada,])
+
+           // ->addTemplate(\App\Libs\Alert::Success($alert, "danger", "Houve um Erro!", "AAAA"))
+           // ->addTemplate("admin/processo/index.php", ['ensino' => $ensino,
+           //                                             'alerta' => ''])
+
+            ->addTemplate("admin/tpl/footer.php");
+
+                return $response->html($tpl->renderTemplate());
+
+        }
 
 
      #[RouteAttribute("/admin/processo/editar/{id:int}", method: "GET|POST")]
@@ -89,6 +169,9 @@ class ProcessoAdmin extends Controller {
 
                     }
                 break;
+
+
+
             }
 
             return $response->html("");
