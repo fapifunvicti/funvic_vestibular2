@@ -7,6 +7,13 @@
 ?>
 <div class="main-content" id="mainContent">
 
+
+ <div class="row justify-content-md-center mb-3">
+        <div class="col col-lg">
+            <a class="btn btn-primary" href="/admin/processo/cadastrar">Cadastrar um Novo Processo</a>
+        </div>
+ </div>
+
 <?php foreach($ensino as $e): ?>
 <h3>Tipo de Ensino: <?=  h($e->nome);  ?></h3>
 <table class="table table-striped">
