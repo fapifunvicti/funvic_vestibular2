@@ -197,4 +197,19 @@ class Request {
 
     }
 
+    public function getSession(string $key): mixed {
+        return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
+    }
+
+    public function setSession(string $key, mixed $value): void {
+        if(!isset($_SESSION[$key])){
+            $_SESSION[$key] = $value;
+            return;
+        }
+        
+        $_SESSION[$key] = $value;
+        return;
+        
+    }
+
 }
