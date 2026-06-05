@@ -6,6 +6,7 @@ use App\Attributes\RouteAttribute;
 use App\Core\Request;
 use App\Core\Response;
 use App\Core\RouteBuilder;
+use ReflectionClass;
 
 class Router {
     private array $routes = [];
@@ -16,8 +17,21 @@ class Router {
         }
     }
 
+    public function registerMiddleware(array $middlewares): void {
+        foreach($middlewares as $middlewareClass){
+            $this->registerMiddleware($middlewareClass);
+        }
+    }
+
+    private function registerMiddlewareClass(string $middleware){
+        $reflectionClass = new ReflectionClass($middleware);
+
+        
+
+    }
+
     private function registerContollerRoute(string $controllerClass) : void {
-        $reflectionClass = new \ReflectionClass($controllerClass);
+        $reflectionClass = new ReflectionClass($controllerClass);
 
 
         $middlewareClass = \array_map(
@@ -122,9 +136,19 @@ class Router {
                    $matches ?? null
                 ];
 
+                $pipeline = new \App\Core\Pipeline(
+                    $route['middlewares'],
+                    $controller,
+                    $method_caller,
+                    $route_params
+                );
+
+                echo $pipeline->Run($requestHandler);
+
                 //$matches[] = $requestHandler;
                 //$matches[] = $responseHandler;
 
+                /*
                 $pipeline = \array_reduce(array_reverse($route['middlewares']),
                             function (callable $next, string $middlewareClass) use($matches, $controller, $method_caller){
                                 return function(Request $request) use ($next, $middlewareClass){
@@ -139,6 +163,7 @@ class Router {
 
 
                 echo $pipeline($requestHandler);
+                */
                 return;
             }            
         }
