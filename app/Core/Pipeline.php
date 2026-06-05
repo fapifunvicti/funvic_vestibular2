@@ -1,5 +1,7 @@
 <?php
 namespace App\Core;
+
+
 class Pipeline {
     private array $middlewares;
     private \App\Core\Controller $controller;
