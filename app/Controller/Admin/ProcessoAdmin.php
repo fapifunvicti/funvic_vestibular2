@@ -8,7 +8,10 @@ use App\Core\Response;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Database\QueryException;
+use App\Attributes\MiddlewareAttribute;
 
+
+#[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
 class ProcessoAdmin extends Controller {
 
      #[RouteAttribute("/admin/processo", method: "GET")]

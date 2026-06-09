@@ -7,11 +7,7 @@ use App\Core\Request;
 use App\Core\Template as Tpl;
 use App\Core\Response;
 use App\Core\Controller;
-use App\Core\DB;
 
-use App\Attributes\MiddlewareAttribute;
-
-#[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
 class Curso extends Controller {
     
     #[RouteAttribute("/cursos", method:"GET")]

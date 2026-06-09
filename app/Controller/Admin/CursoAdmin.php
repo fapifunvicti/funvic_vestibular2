@@ -6,7 +6,9 @@ use App\Core\Controller;
 use App\Core\Request;
 use App\Core\Response;
 
+use App\Attributes\MiddlewareAttribute;
 
+#[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
 class CursoAdmin extends Controller {
 
 
