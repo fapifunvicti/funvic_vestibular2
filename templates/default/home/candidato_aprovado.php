@@ -2,6 +2,7 @@
 
 /***
  * @var mixed $candidato
+ * @var object $processo
  */
 
 
@@ -31,7 +32,7 @@ $valor_original = $format_dinheiro->formatCurrency((float)$candidato->VALOR_ORIG
 
             <div>
                 <h1 class="parabens"><b><?php echo h($nome);  ?></b></h1>
-                <h4 class="aprovado-texto">Você foi aprovado(a) no <?php "PROCESSO" ?> para o curso <b><?php echo h($curso); ?></b>.</h4>
+                <h4 class="aprovado-texto">Você foi aprovado(a) no <strong><?=  h($processo->nome); ?></strong>  para o curso <b><?php echo h($curso); ?></b>.</h4>
 
                 <hr>
 
@@ -43,7 +44,7 @@ $valor_original = $format_dinheiro->formatCurrency((float)$candidato->VALOR_ORIG
                     </br>
 
                     <div class="mt-3">
-                        <i>Agendando sua matrícula até <?php "DATA AGENDAMENTO" ?>, para cursos presenciais você garante seu desconto na matrícula e a bolsa Graduação ao seu Alcance do <span class="font-weight-bolder"><?php echo "NOME DO PROCESSO" ?></span> .
+                        <i>Agendando sua matrícula até <?php "DATA AGENDAMENTO" ?>, para cursos presenciais você garante seu desconto na matrícula e a bolsa Graduação ao seu Alcance do <span class="font-weight-bolder"><strong><?=  h($processo->nome); ?></strong></span> .
                     </div>
                     <div class="mb-3">
                         <ul>
