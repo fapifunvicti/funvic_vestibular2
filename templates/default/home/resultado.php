@@ -4,6 +4,9 @@
      */
 
 
+    $processos = $processos->where('habilitar_resultado', '=', 1)
+                             ->whereNull('deletado_em')
+
 ?>
 <main class="mb-3" role="main">
     <div class="container">
@@ -18,12 +21,12 @@
                         <option selected value="0">Nenhum Selecionado</option>
                         <?php foreach($processos->cursor() as $processo): ?>
                         <?php
-                            if($processo->data_prova):
-                                $data_prova = new DateTime($processos->data_prova);
+                            if($processo->data_prova_fmt !== "" || !$processo->data_prova_fmt):
+                               
                         ?>
-                            <option value="<?= h($processo->idprocesso);  ?>"><?= h(mb_strtoupper($processo->coligada_nome));  ?> <?= h(mb_strtoupper($processo->ensino_nome));  ?> - <?= h(mb_strtoupper($processo->nome ?? "Processo Seletivo")); ?>  <?= $data_prova->format("d/m/Y") ?? "SEM DATA";  ?> <?= $processo->fk_ensino === 2 ? "(MEDICINA)" : "" ?></option>
+                            <option value="<?= h($processo->idprocesso);  ?>"><?= h(mb_strtoupper($processo->coligada_nome));  ?> <?= h(mb_strtoupper($processo->ensino_nome));  ?> - <?= h(mb_strtoupper($processo->nome ?? "Processo Seletivo")); ?>  <?= $processo->data_prova_fmt ?? "SEM DATA";  ?> <?= $processo->fk_ensino === 2 ? "(MEDICINA)" : "" ?></option>
                         <?php else: ?>
-                            <option value="<?= h($processo->idprocesso);  ?>"><?= h($processo->nome ?? "Processo Seletivo"); ?></option>
+                            <option value="<?= h($processo->idprocesso);  ?>"><?= h(mb_strtoupper($processo->coligada_nome));  ?> <?= h(mb_strtoupper($processo->ensino_nome));  ?> - <?= h($processo->nome ?? "Processo Seletivo"); ?></option>
                         <?php  endif; ?>
                         <?php endforeach; ?>
                     </select>
