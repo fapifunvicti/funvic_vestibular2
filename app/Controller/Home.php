@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Attributes\MiddlewareAttribute;
 use App\Attributes\RouteAttribute;
 use App\Core\Request;
 
@@ -8,6 +9,7 @@ use App\Core\Template as Tpl;
 use App\Core\Response;
 use App\Core\Controller;
 use App\Core\DB;
+use App\Libs\WebHookTOTVS;
 use App\Middleware\SoapWrapper;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -89,51 +91,149 @@ class Home extends Controller {
 
     }
 
-    #[RouteAttribute('/resultado', 'GET')]
+    #[RouteAttribute('/resultado', 'GET|POST')]
     public function listar_resultados(Request $request, Response $response) : Response {
 
         global $config;
         $tpl = new Tpl($request, $config);
         \App\Core\DB::get();
 
+        if($request->isPost()){
+            $post = $request->getParsedBody();
+
+            $processo_id = (int)$post['processo'] ?? null;
+
+            if(!$processo_id){
+                $response->redirect("/resultado",302)->send();
+                return $response->text("");
+            }
+
+            if(!\is_numeric($post['cpf']) || !isset($post['cpf'])){
+                $response->redirect("/resultado",302)->send();
+                return $response->text("");
+            }
+
+
+            $processo = \App\Model\ProcessoView::where('idprocesso','=', $processo_id)
+                                                     ->first(); 
+
+
+            $debug = $processo->toArray();
+
+
+            $_SESSION['resultado'] = [
+                'id'          => $processo->idprocesso,
+                'processo_id' => $processo->id_totvs,
+                'cpf'         => $post['cpf'],
+                'coligada'    => $processo->coligada_totvs,
+                'ensino'      => $processo->fk_ensino,
+                'curso'       => $processo->fk_curso
+            ];
+            
+            \setcookie('resultado', 'true', [
+                'expires' => time() + (8 * 60), //8 mins
+                'path'    => '/',
+                'domain'  => '',
+                'secure'  => false,
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]);
+
+            $response->redirect("/resultado_aluno",302)->send();
+            return $response->html("");
+        }
 
         $processos = new \App\Model\ProcessoView();
-        $processos->where('habilitar_resultado','>', 0)
-                  ->whereNull('deletado_em');
+        //$processos->where('habilitar_resultado','=', 1)
+        //          ->whereNull('deletado_em');
                   
      
 
         $tpl->addTemplate("header.php", ['titulo' => "RESULTADOS"])
             ->addTemplate("partes/menu.inc.php")
             ->addTemplate("partes/banner.inc.php")
-            ->addTemplate("home/resultado.php", ['processos' => $processos])
-            ->addTemplate("footer.php");
+            ->addTemplate("home/resultado.php", ['processos' => $processos]);
+        
+            if(isset($_SESSION['aviso'])){
+                $tpl->addTemplate('partes/modal_aviso.php', [
+                    'titulo'   => isset($_SESSION['aviso']['titulo']) ? $_SESSION['aviso']['titulo'] : "Aviso!",
+                    'mensagem' => isset($_SESSION['aviso']['mensagem']) ? $_SESSION['aviso']['mensagem'] : "ocorreu um problema!"
+                
+                ]);
+                
+                unset($_SESSION['aviso']);
+            }
+
+            $tpl->addTemplate("footer.php");
+
+  
 
 
         return $response->html($tpl->renderTemplate());
 
     }
 
-    #[RouteAttribute('/resultado/{id:int}', 'GET', is_regex: true)]
-    public function resultados(Request $request, Response $response) : Response {
+    #[MiddlewareAttribute(\App\Middleware\AcessoResultado::class)]
+    #[RouteAttribute('/resultado_aluno', 'GET', is_regex: true)]
+    public function resultado_aluno(Request $request, Response $response) : Response {
 
         global $config;
         $tpl = new Tpl($request, $config);
         \App\Core\DB::get();
-        $args = $request->get_uri_args();
-
-        $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
-            ->addTemplate("partes/menu.inc.php")
-            ->addTemplate("partes/banner.inc.php")
-            ->addTemplate("home/resultado.php")
-            ->addTemplate("footer.php");
 
 
-        if(!isset($args[0])){
+        $totvs = new WebHookTOTVS();
+
+        $processo_id = (int)$_SESSION['resultado']['processo_id'];
+        $cpf =         $_SESSION['resultado']['cpf'];
+        $coligada    = (int)$_SESSION['resultado']['coligada']; 
+        $ensino      = (int)$_SESSION['resultado']['ensino'];
+        $candidato = null;
+        
+        if(!isset($_SESSION['resultado']['candidato'])){
+             $candidato = $totvs->consultaResultadoProcessoSeletivo($coligada, $processo_id, $cpf);
+            $_SESSION['resultado']['candidato'] = $candidato;
+        }else {
+            $candidato = $_SESSION['resultado']['candidato'];
+        }
+       
+        $curso =        (int)$_SESSION['resultado']['curso'];
+
+        $template_aprovado = "";
+
+        switch($totvs->candidatoStatus($ensino, $candidato)){
+            case WebHookTOTVS::CANDIDATO_APROVADO:
+                if($curso != 2){
+                    $template_aprovado = "home/candidato_aprovado.php";
+                }else {
+                    $template_aprovado = "home/candidato_medicina_aprovado.php";
+                }
+                break;
+            case WebHookTOTVS::CANDIDATO_ERRO:
+                $template_aprovado = "home/candidato_erro.php";
+                break;
+
+            case WebHookTOTVS::CANDIDATO_EM_ESPERA:
+                $template_aprovado = "home/candidato_em_espera.php";
+                break;
+
+            default:
+                $template_aprovado = "partes/candidato_erro.inc.php";
+                break;
 
         }
 
-        return $response->html("");
+
+
+        $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"]);
+            //->addTemplate("partes/menu.inc.php");
+
+        $tpl->addTemplate($template_aprovado, ['candidato' => (object)$candidato]);
+        $tpl->addTemplate("partes/documentos_modal.inc.php");
+        $tpl->addTemplate("footer.php");
+
+
+        return $response->html($tpl->renderTemplate());
 
     }
 }
