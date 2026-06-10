@@ -215,7 +215,7 @@ a:hover{
     width: 100%;
     height: 250px;
     margin-top: 80px;
-    background-image: url('../resultado_candidato.jpg');
+    background-image: url('/images/resultado_candidato.jpg');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
