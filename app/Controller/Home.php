@@ -104,11 +104,15 @@ class Home extends Controller {
             $processo_id = (int)$post['processo'] ?? null;
 
             if(!$processo_id){
+                $_SESSION['aviso']['titulo'] = "Houve um problema!";
+                $_SESSION['aviso']['mensagem'] = "Selecione um processo Corretamente!";
                 $response->redirect("/resultado",302)->send();
                 return $response->text("");
             }
 
             if(!\is_numeric($post['cpf']) || !isset($post['cpf'])){
+                $_SESSION['aviso']['titulo'] = "problema no CPF";
+                $_SESSION['aviso']['mensagem'] = "Por Favor Adicione um CPF Válido!";
                 $response->redirect("/resultado",302)->send();
                 return $response->text("");
             }
@@ -167,7 +171,7 @@ class Home extends Controller {
             $tpl->addTemplate("footer.php");
 
   
-
+        if(isset($_SESSION['aviso'])) unset($_SESSION['aviso']);
 
         return $response->html($tpl->renderTemplate());
 
@@ -184,6 +188,7 @@ class Home extends Controller {
 
         $totvs = new WebHookTOTVS();
 
+        $id          = (int)$_SESSION['resultado']['id'];
         $processo_id = (int)$_SESSION['resultado']['processo_id'];
         $cpf =         $_SESSION['resultado']['cpf'];
         $coligada    = (int)$_SESSION['resultado']['coligada']; 
@@ -223,14 +228,26 @@ class Home extends Controller {
 
         }
 
+        $processo = \App\Model\ProcessoSeletivo::where('idprocesso', $id)
+                                                ->first();
 
+        if(!$processo){
+            $_SESSION['aviso']['titulo'] = "Houve um problema!";
+            $_SESSION['aviso']['mensagem'] = "Processo Seletivo esta incorreto.";
+            $response->redirect("/resultado")->send();
+            if(isset($_SESSION['resultado'])) unset($_SESSION['resultado']);
+            return $response->html("");
+        }
 
-        $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"]);
-            //->addTemplate("partes/menu.inc.php");
+        $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
+            ->addTemplate("partes/menu.inc.php");
 
-        $tpl->addTemplate($template_aprovado, ['candidato' => (object)$candidato]);
+        $tpl->addTemplate($template_aprovado, ['candidato' => (object)$candidato, 
+                                               'processo' => $processo]);
         $tpl->addTemplate("partes/documentos_modal.inc.php");
         $tpl->addTemplate("footer.php");
+            
+
 
 
         return $response->html($tpl->renderTemplate());
