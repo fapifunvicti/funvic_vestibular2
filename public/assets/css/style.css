@@ -806,3 +806,49 @@ a:hover{
 .bg_tabela_sucesso {
     background-color: #cdf7cc !important;
 }
+
+
+.select_processo_seletivo  select:has(option[value="0"]:checked) {
+    border: 2px #ff4d4d;
+    outline: none;
+}
+
+input:user-invalid {
+    border-color: #e74c3c;
+}
+
+input:user-valid{
+    border-color: green;
+}
+
+
+.selectize-control .selectize-input {
+    border: 1px solid #d0d0d0 !important; /* Cor da borda neutra */
+    background: #ffffff !important;        /* Cor do fundo */
+    box-shadow: none !important;
+}
+
+/* Estado quando o usuário clica no campo (Foco / Aberto) */
+.selectize-control .selectize-input.focus, 
+.selectize-control .selectize-input.dropdown-active {
+    border-color: #3498db !important; /* Nova cor de destaque (ex: Azul) */
+    box-shadow: 0 1px 3px rgba(52, 152, 219, 0.2) !important; /* Sombra suave da nova cor */
+}
+
+.selectize-control .selectize-input .item {
+    background: #f4f6f9 !important; /* Cor de fundo do bloco do item */
+    color: #333333 !important;      /* Cor do texto do item */
+    border: 1px solid #d0d0d0 !important; /* Borda ao redor do item (se houver) */
+    border-radius: 3px !important;
+}
+
+.selectize-control .selectize-input .item.active {
+    background: #3498db !important; /* Nova cor de fundo ativa (ex: Azul) */
+    color: #ffffff !important;      /* Cor do texto quando ativo */
+    border-color: #2980b9 !important;
+}
+
+.selectize-dropdown .active {
+    background-color: #e45a5a !important; /* Nova cor de fundo */
+    color: #ffffff !important;            /* Cor do texto */
+}
