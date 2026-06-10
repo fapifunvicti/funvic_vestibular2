@@ -103,7 +103,7 @@ class Home extends Controller {
                   
      
 
-        $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
+        $tpl->addTemplate("header.php", ['titulo' => "RESULTADOS"])
             ->addTemplate("partes/menu.inc.php")
             ->addTemplate("partes/banner.inc.php")
             ->addTemplate("home/resultado.php", ['processos' => $processos])
