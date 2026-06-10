@@ -2,6 +2,8 @@
     /***
      * @var mixed $processos
      */
+
+
 ?>
 <main class="mb-3" role="main">
     <div class="container">
@@ -9,27 +11,32 @@
 
             <?php if($processos->count() > 0): ?>
             <form action="/resultado" method="post">
-                <div class="mb-3 mt-3">
+                <div class="mb-3">
                     <label class="form-label" for="processo">Processo Seletivo:</label>
                 
-                    <select class="form-control" name="processo" id="processo">
+                    <select class="select_processo_seletivo form-select-control" name="processo" id="processo">
+                        <option selected value="0">Nenhum Selecionado</option>
                         <?php foreach($processos->cursor() as $processo): ?>
                         <?php
                             if($processo->data_prova):
-                                $data_prova = DateTime::createFromFormat('Y-m-d H:i:s', $processo->data_prova);
+                                $data_prova = new DateTime($processos->data_prova);
                         ?>
-                            <option value="<?= h($processo->idprocesso);  ?>"><?= h($processo->nome ?? "Processo Seletivo"); ?> - <?= h($data_prova->format("d/m/Y"));  ?></option>
+                            <option value="<?= h($processo->idprocesso);  ?>"><?= h(mb_strtoupper($processo->coligada_nome));  ?> <?= h(mb_strtoupper($processo->ensino_nome));  ?> - <?= h(mb_strtoupper($processo->nome ?? "Processo Seletivo")); ?>  <?= $data_prova->format("d/m/Y") ?? "SEM DATA";  ?> <?= $processo->fk_ensino === 2 ? "(MEDICINA)" : "" ?></option>
                         <?php else: ?>
                             <option value="<?= h($processo->idprocesso);  ?>"><?= h($processo->nome ?? "Processo Seletivo"); ?></option>
                         <?php  endif; ?>
                         <?php endforeach; ?>
                     </select>
                 </div>
-
                 <div class="mb-3">
                     <label class="form-label" for="cpf">CPF:</label>
-                    <input class="form-control" required type="text"  value="" pattern="[\p{L}\p{N}\- ]+" id="cpf" name="cpf">
+                    <input 
+                     hx-trigger="keyup changed delay:300ms"
+                    oninput="document.getElementById('contador').innerText = (11 - this.value.length) + ' caracteres restantes'"
+                    class="form-control" minlength="11" maxlength="11" required type="text"  value="" pattern="[0-9]{11}" placeholder="Digite seu CPF (Somente Numeros) Ex: 34509022318"  id="cpf" name="cpf">
+                    <span id="contador">11 caracteres restantes</span>
                 </div>
+
 
 
                 <div class="mb-3">
@@ -42,3 +49,17 @@
                     <?php endif; ?>
     </div>
 </main>
+<script>
+  $(function () {
+    $("#processo").selectize({
+        plugins: ["restore_on_backspace", "clear_button"],
+        delimiter: " - ",
+        searchable: true,
+        persist: false,
+        maxItems: 1,
+        valueField: "id",
+        labelField: "name",
+      searchField: ["name", "id"],
+    });
+  });
+</script>
