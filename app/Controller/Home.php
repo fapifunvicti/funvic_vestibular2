@@ -194,6 +194,11 @@ class Home extends Controller {
         $coligada    = (int)$_SESSION['resultado']['coligada']; 
         $ensino      = (int)$_SESSION['resultado']['ensino'];
         $candidato = null;
+
+
+
+        $processo = \App\Model\ProcessoSeletivo::where('idprocesso', $id)
+                                                ->first();
         
         if(!isset($_SESSION['resultado']['candidato'])){
              $candidato = $totvs->consultaResultadoProcessoSeletivo($coligada, $processo_id, $cpf);
@@ -205,6 +210,14 @@ class Home extends Controller {
         $curso =        (int)$_SESSION['resultado']['curso'];
 
         $template_aprovado = "";
+
+        if(!$candidato){
+            $_SESSION['aviso']['titulo'] = "Ops!";
+            $_SESSION['aviso']['mensagem'] = "CPF Não Encontrado no Processo Seletivo:{$processo->nome}";
+            $response->redirect("/resultado")->send();
+            if(isset($_SESSION['resultado'])) unset($_SESSION['resultado']);
+            return $response->html("");
+        }
 
         switch($totvs->candidatoStatus($ensino, $candidato)){
             case WebHookTOTVS::CANDIDATO_APROVADO:
@@ -228,8 +241,6 @@ class Home extends Controller {
 
         }
 
-        $processo = \App\Model\ProcessoSeletivo::where('idprocesso', $id)
-                                                ->first();
 
         if(!$processo){
             $_SESSION['aviso']['titulo'] = "Houve um problema!";
