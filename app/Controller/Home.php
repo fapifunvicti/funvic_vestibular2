@@ -54,7 +54,9 @@ class Home extends Controller {
         \App\Core\DB::get();
         $args = $request->get_uri_args();
 
-        $processo = \App\Model\ProcessoView::find((int)$args[0]);
+        $processo = \App\Model\ProcessoView::where('idprocesso', '=', (int)$args[0])
+                                             ->get()
+                                             ->first();
         if(!$processo){
             $response->setStatusCode(404)->send();
             return $response->html("");
@@ -64,7 +66,7 @@ class Home extends Controller {
         $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
             ->addTemplate("partes/menu.inc.php")
             ->addTemplate("partes/banner.inc.php")
-            ->addTemplate("home/informacoes.php", ['processo' => $processo->get()->first() ])
+            ->addTemplate("home/informacoes.php", ['processo' =>$processo ])
             ->addTemplate("footer.php");
 
 
@@ -122,7 +124,6 @@ class Home extends Controller {
                                                      ->first(); 
 
 
-            $debug = $processo->toArray();
 
 
             $_SESSION['resultado'] = [
@@ -143,7 +144,7 @@ class Home extends Controller {
                 'samesite' => 'Lax'
             ]);
 
-            $response->redirect("/resultado_aluno",302)->send();
+            $response->redirect("/resultado_candidato",302)->send();
             return $response->html("");
         }
 
@@ -178,7 +179,7 @@ class Home extends Controller {
     }
 
     #[MiddlewareAttribute(\App\Middleware\AcessoResultado::class)]
-    #[RouteAttribute('/resultado_aluno', 'GET', is_regex: true)]
+    #[RouteAttribute('/resultado_candidato', 'GET', is_regex: true)]
     public function resultado_aluno(Request $request, Response $response) : Response {
 
         global $config;
@@ -250,7 +251,7 @@ class Home extends Controller {
             return $response->html("");
         }
 
-        $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
+        $tpl->addTemplate("header.php", ['titulo' => "RESULTADO DO PROCESSO SELETIVO"])
             ->addTemplate("partes/menu.inc.php");
 
         $tpl->addTemplate($template_aprovado, ['candidato' => (object)$candidato, 
