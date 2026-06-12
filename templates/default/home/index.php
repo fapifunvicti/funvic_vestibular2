@@ -46,7 +46,7 @@ use Illuminate\Database\Eloquent\Builder;
                 <a target="_blank" href="/informacoes/<?= h($proc->idprocesso); ?>">
                                     <button type="button" class="btn botao">
                                     
-                                        <strong><?= h($proc->ensino_nome ?? "Processo Seletivo sem Nome");  ?></strong>
+                                        <strong class="text-uppercase"><?= h($proc->ensino_nome ?? "Processo Seletivo sem Nome");  ?></strong>
                                     </button>
                                 </a>
                 <?php endforeach; ?>
