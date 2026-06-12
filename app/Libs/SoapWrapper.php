@@ -25,7 +25,7 @@ class SoapWrapper {
             'trace' => true,
             'exceptions' => true,
             'keep_alive' => true,
-            'cache_wsdl'    => WSDL_CACHE_NONE,
+            'cache_wsdl'    => \WSDL_CACHE_NONE,
         ];
         
         return new \SoapClient($wsdl_url, $parametros);
