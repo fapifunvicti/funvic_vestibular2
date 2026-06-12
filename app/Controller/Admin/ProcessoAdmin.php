@@ -11,7 +11,7 @@ use Illuminate\Database\QueryException;
 use App\Attributes\MiddlewareAttribute;
 
 
-#[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
+//#[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
 class ProcessoAdmin extends Controller {
 
      #[RouteAttribute("/admin/processo", method: "GET")]
