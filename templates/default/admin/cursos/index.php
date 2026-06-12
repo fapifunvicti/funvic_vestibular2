@@ -31,8 +31,8 @@
                         </div>
                     </td>
                     <td>
-                        <?php if($curso->ativo >= 1):  ?>
-                            <span class="badge text-bg-danger">Ativado</span>
+                        <?php if($curso->ativo === 1):  ?>
+                            <span class="badge text-bg-success">Ativado</span>
                         <?php else:  ?>
                              <span class="badge text-bg-danger">Desativado</span>
                         <?PHP  endif; ?>
