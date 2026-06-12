@@ -41,8 +41,9 @@ RUN docker-php-ext-install \
     xml \
     zip \
     gd \
-    opcache \
-    sockets
+    opcache \ 
+    sockets \
+    soap
 
 # Instala XDebug
 RUN pecl install xdebug && docker-php-ext-enable xdebug
