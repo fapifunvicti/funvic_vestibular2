@@ -51,7 +51,7 @@ $now = new DateTime('now', new DateTimeZone($timezone));
                 <label class="form-select-label" for="curso">Tipo de Curso</label>
                 <select class="form-select" name="curso" id="curso">
                     <?php foreach($curso as $c): ?>
-                    <option <?php $c->idcurso === $processo->curso_fk ? 'selected' : '' ?> value="<?= h($c->idcurso);  ?>"><?= h($c->nome); ?></option>
+                    <option <?=  (int)$c->idcurso === (int)$processo->curso_fk ? 'selected' : '' ?> value="<?= h($c->idcurso);  ?>"><?= h($c->nome); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -60,7 +60,7 @@ $now = new DateTime('now', new DateTimeZone($timezone));
                 <label class="form-select-label" for="coligada">Coligada</label>
                 <select class="form-select" name="coligada" id="coligada">
                     <?php foreach($coligada as $c): ?>
-                    <option <?php $c->idcoligada === $processo->coligada_fk ? 'selected' : '' ?> value="<?= h($c->idcoligada);  ?>"><?= h($c->nome); ?></option>
+                    <option <?= (int)$c->idcoligada === (int)$processo->coligada_fk ? 'selected' : '' ?> value="<?= h($c->idcoligada);  ?>"><?= h($c->nome); ?></option>
                     <?php endforeach; ?>
                 </select>
 
@@ -70,7 +70,7 @@ $now = new DateTime('now', new DateTimeZone($timezone));
                 <label class="form-select-label" for="ensino">Tipo de Ensino</label>
                 <select class="form-select" name="ensino" id="ensino">
                     <?php foreach($ensino as $e): ?>
-                    <option <?php $e->idensino === $processo->ensino_fk ? 'selected' : '' ?> value="<?= h($e->idensino);  ?>"><?= h($e->nome); ?></option>
+                    <option <?= (int)$e->idensino === (int)$processo->ensino_fk ? 'selected' : '' ?> value="<?= h($e->idensino);  ?>"><?= h($e->nome); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>

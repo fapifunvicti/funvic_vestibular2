@@ -21,6 +21,7 @@
         <tr>
             <th>Nome:</th>
             <th>Data da Prova</th>
+            <th>Coligada:</th>
             <th>ID TOTVS / ID Categoria:</th>
             <th>Resultado:</th>
             <th>Status:</th>
@@ -50,16 +51,25 @@
                     <?= h($c->data_prova_fmt) ?>
                 </div>
             </td>
+            <td>
+                <?= h($c->coligada_nome)  ?>
+            </td>
             <td>ID: <?= h($c->id_totvs)  ?> / Categoria:  <?= h($c->categoria) ?></td>
             <td>
                 <?= $c->habilitar_resultado == 0 
-                 ? '<span class="badge badge-danger">Desabilitado</span>'
-                 : '<span class="badge badge-primary">Habilitado</span>' ?>
+                 ? '<span class="badge text-bg-danger">Desabilitado</span>'
+                 : '<span class="badge text-bg-primary">Habilitado</span>' ?>
                 <p>
+                <span class="badge text-bg-info">
                 <?= $c->tipo_resultado == 0 ? "Tipo: Local" : "Tipo: Via TOTVS"  ?>
+                </span>
                 </p>
             </td>
-            <td><?= $c->deletado_em === null ? "Ativo" : "Desativado"  ?></td>
+            <td>
+                <span class="badge text-bg-primary">
+                <?= $c->deletado_em === null ? "Ativo" : "Desativado"  ?>
+                </span>
+            </td>
         </tr>
         <?php endforeach; ?>
     </tbody>
