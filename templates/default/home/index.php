@@ -1,5 +1,10 @@
 <?php 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+
+
+$capsule = \App\Core\DB::get();
+
 
     /**
      * @var Builder $processos;
@@ -13,6 +18,8 @@ use Illuminate\Database\Eloquent\Builder;
 
     $coligadas_cursor = $coligadas->whereNull('deletado_em')
                                   ->where('ativo', '=', 1);
+
+
 ?>
 <style>
     .cursos-grid-container {
@@ -32,6 +39,17 @@ use Illuminate\Database\Eloquent\Builder;
     <div class="w-100 cursos-grid-container  mt-4">
         <?php  if($total_coligadas > 0 &&  $coligadas_cursor != null): ?>
         <?php foreach($coligadas_cursor->cursor() as $coligada): ?>
+        <?php 
+                /*
+                $db = DB::table("processo_seletivo")->select("SELECT total_processos_coligadas(?) as total", [$coligada->coligada_fk])
+                                ->first();
+
+                if($db->total <= 0){
+                    continue;
+                }
+                */
+        ?>
+
         <div class="cursos-grid-item">
             <p class="text-center text-small texto-negrito4 texto-maiusculo" style="margin: 0;">
                         <?= h($coligada->nome);  ?>                       
