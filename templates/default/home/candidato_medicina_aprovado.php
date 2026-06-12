@@ -41,7 +41,7 @@ $valor_original = $format_dinheiro->formatCurrency((float)$candidato->VALOR_ORIG
 
             <div>
                 <h1 class="parabens"><b><?php echo htmlentities($nome);  ?></b></h1>
-                <h4 class="aprovado-texto">Você foi aprovado(a) no Vestibular 2025  para o curso <strong><?php echo h($curso); ?></strong> no UniFUNVIC!</h4>
+                <h4 class="aprovado-texto">Você foi aprovado(a) no <strong><?= h($processo->nome); ?></strong>  para o curso <strong><?php echo h($curso); ?></strong> no UniFUNVIC!</h4>
 
                 <hr>
 
