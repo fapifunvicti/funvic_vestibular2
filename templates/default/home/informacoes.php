@@ -3,7 +3,7 @@
      * @var mixed $processo
      */
 
-    $data_prova = explode(" ", $processo->data_prova_fmt);
+    $data_prova = $processo->data_prova_fmt;
     $data = NULL; //$data_prova[0];
     $hora = $data_prova[1];
 
