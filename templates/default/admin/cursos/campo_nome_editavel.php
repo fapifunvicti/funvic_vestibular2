@@ -17,7 +17,7 @@
 
 <div class="mb-3">
 
-    <input class="form-check-input"  <?= $curso->ativo ? "checked" : ""; ?> type="checkbox" name="ativo" id="ativo" >
+    <input class="form-check-input"  value="1" <?= $curso->ativo ? "checked" : ""; ?> type="checkbox" name="ativo" id="ativo" >
     <label class="form-check-label"  for="ativo">Ativo</label>
 </div>
 
