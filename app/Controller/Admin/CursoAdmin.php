@@ -8,7 +8,7 @@ use App\Core\Response;
 
 use App\Attributes\MiddlewareAttribute;
 
-#[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
+//#[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
 class CursoAdmin extends Controller {
 
 
@@ -37,8 +37,8 @@ class CursoAdmin extends Controller {
                         return $response->html("");
                     }
 
-                    $curso_dados  = new \App\Model\Curso();
-                    $dados = $curso_dados->where('idcurso', '=', $post['id'])->get()->first();
+                    $curso_dados  = \App\Model\Curso::where('idcurso', '=', $post['id'])->get()->first();
+               
                     if(!$curso_dados){
                         return $response->header("HX-Redirect", get_url("admin/cursos"));
                     }
@@ -46,7 +46,7 @@ class CursoAdmin extends Controller {
                     $editar = \App\Model\Curso::find($post['id']);
 
                     $editar->nome = $post['nome'];
-                    $editar->ativo = $post['ativo'];
+                    $editar->ativo = (int)$post['ativo'];
                     $editar->save();
 
                     $html = $tpl->renderTemplateFile("admin/cursos/campo_nome_editavel.php", ['modo_editar' => false, 'curso' => $editar]);

@@ -9,7 +9,7 @@ use App\Core\Response;
 
 
 
-#[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
+//#[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
 class AdminLogin extends Controller {
 
     #[RouteAttribute("/admin/login", method:"GET|POST")]
