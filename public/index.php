@@ -22,6 +22,7 @@ $router->registerController([
     \App\Controller\Admin\MenuAdmin::class,
     \App\Controller\Admin\ProcessoAdmin::class,
     \App\Controller\Admin\AdminLogin::class,
+    \App\Controller\Admin\DashboardAdmin::class
 
     //middlewares
 
@@ -35,7 +36,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 /**
  * @var string $uri
  */
-$uri    = $_SERVER['REQUEST_URI'];
+$uri    = $_SERVER['REQUEST_URI'] ?? "";
 
 
 //$templates->addTemplate("header", App\Core\Template::class, "tpl/header.php");
