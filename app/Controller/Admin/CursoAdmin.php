@@ -8,7 +8,7 @@ use App\Core\Response;
 
 use App\Attributes\MiddlewareAttribute;
 
-//#[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
+#[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
 class CursoAdmin extends Controller {
 
 
