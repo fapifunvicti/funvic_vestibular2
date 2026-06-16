@@ -29,6 +29,14 @@ class AuthMiddleware implements MiddlewareInterface {
         }
 
 
+        if(isset($_SESSION['admin']['time']) &&  time() >= (int)$_SESSION['admin']['time']){
+            $_SESSION['aviso']['titulo'] = "Erro";
+            $_SESSION['aviso']['mensagem'] = "Tempo de Acesso Expirou por favor entre com login novamente";
+            $response->redirect("/admin/login")->send();
+            return $next($request);
+        }
+
+
         
 
        
