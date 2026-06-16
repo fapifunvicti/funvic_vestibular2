@@ -37,10 +37,15 @@ class Home extends Controller {
       $listaColigada = new \App\Model\Coligada();
 
 
+
+
         $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
             ->addTemplate("partes/menu.inc.php")
             ->addTemplate("partes/banner.inc.php")
-            ->addTemplate("home/index.php", ['processos' => $viewProcesso, 'coligadas' => $listaColigada])
+            ->addTemplate("home/index.php", ['processos'   => $viewProcesso, 
+                                             'coligadas'   => $listaColigada
+                                             
+                                             ])
             ->addTemplate("footer.php");
 
         return $response->html($tpl->renderTemplate(), 200);
@@ -65,7 +70,7 @@ class Home extends Controller {
 
         $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
             ->addTemplate("partes/menu.inc.php")
-            ->addTemplate("partes/banner.inc.php")
+           // ->addTemplate("partes/banner.inc.php")
             ->addTemplate("home/informacoes.php", ['processo' =>$processo ])
             ->addTemplate("footer.php");
 
