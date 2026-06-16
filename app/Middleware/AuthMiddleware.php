@@ -12,8 +12,8 @@ class AuthMiddleware implements MiddlewareInterface {
         $uri = $request->getUri();
 
         if($uri == "/admin/login"){
-            if($request->getSession("user") !== null){
-                $response->redirect("/admin/processos")->send();
+            if($request->getSession("admin") !== null){
+                $response->redirect("/admin/processo")->send();
                 return $next($request);
             }
             
@@ -24,6 +24,9 @@ class AuthMiddleware implements MiddlewareInterface {
         if(!isset($_SESSION['admin'])){
             $_SESSION['aviso']['titulo'] = "Erro";
             $_SESSION['aviso']['mensagem'] = "Acesso Expirou por favor entre com login novamente";
+
+
+
             $response->redirect("/admin/login")->send();
             return $next($request);
         }
@@ -32,6 +35,8 @@ class AuthMiddleware implements MiddlewareInterface {
         if(isset($_SESSION['admin']['time']) &&  time() >= (int)$_SESSION['admin']['time']){
             $_SESSION['aviso']['titulo'] = "Erro";
             $_SESSION['aviso']['mensagem'] = "Tempo de Acesso Expirou por favor entre com login novamente";
+            if(isset($_SESSION['admin'])) 
+                unset($_SESSION['admin']);
             $response->redirect("/admin/login")->send();
             return $next($request);
         }
