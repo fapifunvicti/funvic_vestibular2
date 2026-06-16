@@ -28,7 +28,7 @@ final class Config {
     public string $template_dir = "default";
     public string $template_path = __DIR__ . \DIRECTORY_SEPARATOR . 'templates';
 
-    public string $session_name  = "projetotest2";
+    public string $session_name  = "vestibularsess";
 
     public string $modo  = "production";
 }
