@@ -20,15 +20,11 @@ $capsule = \App\Core\DB::get();
                                   ->where('ativo', '=', 1);
 
 
+    $colunas = 0;
+
+
 ?>
-<style>
-    .cursos-grid-container {
-	    display: grid;
-	    grid-template-columns: repeat(<?=  h($total_coligadas) ?>, 1fr);
-	    gap: 1rem;
-	
-    }
-</style>
+
 <div class="inscricoes-info">
     <div class="titulos">
         <h1 class="inscricao_title">Inscrições </h1>
@@ -40,6 +36,15 @@ $capsule = \App\Core\DB::get();
         <?php  if($total_coligadas > 0 &&  $coligadas_cursor != null): ?>
         <?php foreach($coligadas_cursor->cursor() as $coligada): ?>
         <?php 
+
+                $count = $processos->TotalColigadas($coligada->idcoligada)->first();
+
+                if($count->total <= 0) {
+                    continue;
+                }
+                
+                $colunas++;
+
                 /*
                 $db = DB::table("processo_seletivo")->select("SELECT total_processos_coligadas(?) as total", [$coligada->coligada_fk])
                                 ->first();
@@ -80,3 +85,12 @@ $capsule = \App\Core\DB::get();
    
 
 </div>
+
+<style>
+    .cursos-grid-container {
+	    display: grid;
+	    grid-template-columns: repeat(<?=  h($colunas) ?>, 1fr);
+	    gap: 1rem;
+	
+    }
+</style>
