@@ -19,10 +19,19 @@ class AuthMiddleware implements MiddlewareInterface {
             
             return $next($request);
         }
-    
 
 
-        $response->redirect("/admin/login")->send();
+        if(!isset($_SESSION['admin'])){
+            $_SESSION['aviso']['titulo'] = "Erro";
+            $_SESSION['aviso']['mensagem'] = "Acesso Expirou por favor entre com login novamente";
+            $response->redirect("/admin/login")->send();
+            return $next($request);
+        }
+
+
+        
+
+       
         return $next($request);
     }
 }
