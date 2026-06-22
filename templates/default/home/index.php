@@ -90,7 +90,7 @@ $capsule = \App\Core\DB::get();
 <style>
     .cursos-grid-container {
 	    display: grid;
-	    grid-template-columns: repeat(<?=  h($colunas) ?>, 1fr);
+	    grid-template-columns: repeat(2, 1fr);
 	    gap: 1rem;
 	
     }
