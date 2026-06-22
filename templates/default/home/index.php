@@ -17,7 +17,8 @@ $capsule = \App\Core\DB::get();
                                   ->count(); 
 
     $coligadas_cursor = $coligadas->whereNull('deletado_em')
-                                  ->where('ativo', '=', 1);
+                                  ->where('ativo', '=', 1)
+                                  ->orderBy('ordem', 'asc');
 
 
     $colunas = 0;
