@@ -74,6 +74,7 @@ class ProcessoAdmin extends Controller {
                             $processo->data_resultado_fim = $post['datafim'];
                             $processo->categoria = $post['categoriaid'];
                             $processo->habilitar_resultado = (int)$post['resultado'] > 0 ? 1 : 0;
+                            $processo->ordem = (int)$post['ordem'] > 0 ? 1 : 0;
 
                             if(!$processo->save()){
                                 $response->redirect("/admin/processo", 302)->send();
