@@ -56,6 +56,8 @@ class Home extends Controller {
     #[RouteAttribute('/informacoes/{id:int}', 'GET', is_regex: true)]
     public function informacoes(Request $request, Response $response) : Response {
         global $config;
+
+
         $tpl = new Tpl($request, $config);
         \App\Core\DB::get();
         $args = $request->get_uri_args();
@@ -67,6 +69,16 @@ class Home extends Controller {
             $response->setStatusCode(404)->send();
             return $response->html("");
         }
+
+        if(!constant('LINK_INFORMACOES')){
+            $id = $processo->id_totvs ?? "0";
+            $categoria = $processo->categoria ?? "1";
+            $link_inscricao = "https://fundacaouniversitaria151485.rm.cloudtotvs.com.br/FrameHTML/web/app/Edu/PortalProcessoSeletivo/?c=1&f=1&ct={$categoria}&ps={$id}#/es/inscricoeswizard/dados-basicos";
+
+            $response->redirect($link_inscricao, 302)->send();
+            return $response->html("");
+        }
+
         
 
         $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
