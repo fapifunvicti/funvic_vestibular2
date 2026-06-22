@@ -1,11 +1,19 @@
 <?php
+
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Container\Container;
+
+/*
+por motivos de ignorancia alheia vou manter por enquanto os links diretos 
+se LINK_INFORMACOES estiver true ele redireciona para uma pagina de informações
+*/
+define('LINK_INFORMACOES', false);
+
 $activate_session = false;
 if (session_status() !== PHP_SESSION_ACTIVE || session_status() === PHP_SESSION_NONE) {
     $activate_session = true;
 }
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Container\Container;
 
 
 if(!is_dir(__DIR__ . DIRECTORY_SEPARATOR . "vendor")){
