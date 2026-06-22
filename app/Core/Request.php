@@ -105,11 +105,15 @@ class Request {
     }
 
     public function getuserAgent(): ?string {
-        return $this->server['HTTP)SER_AGENT'] ?? null;
+        return $this->server['HTTP_USER_AGENT'] ?? null;
     }
 
     public function getUri(): string|bool {
         return parse_url($this->server['REQUEST_URI'], \PHP_URL_PATH) ?? "/";
+    }
+
+    public function getServer(string $key): mixed  {
+        return !isset($_SERVER[$key]) ? null : $_SERVER[$key];
     }
 
 
