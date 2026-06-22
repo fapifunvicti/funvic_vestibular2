@@ -33,9 +33,10 @@ class Home extends Controller {
       }
 
 
-      $viewProcesso = new \App\Model\ProcessoView();
-      $listaColigada = new \App\Model\Coligada();
+        $viewProcesso = new \App\Model\ProcessoView();
+        $listaColigada = new \App\Model\Coligada();
 
+        $listaColigada->orderBy('coligada.ordem', 'desc');
 
 
 
