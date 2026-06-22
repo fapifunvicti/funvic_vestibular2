@@ -3,6 +3,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 
+
 $capsule = \App\Core\DB::get();
 
 
@@ -66,13 +67,28 @@ $capsule = \App\Core\DB::get();
             <div class="button-container">
                 <?php $processos_abertos = $processos->ListarPorColigada($coligada->idcoligada); ?>
                 <?php foreach($processos_abertos->cursor() as $proc): ?>
-                 
+                
+                <?php if(constant('LINK_INFORMACOES')): ?>
                 <a target="_blank" href="/informacoes/<?= h($proc->idprocesso); ?>">
                                     <button type="button" class="btn botao">
                                     
                                         <strong class="text-uppercase"><?= h($proc->ensino_nome ?? "Processo Seletivo sem Nome");  ?></strong>
                                     </button>
                                 </a>
+                <?php else: ?>
+                <?php 
+                        $id = $proc->id_totvs ?? "0";
+                        $categoria = $proc->categoria ?? "1";
+                        $link_inscricao = "https://fundacaouniversitaria151485.rm.cloudtotvs.com.br/FrameHTML/web/app/Edu/PortalProcessoSeletivo/?c=1&f=1&ct={$categoria}&ps={$id}#/es/inscricoeswizard/dados-basicos";
+
+                ?>
+
+                            <a target="_blank" href="<?=  $link_inscricao; ?>">
+                                    <button type="button" class="btn botao">        
+                                        <strong class="text-uppercase"><?= h($proc->ensino_nome ?? "Processo Seletivo sem Nome");  ?></strong>
+                                    </button>
+                                </a>
+                <?php endif; ?>
                 <?php endforeach; ?>
             </div>
          </div>
@@ -86,12 +102,3 @@ $capsule = \App\Core\DB::get();
    
 
 </div>
-
-<style>
-    .cursos-grid-container {
-	    display: grid;
-	    grid-template-columns: repeat(2, 1fr);
-	    gap: 1rem;
-	
-    }
-</style>
