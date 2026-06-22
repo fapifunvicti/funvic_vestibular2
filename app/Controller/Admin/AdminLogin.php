@@ -12,6 +12,20 @@ use App\Core\Response;
 #[MiddlewareAttribute(\App\Middleware\AuthMiddleware::class)]
 class AdminLogin extends Controller {
 
+        #[RouteAttribute("/admin/logoff", method:"GET")]
+        public function logoff(Request $request, Response $response):  Response {
+            if($request->getSession('admin') !== null){
+                unset($_SESSION['admin']);
+                $response->redirect("/admin/login", 302)->send();
+                return $response->html("");
+            }
+
+            $last_url = $request->getServer('REQUEST_URI') ?? "/";
+             $response->redirect($last_url, 302)->send();
+             return $response->html("");
+        }
+
+
     #[RouteAttribute("/admin/login", method:"GET|POST")]
     public function index(Request $request, Response $response): Response {
         global $config;
@@ -55,6 +69,7 @@ class AdminLogin extends Controller {
             $_SESSION['admin']['time'] = time() + (15 * 60);
             $_SESSION['admin']['id'] = $usuario->idusuario;
             $_SESSION['admin']['permissao'] = $usuario->permissao;
+            $_SESSION['admin']['email'] = $usuario->email;
 
 
 
