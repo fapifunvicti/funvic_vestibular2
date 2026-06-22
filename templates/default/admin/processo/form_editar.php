@@ -85,6 +85,10 @@ $now = new DateTime('now', new DateTimeZone($timezone));
                     <label class="form-label" for="nome">Categoria ID</label>
                     <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="<?= h($processo->categoria); ?>" pattern="[\d+]" id="categoriaid" name="categoriaid">
                 </div>
+                <div class="mb-3">
+                    <label class="form-label" for="ordem">Ordem</label>
+                    <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="<?= h($processo->ordem); ?>" pattern="[\d+]" id="ordem" name="ordem">
+                </div>
             </div>
 
         <div class="mb-3">
@@ -182,6 +186,10 @@ $now = new DateTime('now', new DateTimeZone($timezone));
                 <div class="mb-3">
                     <label class="form-label" for="categoriaid">Categoria ID</label>
                     <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="1" pattern="[\d+]" id="categoriaid" name="categoriaid">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="ordem">Ordem</label>
+                    <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="0" pattern="[\d+]" id="ordem" name="ordem">
                 </div>
             </div>
 
