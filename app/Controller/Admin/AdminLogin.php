@@ -52,7 +52,7 @@ class AdminLogin extends Controller {
             }
 
 
-            $_SESSION['admin']['time'] = time() + (10 * 60);
+            $_SESSION['admin']['time'] = time() + (15 * 60);
             $_SESSION['admin']['id'] = $usuario->idusuario;
             $_SESSION['admin']['permissao'] = $usuario->permissao;
 
