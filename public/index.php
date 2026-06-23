@@ -22,7 +22,8 @@ $router->registerController([
     \App\Controller\Admin\MenuAdmin::class,
     \App\Controller\Admin\ProcessoAdmin::class,
     \App\Controller\Admin\AdminLogin::class,
-    \App\Controller\Admin\DashboardAdmin::class
+    \App\Controller\Admin\DashboardAdmin::class,
+    \App\Controller\Admin\VestibularAdmin::class
 
     //middlewares
 
