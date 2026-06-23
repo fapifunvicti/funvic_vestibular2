@@ -34,5 +34,16 @@ class ProcessoView extends Model
     {
         return $query->where('fk_ensino', '=', $id);
     }
+
+
+    public function vestibular()
+    {
+        return $this->belongsToMany(\App\Model\Vestibular::class, 'vestibular', 'idvestibular');
+    }
+
+    public function processo()
+    {
+        return $this->belongsToMany(\App\Model\ProcessoVestibular::class, 'processo', 'idprocesso');
+    }
     
 }
