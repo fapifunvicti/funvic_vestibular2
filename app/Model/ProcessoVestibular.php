@@ -13,12 +13,12 @@ class ProcessoVestibular extends Model {
 
     public function vestibular()
     {
-        return $this->belongsToMany(\App\Model\Vestibular::class, 'idvestibular');
+        return $this->belongsToMany(\App\Model\Vestibular::class, 'vestibular', 'idvestibular');
     }
 
     public function processo()
     {
-        return $this->belongsToMany(\App\Model\ProcessoVestibular::class, 'idprocesso');
+        return $this->belongsToMany(\App\Model\ProcessoVestibular::class, 'processo', 'idprocesso');
     }
 
 }
