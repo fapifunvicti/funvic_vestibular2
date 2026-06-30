@@ -17,7 +17,7 @@ class Curso extends Controller {
         
         $tpl->addTemplate("header.php", ['titulo' => "Cursos Disponíveis"])
             ->addTemplate("partes/menu.inc.php")
-            ->addTemplate("partes/banner.inc.php")
+            //->addTemplate("partes/banner.inc.php")
             ->addTemplate("cursos/cursos.temp.php")
             ->addTemplate("footer.php");
 
