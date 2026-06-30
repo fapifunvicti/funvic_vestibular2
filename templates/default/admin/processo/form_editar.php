@@ -12,6 +12,7 @@
 global $timezone; // existe em bootstrap.php
 $now = new DateTime('now', new DateTimeZone($timezone));
 
+
 ?>
 
 
@@ -87,7 +88,7 @@ $now = new DateTime('now', new DateTimeZone($timezone));
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="ordem">Ordem</label>
-                    <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="<?= $processo->ordem ?>" pattern="[\d+]" id="ordem" name="ordem">
+                    <input   class="form-control" required type="number" min="0" max="9999999" minlength="0" maxlength="9999999" value="<?= h($processo->processo_ordem); ?>" pattern="[\d+]" id="ordem" name="ordem">
                 </div>
             </div>
 
