@@ -49,7 +49,7 @@
 
         <tr class="<?= $css ?>">
             <td><a class="<?= $link_css  ?>" href="/admin/processo/editar/<?= h($c->idprocesso) ?>"><?= h($c->nome ?? "Sem Nome");  ?></a></td>
-            <td><?=  h($c->ordem); ?></td>
+            <td><span class="badge rounded-pill text-bg-info"><?=  h($c->processo_ordem); ?></span></td>
             <td>
                 <div class="mb-3">
                     <?= h($c->data_prova_fmt) ?>
