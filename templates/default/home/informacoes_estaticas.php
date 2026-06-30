@@ -13,7 +13,7 @@
                 <div class="header-gradient">
                     <div class="d-flex justify-content-between align-items-center flex-wrap">
                         <div>
-                            <?php if($data): ?>
+                            <?php if(isset($data) && $data): ?>
                             <div class="data-prova">
                                 <i class="fas fa-calendar-alt"></i> Data da Prova: <?= h($data); ?>
                             </div>
