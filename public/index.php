@@ -19,6 +19,7 @@ $router->registerController([
     \App\Controller\Admin\AdminLogin::class,
     \App\Controller\Admin\DashboardAdmin::class,
     \App\Controller\Admin\VestibularAdmin::class,
+    \App\Controller\Admin\ColigadaAdmin::class,
 ]);
 
 $method = $_SERVER['REQUEST_METHOD'];
