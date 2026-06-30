@@ -283,4 +283,19 @@ class Home extends Controller {
         return $response->html($tpl->renderTemplate());
 
     }
+
+    #[RouteAttribute('/sobre_prova', 'GET', is_regex: true)]
+    public function sobre_prova(Request $request, Response $response) : Response {
+        global $config;
+        $tpl = new Tpl($request, $config);
+        
+        $tpl->addTemplate("header.php", ['titulo' => "RESULTADOS"])
+            ->addTemplate("partes/menu.inc.php")
+            ->addTemplate("partes/banner.inc.php")
+            ->addTemplate("home/informacoes_estaticas.php");
+            $tpl->addTemplate("footer.php");
+            
+        return $response->html($tpl->renderTemplate());
+            
+    }
 }
