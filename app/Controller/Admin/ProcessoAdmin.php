@@ -153,6 +153,7 @@ class ProcessoAdmin extends Controller {
                         $processo->data_resultado_fim = $post['datafim'];
                         $processo->categoria = $post['categoriaid'];
                         $processo->habilitar_resultado = (int)$post['resultado'] > 0 ? 1 : 0;
+                        $processo->ordem = (int)$post['ordem'];
                         
                         if(isset($post['ativo']) && (int)$post['ativo'] === 0){
                             $processo->deletado_em = $now->format("Y-m-d H:i:s");
