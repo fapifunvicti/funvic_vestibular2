@@ -25,7 +25,7 @@
                 <td><?= h($p->vestibular_data_prova_fmt)   ?></td>
                 <td>
                     <div class="mb-3">
-                        <a  href="" class="btn btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a href="javascript: void(0)" hx-post="/admin/vestibular/deletar/<?= h($p->idprocesso)  ?>"   class="btn btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
                     </div>
                 </td>
             </tr>
