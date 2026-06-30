@@ -16,6 +16,7 @@ class Controller {
     public function __construct()
     {
         //throw new \Exception('Not implemented');
+        \App\Core\DB::get();
     }
 
 }
