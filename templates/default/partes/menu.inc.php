@@ -26,14 +26,16 @@
                 </li>
                 <?php else: ?>
                       <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="<?=  "dropDown-". $menu->idmenu; ?>" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="<?=  "dropDown-". $menu->idmenu; ?>"  data-bs-toggle="dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <b><?php echo h($menu->nome); ?></b>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="<?=  "dropDown-". $menu->idmenu; ?>">
+                            <div class="dropdown-menu">
 
                                     <?php 
                                         $submenu_itens = new \App\Model\MenuItem();
-                                        $submenu_itens = $submenu_itens->where('pai_id','=', $menu->idmenu)->cursor();
+                                        $submenu_itens = $submenu_itens->where('pai_id','=', $menu->idmenu)
+                                                         ->where('ativo', '=', 1)
+                                                         ->cursor();
                                          //\App\Model\ArvoreMenuView::filhosDe($menu->pai_id)->get();     
                                     ?>
                                      <?php foreach ($submenu_itens as $submenu): ?>
