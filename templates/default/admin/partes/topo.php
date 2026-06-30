@@ -1,7 +1,9 @@
 <div class="topo">
+
     <div class="topo-header">
-          
-        Setor: <?= $titulo ?? "Sem titulo"; ?>
+
+        <span>Setor: <?= $titulo ?? "Sem titulo"; ?></span> 
+
 
     </div>
     <div class="area-login">
@@ -12,6 +14,7 @@
                 <a href="/login">Login</a>
             </span>
         <?php else: ?>
+            <span class="badge text-bg-secondary"><a href="/" target="_blank" rel="noopener noreferrer">Ver Site</a> </span>
             <span class="login-usuario">
                   <?=  h($_SESSION['admin']['email'] ?? "E-Mail");  ?>
             </span>
