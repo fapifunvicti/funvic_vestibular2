@@ -12,6 +12,8 @@
 global $timezone; // existe em bootstrap.php
 $now = new DateTime('now', new DateTimeZone($timezone));
 
+//var_dump($processo->toArray());
+//exit;
 
 ?>
 
@@ -61,7 +63,7 @@ $now = new DateTime('now', new DateTimeZone($timezone));
                 <label class="form-select-label" for="coligada">Coligada</label>
                 <select class="form-select" name="coligada" id="coligada">
                     <?php foreach($coligada as $c): ?>
-                    <option <?= (int)$c->idcoligada === (int)$processo->coligada_fk ? 'selected' : '' ?> value="<?= h($c->idcoligada);  ?>"><?= h($c->nome); ?></option>
+                    <option <?= (int)$c->idcoligada === (int)$processo->fk_coligada ? 'selected' : '' ?> value="<?= h($c->idcoligada);  ?>"><?= h($c->nome); ?></option>
                     <?php endforeach; ?>
                 </select>
 
@@ -71,7 +73,7 @@ $now = new DateTime('now', new DateTimeZone($timezone));
                 <label class="form-select-label" for="ensino">Tipo de Ensino</label>
                 <select class="form-select" name="ensino" id="ensino">
                     <?php foreach($ensino as $e): ?>
-                    <option <?= (int)$e->idensino === (int)$processo->ensino_fk ? 'selected' : '' ?> value="<?= h($e->idensino);  ?>"><?= h($e->nome); ?></option>
+                    <option <?= (int)$e->idensino === (int)$processo->fk_ensino ? 'selected' : '' ?> value="<?= h($e->idensino);  ?>"><?= h($e->nome); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
