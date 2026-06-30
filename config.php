@@ -8,6 +8,7 @@ $config->url = "http://10.0.3.65:8000";
 $config->root_path = __DIR__;
 $config->template_dir = "default";
 $config->template_path = $config->root_path . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $config->template_dir;
+$config->modo = "debug";
 
 $config->db_driver = "mysql";
 $config->db_host =  "mariadb";
