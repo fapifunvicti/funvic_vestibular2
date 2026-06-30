@@ -9,6 +9,11 @@ class ProcessoVestibular extends Model {
     protected $primaryKey = ['idvestibular_fk','idprocesso_fk', 'ativo'];
     public $incrementing = false;
 
+     public $timestamps = false;
+
+    const CREATED_AT = 'inserido_em';
+    const UPDATED_AT = 'alterado_em';
+
     protected $fillable = ['idvestibular_fk','idprocesso_fk', 'ativo'];
 
     public function vestibular()
