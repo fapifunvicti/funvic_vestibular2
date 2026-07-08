@@ -162,7 +162,7 @@ class Home extends Controller {
             $post = $request->getParsedBody();
 
 
-            $processo_id = (int)$post['processo'] ?? null;
+            $processo_id = \filter_var($post['processo'], \FILTER_VALIDATE_INT, [\FILTER_REQUIRE_SCALAR ]) ?? null; //(int)$post['processo'] ?? null;
 
 
             if(!$this->validarCpf($post['cpf'])){
