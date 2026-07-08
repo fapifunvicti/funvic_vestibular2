@@ -111,6 +111,44 @@ class Home extends Controller {
 
     }
 
+
+    private function calcularDigitoVerificador(string $digitos, int $pesoInicial): int
+    {
+        $soma = 0;
+        $peso = $pesoInicial;
+
+        foreach (str_split($digitos) as $digito) {
+            $soma += (int)$digito * $peso;
+            $peso--;
+        }
+
+        $resto = ($soma * 10) % 11;
+
+        return ($resto === 10) ? 0 : $resto;
+    }
+
+    private function validarCpf(string $cpf): bool
+    {
+        $cpf = preg_replace('/[^0-9]/', '', $cpf);
+
+        if (strlen($cpf) !== 11 || preg_match('/^(\d)\1{10}$/', $cpf)) {
+            return false;
+        }
+
+        $base = substr($cpf, 0, 9);
+
+        // 1º dígito: 9 dígitos base, peso inicial 10
+        $digito1 = $this->calcularDigitoVerificador($base, 10);
+
+        // 2º dígito: 9 dígitos base + 1º dígito, peso inicial 11
+        $digito2 = $this->calcularDigitoVerificador($base . $digito1, 11);
+
+        $digitosCalculados = $digito1 . $digito2;
+        $digitosInformados = substr($cpf, 9, 2);
+
+        return $digitosCalculados === $digitosInformados;
+    }
+
     #[RouteAttribute('/resultado', 'GET|POST')]
     public function listar_resultados(Request $request, Response $response) : Response {
 
@@ -118,10 +156,21 @@ class Home extends Controller {
         $tpl = new Tpl($request, $config);
         \App\Core\DB::get();
 
+     
+
         if($request->isPost()){
             $post = $request->getParsedBody();
 
+
             $processo_id = (int)$post['processo'] ?? null;
+
+
+            if(!$this->validarCpf($post['cpf'])){
+                $_SESSION['aviso']['titulo'] = "problema no CPF";
+                $_SESSION['aviso']['mensagem'] = "Por Favor Adicione um CPF Válido!";
+                $response->redirect("/resultado",302)->send();
+            }
+
 
             if(!$processo_id){
                 $_SESSION['aviso']['titulo'] = "Houve um problema!";
@@ -130,24 +179,19 @@ class Home extends Controller {
                 return $response->text("");
             }
 
-            if(!\is_numeric($post['cpf']) || !isset($post['cpf'])){
-                $_SESSION['aviso']['titulo'] = "problema no CPF";
-                $_SESSION['aviso']['mensagem'] = "Por Favor Adicione um CPF Válido!";
-                $response->redirect("/resultado",302)->send();
-                return $response->text("");
-            }
-
+            $cpf =  preg_replace('/[^0-9]/', '', $post['cpf']);
 
             $processo = \App\Model\ProcessoView::where('idprocesso','=', $processo_id)
                                                      ->first(); 
 
 
+           
 
 
             $_SESSION['resultado'] = [
                 'id'          => $processo->idprocesso,
                 'processo_id' => $processo->id_totvs,
-                'cpf'         => $post['cpf'],
+                'cpf'         => $cpf,
                 'coligada'    => $processo->coligada_totvs,
                 'ensino'      => $processo->fk_ensino,
                 'curso'       => $processo->fk_curso
