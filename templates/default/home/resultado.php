@@ -31,6 +31,23 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">CPF</span>
+                    <div class="form-floating">
+                        <input 
+                        hx-trigger="keyup changed delay:300ms"
+                        oninput="document.getElementById('contador').innerText = (14 - this.value.length) + ' caracteres restantes'"
+                        class="form-control" minlength="11" maxlength="14" required type="text"  value="" pattern="/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/" 
+                        type="text" class="form-control" id="floatingInputGroup1" placeholder="CPF" id="cpf" name="cpf">
+                        <label for="floatingInputGroup1">Digite o seu CPF</label>
+                    </div>
+                </div>
+
+                <dib class="mb-3">
+                    <span id="contador">14 caracteres restantes</span>
+                </dib>
+                <!--
                 <div class="mb-3">
                     <label class="form-label" for="cpf">CPF:</label>
                     <input 
@@ -39,6 +56,7 @@
                     class="form-control" minlength="11" maxlength="11" required type="text"  value="" pattern="[0-9]{11}" placeholder="Digite seu CPF (Somente Numeros) Ex: 34509022318"  id="cpf" name="cpf">
                     <span id="contador">11 caracteres restantes</span>
                 </div>
+                -->
 
 
 
