@@ -69,12 +69,10 @@ class Router {
         $uri = parse_url($uri, PHP_URL_PATH);
 
         foreach($this->routes as $route){
-
             /*
                 checa se $route['method'] é GET ou POST, PATCH, DELETE
                 se for GET|POST significa que aceita os dois ao mesmo tempo
             */
-
             $routes_sep = $route['method'];
 
             /* chega se existe o caracter | na string (str_contains so existe no PHP 8+) */
@@ -100,22 +98,16 @@ class Router {
                     continue;
             }
 
-          
-            //aqui prepara a requisição checa regez da URL
-            //$group = \mb_strtolower($route['group']);
-            //$namespace_str = "\\App\\Controller\\";
-            //$className = $route['group'];
-
-            //if(!\str_starts_with($group,'/')){
-            //     $group = '/'.$group; 
-           // }
-
+            //todo codigo antigo agora é feito na classe RouteBuilder
             $routeBuilder = new RouteBuilder();
+
+
+            /*
+             todos parametros de path é passado para o metodo build
+             gera o regex a partir do input para checagem posteriores
+             */
             $pattern = $routeBuilder->build($route['path']);
-
-            //$pattern = "#^" . preg_replace('/\{[a-z]+\}/', '([^/]+)',  $route['path']) . "$#";
-
-
+            
             if(preg_match($pattern, $uri, $matches)){
                 //remove o primeiro registro nao tem utilidade no momento
                 array_shift($matches);
@@ -144,26 +136,6 @@ class Router {
                 );
 
                 echo $pipeline->Run($requestHandler);
-
-                //$matches[] = $requestHandler;
-                //$matches[] = $responseHandler;
-
-                /*
-                $pipeline = \array_reduce(array_reverse($route['middlewares']),
-                            function (callable $next, string $middlewareClass) use($matches, $controller, $method_caller){
-                                return function(Request $request) use ($next, $middlewareClass){
-                                    $middleware = new $middlewareClass();
-                                    return $middleware->handle($request, $next);
-                                };
-                            }, function() use ($controller, $method_caller, $matches, $route_params){
-                                    return \call_user_func_array([$controller, $method_caller], $route_params);
-                            }
-                            );
-
-
-
-                echo $pipeline($requestHandler);
-                */
                 return;
             }            
         }
