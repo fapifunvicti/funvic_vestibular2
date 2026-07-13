@@ -13,18 +13,15 @@ $capsule = \App\Core\DB::get();
      */
 
 
-    $total_coligadas = $coligadas->whereNull('deletado_em')
+ $total_coligadas = $coligadas->whereNull('deletado_em')
                                   ->where('ativo', '=', 1)
                                   ->count(); 
 
-    $coligadas_cursor = $coligadas->whereNull('deletado_em')
+ $coligadas_cursor = $coligadas->whereNull('deletado_em')
                                   ->where('ativo', '=', 1)
                                   ->orderBy('ordem', 'asc');
-
-
-    $colunas = 0;
-
-
+$colunas = 0;
+const MAX_COLUNAS  = 2;
 ?>
 
 <div class="inscricoes-info">
@@ -46,15 +43,8 @@ $capsule = \App\Core\DB::get();
                 }
                 
                 $colunas++;
-
-                /*
-                $db = DB::table("processo_seletivo")->select("SELECT total_processos_coligadas(?) as total", [$coligada->coligada_fk])
-                                ->first();
-
-                if($db->total <= 0){
-                    continue;
-                }
-                */
+				       if($colunas >= MAX_COLUNAS) $colunas = MAX_COLUNAS;
+				       else $colunas = 1;
         ?>
 
         <div class="cursos-grid-item">
@@ -102,3 +92,13 @@ $capsule = \App\Core\DB::get();
    
 
 </div>
+
+<style>
+ .cursos-grid-container {
+		 display: grid;
+		 grid-template-columns: repeat(<?= $colunas <= 1 ? 1 : 2 ?>, 1fr) !important;
+		 gap: 1rem;
+		 
+ }
+ 
+</style>
