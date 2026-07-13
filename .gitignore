@@ -6,3 +6,9 @@ public/pdf/
 
 \#*
 \.\#
+
+\#*\#
+.\#*
+
+# Emacs lock files (o seu caso: .#routes.php)
+.#*
