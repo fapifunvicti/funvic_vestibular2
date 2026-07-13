@@ -168,9 +168,18 @@ class Router {
             }            
         }
 
+
+        global $config;
         //erro 404 de rota nao econtrada
         http_response_code(404);
-        echo 'Rota Nao Encontrada!';
+        
+        switch($config->modo){
+            default: break;
+            case 'debug':
+                 echo 'Rota Nao Encontrada!';
+            break;
+        }
+       
         return;
     }
 }
