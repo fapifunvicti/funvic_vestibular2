@@ -100,6 +100,7 @@ $now = new DateTime('now', new DateTimeZone($timezone));
             <small id="dropdownHelp" class="form-text text-muted">Habilita o resultado no menu principal</small>
         </div>
 
+
         <div class="mb-3">
             <label class="form-select-label" for="tiporesultado">Tipo de Resultado</label>
             <select class="form-select" name="tiporesultado" id="tiporesultado">
@@ -202,13 +203,16 @@ $now = new DateTime('now', new DateTimeZone($timezone));
             <small id="dropdownHelp" class="form-text text-muted">Habilita o resultado no menu principal</small>
         </div>
 
+
+
+
         <div class="mb-3">
             <label class="form-select-label" for="tiporesultado">Tipo de Resultado</label>
             <select class="form-select" name="tiporesultado" id="tiporesultado">
                 <option value="0">Local</option>
                 <option value="1">TOTVS</option>
             </select>
-            <small id="dropdownHelp" class="form-text text-muted">Qual tipo de resultado para gera rlink corretamente</small>
+            <small id="dropdownHelp" class="form-text text-muted">Qual tipo de resultado para gerar link corretamente</small>
         </div>
 
         <div class="mb-3">
