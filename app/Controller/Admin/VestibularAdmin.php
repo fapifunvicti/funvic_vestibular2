@@ -174,11 +174,16 @@ class VestibularAdmin extends Controller {
         return $response->html($tpl->renderTemplate());
     }
 
-    #[RouteAttribute("/admin/vestibular/deletar/{id:int}", method: "POST", is_regex: true)]
+    #[RouteAttribute("/admin/vestibular/deletar/{id:int}/{vestibular:int}", method: "GET|POST", is_regex: true)]
     public function deletar_processo(Request $request, Response $response) : Response {
 
-            if($request->isPost()){
-                $id = $request->get_uri_args()[0] ?? null;
+            if($request->isGet()){
+                $id   = $request->get_uri_args()[0] ?? null;
+                $vest = $request->get_uri_args()[1] ?? null;
+
+
+                $id = \filter_var($id, \FILTER_VALIDATE_INT, [\FILTER_REQUIRE_SCALAR]);
+                $vest = \filter_var($vest, \FILTER_VALIDATE_INT, [\FILTER_REQUIRE_SCALAR]);
                 
 
                 if(!$id){
@@ -187,9 +192,14 @@ class VestibularAdmin extends Controller {
                     $response->redirect("/admin/vestibular", 302)->send();
                     return $response->html("");
                 }
+                
+                
 
+                
 
-                \App\Model\ProcessoVestibular::where('idprocesso_fk', '=', $id)->delete();
+                \App\Model\ProcessoVestibular::where('idprocesso_fk', '=', $id)
+                                             ->where('idvestibular_fk', '=', $vest) 
+                                             ->delete();
 
 
                               
