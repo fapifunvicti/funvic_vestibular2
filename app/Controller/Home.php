@@ -15,11 +15,26 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Home extends Controller {
 
+    private const TOTVS_URL = "https://fundacaouniversitaria151485.rm.cloudtotvs.com.br/FrameHTML/web/app/Edu/PortalProcessoSeletivo/?c=1&f=1&ct={%CAT%}&ps={%ID%}#/es/login?action=&expired=0&recuperarSenha=0";
+
+
+    private function gerarLinkTOTVS(int $cat, int $id): string {
+        
+        if($cat <= 0) $cat = 1;
+
+        $re_categoria = "/\{\%CAT\%\}/";
+        $re_id = "/\{\%ID\%\}/";
+        $url = \preg_replace($re_categoria,$cat, Home::TOTVS_URL);
+        $url = \preg_replace($re_id,$id, $url);
+        return $url;
+    }
+
     #[RouteAttribute("/", method:"GET|POST", is_regex: false)]
     public function index(Request $request, Response $response) : Response {
         global $config;
         $tpl = new Tpl($request, $config);
         \App\Core\DB::get();
+
 
       if($request->isPost()){
             $capsule = DB::get();
@@ -156,7 +171,6 @@ class Home extends Controller {
         $tpl = new Tpl($request, $config);
         \App\Core\DB::get();
 
-     
 
         if($request->isPost()){
             $post = $request->getParsedBody();
@@ -185,7 +199,6 @@ class Home extends Controller {
                                                      ->first(); 
 
 
-           
 
 
             $_SESSION['resultado'] = [
@@ -194,7 +207,9 @@ class Home extends Controller {
                 'cpf'         => $cpf,
                 'coligada'    => $processo->coligada_totvs,
                 'ensino'      => $processo->fk_ensino,
-                'curso'       => $processo->fk_curso
+                'curso'       => $processo->fk_curso,
+                'local'       => $processo->tipo_resultado > 1 ? true : false,
+                'categoria'   => $processo->categoria
             ];
             
             \setcookie('resultado', 'true', [
@@ -256,8 +271,16 @@ class Home extends Controller {
         $cpf =         $_SESSION['resultado']['cpf'];
         $coligada    = (int)$_SESSION['resultado']['coligada']; 
         $ensino      = (int)$_SESSION['resultado']['ensino'];
-        $candidato = null;
+        $candidato   = null;
+        $local       = (bool)$_SESSION['resultado']['local'] ?? true;
+        $categoria    = (int)$_SESSION['resultado']['categoria'] ?? 1;
 
+
+        if($local){
+            $url_totvs = $this->gerarLinkTOTVS($categoria, $processo_id);
+            $response->redirect($url_totvs)->send();
+            return $response->html("");
+        }
 
 
         $processo = \App\Model\ProcessoSeletivo::where('idprocesso', $id)
@@ -313,8 +336,8 @@ class Home extends Controller {
             return $response->html("");
         }
 
-        $tpl->addTemplate("header.php", ['titulo' => "RESULTADO DO PROCESSO SELETIVO"])
-            ->addTemplate("partes/menu.inc.php");
+        $tpl->addTemplate("header.php", ['titulo' => "RESULTADO DO PROCESSO SELETIVO"]);
+           // ->addTemplate("partes/menu.inc.php");
 
         $tpl->addTemplate($template_aprovado, ['candidato' => (object)$candidato, 
                                                'processo' => $processo]);
