@@ -17,7 +17,12 @@
                 <div class="mb-3">
                     <label class="form-label" for="processo">Processo Seletivo:</label>
                 
-                    <select class="select_processo_seletivo form-select-control" name="processo" id="processo">
+                    <select 
+                        hx-get="/resultado?checa_processo=1"
+                        hx-trigger="changed"
+                        hx-target="#usuario_cpf"
+                       
+                        class="select_processo_seletivo form-select-control" name="processo" id="processo">
                         <option selected value="0">Nenhum Selecionado</option>
                         <?php foreach($processos->cursor() as $processo): ?>
                         <?php
@@ -32,7 +37,7 @@
                     </select>
                 </div>
 
-                <div class="input-group mb-3">
+                <div id="usuario_cpf" class="input-group mb-3">
                     <span class="input-group-text">CPF</span>
                     <div class="form-floating">
                         <input 
@@ -82,5 +87,8 @@
         labelField: "name",
       searchField: ["name", "id"],
     });
+
+    
+
   });
 </script>
