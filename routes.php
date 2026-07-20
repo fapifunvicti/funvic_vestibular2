@@ -150,7 +150,7 @@ class Router {
             case 'debug':
                  echo 'Rota Nao Encontrada!';
             break;
-        }
+         }
        
         return;
     }
