@@ -154,6 +154,7 @@ class ProcessoAdmin extends Controller {
                         $processo->categoria = $post['categoriaid'];
                         $processo->habilitar_resultado = (int)$post['resultado'] > 0 ? 1 : 0;
                         $processo->ordem = (int)$post['ordem'];
+                        $processo->tipo_resultado = (int)$post['tiporesultado'];
                         
                         if(isset($post['ativo']) && (int)$post['ativo'] === 0){
                             $processo->deletado_em = $now->format("Y-m-d H:i:s");
@@ -168,8 +169,9 @@ class ProcessoAdmin extends Controller {
                             return  $response->html("");
                         }
 
-
-                        $response->redirect("/admin/processo", 302)->send();
+                        $_SESSION['aviso']['titulo'] = "problema no CPF";
+                        $_SESSION['aviso']['mensagem'] = "Por Favor Adicione um CPF Válido!";
+                        $response->redirect("/admin/processo/editar/" . $id, 302)->send();
                         return  $response->html("");
 
                     }
@@ -207,10 +209,16 @@ class ProcessoAdmin extends Controller {
                                                                         'processo'=> $processo,
                                                                         'curso' => $curso,
                                                                         'coligada' => $coligada,
-                                                                        'ensino' => $ensino
-                                                                    ])
+                                                                        'ensino' => $ensino]);
             //->addTemplate("admin/processo/index.php", ['ensino' => $ensino])
-            ->addTemplate("admin/tpl/footer.php");
+
+        if(isset($_SESSION['aviso'])){
+              $tpl->addTemplate("admin/partes/alert_model.php", [
+                'titulo' => "Sucesso!",
+                'conteudo' => $_SESSION['aviso']['mensagem']
+              ]);
+        }
+        $tpl->addTemplate("admin/tpl/footer.php");
 
             return $response->html($tpl->renderTemplate());
         
