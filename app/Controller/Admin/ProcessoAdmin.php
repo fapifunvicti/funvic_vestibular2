@@ -215,7 +215,7 @@ class ProcessoAdmin extends Controller {
         if(isset($_SESSION['aviso'])){
               $tpl->addTemplate("admin/partes/alert_model.php", [
                 'titulo' => "Sucesso!",
-                'conteudo' => $_SESSION['aviso']['mensagem']
+                'conteudo' => $_SESSION['aviso']['mensagem'] ?? "Mensagem Não Definida"
               ]);
         }
         $tpl->addTemplate("admin/tpl/footer.php");
