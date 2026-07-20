@@ -23,10 +23,10 @@ const MAX_COLUNAS  = 2;
 <div class="inscricoes-info">
     
     <?php if($vestibulares->count() > 0): ?>
-
+  
     <?php foreach($vestibulares as $vest): ?>
         <div class="titulos">
-
+            <h1 class="inscricao_title">Inscrições </h1>
             <h5 class="inscricao_subtitle text-secondary"><?= h($vest->nome); ?></h5>
         </div>
 
