@@ -48,22 +48,26 @@ class Home extends Controller {
       }
 
 
+        $listaVestibular = \App\Model\Vestibular::all()->whereNull('deletado_em');
+
+
+        $listarProcessoSeletivo = \App\Model\ProcessoVestibular::all()->where('ativo', '=', 1);        
         $viewProcesso = new \App\Model\ProcessoView();
-        $listaColigada = new \App\Model\Coligada();
-
-        $listaColigada->orderBy('coligada.ordem', 'desc');
 
 
-
+        
         $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
             ->addTemplate("partes/menu.inc.php")
             ->addTemplate("partes/banner.inc.php")
-            ->addTemplate("home/index.php", ['processos'   => $viewProcesso, 
-                                             'coligadas'   => $listaColigada
+            ->addTemplate("home/index.php", [
+                                             'processos'   => $viewProcesso, 
+                                             'processo_vestibular' =>   $listarProcessoSeletivo,
+                                            // 'coligadas'   => $listaColigada,
+                                             'vestibulares' => $listaVestibular
                                              
                                              ])
             ->addTemplate("footer.php");
-
+        
         return $response->html($tpl->renderTemplate(), 200);
         //return $response->html($tpl->renderTemplate(), 200);
     }
