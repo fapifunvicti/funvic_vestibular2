@@ -74,7 +74,7 @@ class AdminLogin extends Controller {
 
 
 
-            $response->redirect("/admin/menu", 302)->send();
+            $response->redirect("/admin/processo", 302)->send();
             return $response->html("");
         }
 
