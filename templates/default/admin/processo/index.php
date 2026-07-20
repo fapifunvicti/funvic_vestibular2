@@ -22,6 +22,7 @@
     <thead>
         <tr>
             <th>Nome do Processo:</th>
+            <th>Vestibular</th>
             <th>Tipo de Ensino:</th>
             <th>Ordem</th>
             <th>Data da Prova</th>
@@ -51,6 +52,7 @@
         <tr class="<?= $css ?>">
 
             <td><a class="<?= $link_css  ?>" href="/admin/processo/editar/<?= h($c->idprocesso) ?>"><?= h($c->nome ?? "Sem Nome");  ?></a></td>
+            <td><?= h($c->vestibular_nome);  ?></td>
             <td><?= h($c->ensino_nome);  ?></td>
             <td><span class="badge rounded-pill text-bg-info"><?=  h($c->processo_ordem); ?></span></td>
             <td>
