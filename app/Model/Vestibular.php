@@ -13,4 +13,7 @@ class Vestibular extends Model {
 
     const DELETED_AT = 'deletado_em';
 
+
+
+
 }
