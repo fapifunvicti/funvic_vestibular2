@@ -4,8 +4,8 @@
      */
 
 
-    $processos = $processos->where('habilitar_resultado', '=', 1)
-                             ->whereNull('deletado_em')
+    $processos = $processos->where('habilitar_resultado', '=', 1);
+                             //->whereNull('deletado_em')
 
 ?>
 <main class="mb-3" role="main">
