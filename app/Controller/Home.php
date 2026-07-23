@@ -46,39 +46,31 @@ class Home extends Controller {
             return $response->html(\serialize($post), 200);
 
       }
-
-
-        $listaVestibular = \App\Model\Vestibular::all()->whereNull('deletado_em');
-
-
-        $listarProcessoSeletivo = \App\Model\ProcessoVestibular::all()->where('ativo', '=', 1);        
-        $viewProcesso = new \App\Model\ProcessoView();
-
+        $listaProcessos = new \App\Model\ProcessoView();
+        $listaVestibular = new \App\Model\Vestibular();
+        $listaColigadas = new \App\Model\Coligada();
 
         
-        $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
+        $tpl->addTemplate("header.php", ['titulo' => "Seu Futuro Está Aqui!"])
             ->addTemplate("partes/menu.inc.php")
             ->addTemplate("partes/banner.inc.php")
             ->addTemplate("home/index.php", [
-                                             'processos'   => $viewProcesso, 
-                                             'processo_vestibular' =>   $listarProcessoSeletivo,
-                                            // 'coligadas'   => $listaColigada,
+                                             'processos'   => $listaProcessos, 
+                                            // 'processo_vestibular' =>   $listarProcessoSeletivo,
+                                             'coligadas'   => $listaColigadas,
                                              'vestibulares' => $listaVestibular
                                              
                                              ])
             ->addTemplate("footer.php");
         
         return $response->html($tpl->renderTemplate(), 200);
-        //return $response->html($tpl->renderTemplate(), 200);
     }
 
     #[RouteAttribute('/informacoes/{id:int}', 'GET', is_regex: true)]
     public function informacoes(Request $request, Response $response) : Response {
         global $config;
 
-
         $tpl = new Tpl($request, $config);
-        \App\Core\DB::get();
         $args = $request->get_uri_args();
 
         $processo = \App\Model\ProcessoView::where('idprocesso', '=', (int)$args[0])
