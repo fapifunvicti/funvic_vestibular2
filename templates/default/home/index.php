@@ -19,15 +19,17 @@ const MAX_COLUNAS  = 2;
                 Desculpe, nenhum vestibular ativo no momento.
             </p>
     <?php else: ?>
-
+        <div class="titulos_fixo">
+            <h1 class="inscricao_title">Inscrições </h1>
+        </div>
         <?php foreach($vestibulares->whereNull('deletado_em')->cursor() as $vest): ?>
         <div class="titulos">
-            <h1 class="inscricao_title">Inscrições </h1>
+
             <h5 class="inscricao_subtitle text-secondary"><?= h($vest->nome); ?></h5>
         </div>
         
-        <div class="w-100 cursos-grid-container  mt-4">
-             <?php foreach($coligadas->cursor() as $c): ?>
+        <div class="cursos-grid-container  mt-4">
+             <?php foreach($coligadas->orderBy('ordem', 'desc')->cursor() as $c): ?>
                 <div class="cursos-grid-item">
                     <p class="text-center text-small texto-negrito4 texto-maiusculo" style="margin: 0;">
                         <?= h($c->nome);  ?>                       
