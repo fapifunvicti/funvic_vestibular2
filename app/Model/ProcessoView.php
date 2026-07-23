@@ -45,5 +45,10 @@ class ProcessoView extends Model
     {
         return $this->belongsToMany(\App\Model\ProcessoVestibular::class, 'processo', 'idprocesso');
     }
+
+    public function coligada()
+    {
+        return $this->belongsToMany(\App\Model\Coligada::class, 'coligada', 'idcoligada');
+    }
     
 }
