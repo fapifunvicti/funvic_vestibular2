@@ -7,7 +7,6 @@ use App\Core\Request;
 use App\Core\Response;
 use DateTime;
 use DateTimeZone;
-use Illuminate\Database\QueryException;
 use App\Attributes\MiddlewareAttribute;
 
 
@@ -20,23 +19,17 @@ class ProcessoAdmin extends Controller {
         $tpl = new \App\Core\Template($request, $config);
         \App\Core\DB::get();
 
-        //$alert = new \App\Libs\Alert($config, $tpl, "admin/partes/alert_model.php");
-
-
-        $curso    = \App\Model\Curso::all();
-        $coligada = \App\Model\Coligada::all();
         $ensino   = \App\Model\Ensino::all(); 
+
+        $processos = new \App\Model\ProcessoView();
+        $processos = $processos->orderBy('processo_ordem', 'desc')
+                                ->orderByDesc('nome'); 
 
         $tpl->addTemplate("admin/tpl/header.php", ['titulo' => "PROCESSOS SELETIVOS"])
             ->addTemplate("admin/partes/topo.php", ['titulo' => "PROCESSOS SELETIVOS"])
             ->addTemplate("admin/partes/menu.php")
-            //->addTemplate("admin/processo/form_editar.php", ['editar' => false,
-            //                                                 'ensino' => $ensino,
-            //                                                 'curso' => $curso,
-            //                                                 'coligada' => $coligada,])
-
-           // ->addTemplate(\App\Libs\Alert::Success($alert, "danger", "Houve um Erro!", "AAAA"))
             ->addTemplate("admin/processo/index.php", ['ensino' => $ensino,
+                                                        'processos' => $processos,
                                                         'alerta' => ''])
 
             ->addTemplate("admin/tpl/footer.php");
