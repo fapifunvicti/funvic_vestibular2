@@ -15,7 +15,7 @@ if($modo === "adicionar"): ?>
             <select class="form-select" name="processo" id="processo">
                 <?php foreach($processos as $proc): ?>
                 <?php 
-                    $nome = $proc->data_prova_fmt . ': ' . $proc->coligada_nome . ' '. $proc->vestibular_nome;
+                    $nome = mb_strtoupper($proc->data_prova_fmt . ': ' . ' - ' . $proc->nome . ' ' . $proc->vestibular_nome . '  - ' . $proc->coligada_nome);
                 ?>
 
                 <option value="<?= h($proc->idprocesso);  ?>"><?= h($nome); ?></option>
