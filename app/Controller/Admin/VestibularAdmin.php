@@ -148,7 +148,8 @@ class VestibularAdmin extends Controller {
 
 
         $processo = \App\Model\ProcessoView::where('vestibular_id', $id);
-        $processoListagem =  \App\Model\ProcessoView::all();
+        $processoListagem =  new \App\Model\ProcessoView();
+        $processoListagem = $processoListagem->orderBy('idprocesso', 'desc')->get();
 
 
         $tpl->addTemplate("admin/tpl/header.php", ['titulo' => "PROCESSOS " . $vestibularModel->nome ])
