@@ -2,6 +2,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProcessoVestibular extends Model {
 
@@ -23,7 +24,10 @@ class ProcessoVestibular extends Model {
 
     public function processo()
     {
-        return $this->belongsToMany(\App\Model\ProcessoVestibular::class, 'processo', 'idprocesso');
+        return $this->belongsToMany(\App\Model\Coligada::class, 'coligada', 'idcoligada');
     }
+
+
+    
 
 }
