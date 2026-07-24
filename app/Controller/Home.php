@@ -33,7 +33,6 @@ class Home extends Controller {
     public function index(Request $request, Response $response) : Response {
         global $config;
         $tpl = new Tpl($request, $config);
-        \App\Core\DB::get();
 
 
       if($request->isPost()){
@@ -46,21 +45,38 @@ class Home extends Controller {
             return $response->html(\serialize($post), 200);
 
       }
-        $listaProcessos = new \App\Model\ProcessoView();
-        $listaVestibular = new \App\Model\Vestibular();
-        $listaColigadas = new \App\Model\Coligada();
+
+
+
+        $vestibulares = new \App\Model\Vestibular();
+        $vestibulares = $vestibulares->whereNull('deletado_em');
+                       
+        $coligadas = new \App\Model\ProcessoVestibular();
+        $coligadas = $coligadas->selectRaw("
+                                            coligada.*,
+                                            processo_seletivo.nome as processo_nome,
+                                            coligada.nome as coligada_nome,
+                                            vestibular.nome as vestibular_nome,
+                                            processo_seletivo.inserido_em as inseridoem
+                                            
+                                        ")
+                                        ->join('processo_seletivo', 'processo_seletivo.idprocesso', '=', 'processo_vestibular.idprocesso_fk', 'left')
+                                        ->join('vestibular', 'vestibular.idvestibular', '=', 'processo_vestibular.idvestibular_fk', 'left')
+                                        ->join('coligada', 'processo_seletivo.fk_coligada', '=', 'coligada.idcoligada', 'left')
+                                        ->whereNull('processo_seletivo.deletado_em')
+                                        ->groupBy('coligada.idcoligada');
+
+        $processos = new \App\Model\ProcessoView();
 
         
         $tpl->addTemplate("header.php", ['titulo' => "Seu Futuro Está Aqui!"])
             ->addTemplate("partes/menu.inc.php")
             ->addTemplate("partes/banner.inc.php")
             ->addTemplate("home/index.php", [
-                                             'processos'   => $listaProcessos, 
-                                            // 'processo_vestibular' =>   $listarProcessoSeletivo,
-                                             'coligadas'   => $listaColigadas,
-                                             'vestibulares' => $listaVestibular
-                                             
-                                             ])
+                'vestibulares' => $vestibulares,
+                'coligadas'  => $coligadas,
+                'processos'  => $processos,
+            ])
             ->addTemplate("footer.php");
         
         return $response->html($tpl->renderTemplate(), 200);
