@@ -3,6 +3,7 @@ namespace App\Core;
 
 
 class Request {
+    
 
     private array $query;
 
@@ -16,6 +17,19 @@ class Request {
     public readonly QueryString $query_string;
 
     private array $uri_args;
+
+    private static ?Request $s_request = null;
+    
+    /*
+        somente para uso em "/partes onde nao dependem de um controller"
+    */
+    public static function getInstance(): Request {
+        if(!Request::$s_request){
+            Request::$s_request = new Request();
+        }
+
+        return Request::$s_request;
+    }
 
     public function __construct()
     {
@@ -138,6 +152,10 @@ class Request {
         }
     
         return \filter_input_array($method_filter, $this->request, true);
+    }
+
+    public function get_server(string $key){
+            return $this->server[$key] ?? null;
     }
     
     /*
