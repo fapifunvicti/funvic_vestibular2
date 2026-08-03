@@ -102,8 +102,9 @@ function resultados_online(string $dominio, bool $debug = false){
 
     $response = curl_exec($curl);
     $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    curl_close($curl);
-
+    //curl_close($curl);
+    unset($curl);
+    
     if($response){ 
         return true;
     }
