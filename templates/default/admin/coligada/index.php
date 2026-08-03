@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Nome</th>
+                <th>Ordem:</th>
                 <th>Ativo</th>
             </tr>
         </thead>
@@ -18,6 +19,9 @@
             <tr>
                 <td>
                     <a href="/admin/coligada/<?= h($col->idcoligada);  ?>"><?= h($col->nome);  ?></a>
+                </td>
+                <td>
+                    <?= h($col->ordem); ?>
                 </td>
                 <td>
                     

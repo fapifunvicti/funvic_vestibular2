@@ -22,6 +22,8 @@ class ColigadaAdmin extends Controller {
             $coligadaModel =\App\Model\Coligada::find($id);
 
             $coligadaModel->nome = $post['nome'];
+            $coligadaModel->ordem = (int)$post['ordem'] ?? 0;
+            
             if(!$coligadaModel->save()){
                     $response->redirect("/admin/coligada",302)->send();
                     return $response->html("");
