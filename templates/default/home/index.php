@@ -29,7 +29,9 @@ const MAX_COLUNAS  = 2;
         </div>
 
          <div class="w-100 cursos-grid-container  mt-4">
-                <?php foreach($coligadas->cursor() as $c): ?>
+                <?php foreach($coligadas
+                        ->orderBy('ordem', 'asc')
+                        ->cursor() as $c): ?>
                 <div class="cursos-grid-item">
                     <p class="text-center text-small texto-negrito4 texto-maiusculo" style="margin: 0;">
                         <?= h($c->coligada_nome);  ?>                       
@@ -38,7 +40,8 @@ const MAX_COLUNAS  = 2;
                     <div class="button-container">
                         <?php foreach($processos->whereNull('deletado_em')
                                             ->where('vestibular_id', '=', $vest->idvestibular)
-                                            ->where('fk_coligada','=', $c->idcoligada)->cursor() as $p):
+                                            ->where('fk_coligada','=', $c->idcoligada)
+                                            ->cursor() as $p):
                                             
                             ?>
                             <?php
