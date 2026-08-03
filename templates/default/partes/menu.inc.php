@@ -1,6 +1,7 @@
 <?php
     \App\Core\DB::get();
     $menu_raiz = \App\Model\ArvoreMenuView::Raiz()->where('ativo', '=', 1)
+            ->orderBy('ordem', 'asc')
             ->cursor();
 ?>
 
@@ -20,7 +21,7 @@
 
                 <?php if(!$menu->dropdown && $menu->nivel == 0): ?>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $menu->estilo; ?>" href="<?php echo $menu->url ?>">
+                    <a data-ordem="<?= h($menu->ordem); ?>" class="nav-link <?php echo $menu->estilo; ?>" href="<?php echo $menu->url ?>">
                         <b><?php echo h($menu->nome); ?></b>
                     </a>
                 </li>
@@ -36,7 +37,7 @@
                                         $submenu_itens = $submenu_itens->where('pai_id','=', $menu->idmenu)
                                                          ->where('ativo', '=', 1)
                                                          ->cursor();
-                                         //\App\Model\ArvoreMenuView::filhosDe($menu->pai_id)->get();     
+
                                     ?>
                                      <?php foreach ($submenu_itens as $submenu): ?>
                                        
