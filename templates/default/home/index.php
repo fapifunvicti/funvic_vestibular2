@@ -14,7 +14,7 @@ const MAX_COLUNAS  = 2;
 ?>
 
 <?php if($vestibulares->get()->count() > 0 ): ?>
-<div class="inscricoes-info">
+<div id="inscricoes" class="inscricoes-info">
 
 
 

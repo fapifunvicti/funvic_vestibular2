@@ -8,7 +8,7 @@
                              //->whereNull('deletado_em')
 
 ?>
-<main class="mb-3" role="main">
+<main id="resultados" class="mb-3" role="main">
     <div class="container">
         <h2 class="mb-3">Resultados</h2>
 
