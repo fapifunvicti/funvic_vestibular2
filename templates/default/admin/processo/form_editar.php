@@ -31,7 +31,7 @@ $now = new DateTime('now', new DateTimeZone($timezone));
 
             <div class="mb-3">
                 <label class="form-label" for="nome">Nome:</label>
-                <input placeholder="Digite nome do processo seletivo" class="form-control" required type="text" value="<?= h($processo->nome ?? "Sem Nome");  ?>" pattern="[\p{L}\p{N}\- ]+" id="nome" name="nome">
+                <input placeholder="Digite nome do processo seletivo" class="form-control" required type="text" value="<?= h($processo->nome ?? "Sem Nome");  ?>" id="nome" name="nome">
             </div>
 
             <div class="mb-3">
@@ -136,7 +136,7 @@ $now = new DateTime('now', new DateTimeZone($timezone));
 
             <div class="mb-3">
                 <label class="form-label" for="nome">Nome:</label>
-                <input placeholder="Digite nome do processo seletivo" class="form-control" required type="text" value="" pattern="[\p{L}\p{N}\- ]+" id="nome" name="nome">
+                <input placeholder="Digite nome do processo seletivo" class="form-control" required type="text" value=""  id="nome" name="nome">
             </div>
 
             <div class="mb-3">
