@@ -40,7 +40,6 @@ class Home extends Controller {
             $tabela = $capsule->table('coligada')->select()->get();
 
             $post = $request->getParsedBody();
-            var_dump($tabela);
 
             return $response->html(\serialize($post), 200);
 
@@ -67,7 +66,7 @@ class Home extends Controller {
                                         ->groupBy('coligada.idcoligada');
 
         $processos = new \App\Model\ProcessoView();
-
+       
         
         $tpl->addTemplate("header.php", ['titulo' => "Seu Futuro Está Aqui!"])
             ->addTemplate("partes/menu.inc.php")
@@ -220,7 +219,7 @@ class Home extends Controller {
                 'coligada'    => $processo->coligada_totvs,
                 'ensino'      => $processo->fk_ensino,
                 'curso'       => $processo->fk_curso,
-                'local'       => $processo->tipo_resultado > 1 ? true : false,
+                'local'       => $processo->tipo_resultado >= 1 ? true : false,
                 'categoria'   => $processo->categoria
             ];
             
@@ -238,6 +237,7 @@ class Home extends Controller {
         }
 
         $processos = new \App\Model\ProcessoView();
+
 
         $tpl->addTemplate("header.php", ['titulo' => "RESULTADOS"])
             ->addTemplate("partes/menu.inc.php")
@@ -307,7 +307,17 @@ class Home extends Controller {
 
         if(!$candidato){
             $_SESSION['aviso']['titulo'] = "Ops!";
-            $_SESSION['aviso']['mensagem'] = "CPF Não Encontrado no Processo Seletivo:{$processo->nome}";
+            $_SESSION['aviso']['html'] = true;
+            $_SESSION['aviso']['mensagem'] = "
+                                            <p class=\"text-center\">CPF Não Encontrado no Processo Seletivo:{$processo->nome}.</p>". 
+                                                '<div class="text-center">
+                                                    <a href="https://wa.me/5512996507709" target="_blank" class="whatsapp-link">
+                                                        <i class="fab fa-whatsapp fa-xl"></i>
+                                                        Entre em contato pelo WhatsApp - (12) 99650-7709 - Clique Aqui
+                                                    </a>
+                                                </div>';
+
+
             $response->redirect("/resultado")->send();
             if(isset($_SESSION['resultado'])) unset($_SESSION['resultado']);
             return $response->html("");
