@@ -181,7 +181,7 @@ class Home extends Controller {
 
         global $config;
         $tpl = new Tpl($request, $config);
-        \App\Core\DB::get();
+
 
 
         if($request->isPost()){
@@ -238,10 +238,6 @@ class Home extends Controller {
         }
 
         $processos = new \App\Model\ProcessoView();
-        //$processos->where('habilitar_resultado','=', 1)
-        //          ->whereNull('deletado_em');
-                  
-     
 
         $tpl->addTemplate("header.php", ['titulo' => "RESULTADOS"])
             ->addTemplate("partes/menu.inc.php")
