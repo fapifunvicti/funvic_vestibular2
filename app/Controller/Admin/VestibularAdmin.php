@@ -149,8 +149,7 @@ class VestibularAdmin extends Controller {
 
         $processo = \App\Model\ProcessoView::where('vestibular_id', $id);
         $processoListagem =  new \App\Model\ProcessoView();
-        $processoListagem = $processoListagem->orderBy('idprocesso', 'desc')
-                            ->whereNull('deletado_em')
+        $processoListagem = $processoListagem->orderBy('idprocesso', 'desc')       
                             ->get();
 
 
