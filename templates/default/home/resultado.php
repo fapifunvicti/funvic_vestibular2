@@ -4,7 +4,9 @@
      */
 
 
-    $processos = $processos->where('habilitar_resultado', '=', 1);
+    $processos = $processos->where('habilitar_resultado', '=', 1)
+                 //->orderBy('id_totvs')
+                 ->orderBy('data_prova', 'desc')
                              //->whereNull('deletado_em')
 
 ?>
@@ -29,7 +31,7 @@
                             if($processo->data_prova_fmt !== "" || !$processo->data_prova_fmt):
                                
                         ?>
-                            <option value="<?= h($processo->idprocesso);  ?>"><?= h(mb_strtoupper($processo->coligada_nome));  ?> <?= h(mb_strtoupper($processo->ensino_nome));  ?> - <?= h(mb_strtoupper($processo->nome ?? "Processo Seletivo")); ?>  <?= $processo->data_prova_fmt ?? "SEM DATA";  ?> <?= $processo->fk_ensino === 2 ? "(MEDICINA)" : "" ?></option>
+                            <option value="<?= h($processo->idprocesso);  ?>"><?= h(mb_strtoupper($processo->coligada_nome));  ?> <?= h(mb_strtoupper($processo->ensino_nome));  ?> - <?= h(mb_strtoupper($processo->nome ?? "Processo Seletivo")); ?>  <?= $processo->fk_ensino === 2 ? "(MEDICINA)" : "" ?></option>
                         <?php else: ?>
                             <option value="<?= h($processo->idprocesso);  ?>"><?= h(mb_strtoupper($processo->coligada_nome));  ?> <?= h(mb_strtoupper($processo->ensino_nome));  ?> - <?= h($processo->nome ?? "Processo Seletivo"); ?></option>
                         <?php  endif; ?>
@@ -42,27 +44,16 @@
                     <div class="form-floating">
                         <input 
                         hx-trigger="keyup changed delay:300ms"
-                        oninput="document.getElementById('contador').innerText = (14 - this.value.length) + ' caracteres restantes'"
                         class="form-control" minlength="11" maxlength="14" required type="text"  value="" pattern="/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/" 
                         type="text" class="form-control" id="floatingInputGroup1" placeholder="CPF" id="cpf" name="cpf">
                         <label for="floatingInputGroup1">Digite o seu CPF</label>
+
                     </div>
                 </div>
 
-                <dib class="mb-3">
-                    <span id="contador">14 caracteres restantes</span>
-                </dib>
-                <!--
                 <div class="mb-3">
-                    <label class="form-label" for="cpf">CPF:</label>
-                    <input 
-                     hx-trigger="keyup changed delay:300ms"
-                    oninput="document.getElementById('contador').innerText = (11 - this.value.length) + ' caracteres restantes'"
-                    class="form-control" minlength="11" maxlength="11" required type="text"  value="" pattern="[0-9]{11}" placeholder="Digite seu CPF (Somente Numeros) Ex: 34509022318"  id="cpf" name="cpf">
-                    <span id="contador">11 caracteres restantes</span>
+                        <small id="emailHelp" class="form-text text-muted">Por favor digite seu CPF no campo acima: pode ser somente numeros ou com pontos</small>
                 </div>
-                -->
-
 
 
                 <div class="mb-3">
