@@ -42,7 +42,11 @@ if($activate_session){
 }
 
 
-date_default_timezone_set($config->timezone);
+if(date_default_timezone_get() != $config->timezone){
+    date_default_timezone_set($config->timezone);
+}
+
+
 
 
 
