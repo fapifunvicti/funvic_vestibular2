@@ -69,7 +69,7 @@ class Home extends Controller {
        
         
         $tpl->addTemplate("header.php", ['titulo' => "Seu Futuro Está Aqui!"])
-            ->addTemplate("partes/menu.inc.php")
+            ->addTemplate("partes/menu/menu.inc.php")
             ->addTemplate("partes/banner.inc.php")
             ->addTemplate("home/index.php", [
                 'vestibulares' => $vestibulares,
@@ -107,8 +107,8 @@ class Home extends Controller {
 
         
 
-        $tpl->addTemplate("header.php", ['titulo' => "TESTE TITULO"])
-            ->addTemplate("partes/menu.inc.php")
+        $tpl->addTemplate("header.php", ['titulo' => "INFORMAÇÕES"])
+            ->addTemplate("partes/menu/menu.inc.php")
            // ->addTemplate("partes/banner.inc.php")
             ->addTemplate("home/informacoes.php", ['processo' =>$processo ])
             ->addTemplate("footer.php");
@@ -240,7 +240,7 @@ class Home extends Controller {
 
 
         $tpl->addTemplate("header.php", ['titulo' => "RESULTADOS"])
-            ->addTemplate("partes/menu.inc.php")
+            ->addTemplate("partes/menu/menu.inc.php")
             ->addTemplate("partes/banner.inc.php")
             ->addTemplate("home/resultado.php", ['processos' => $processos]);
         
@@ -375,7 +375,7 @@ class Home extends Controller {
         $tpl = new Tpl($request, $config);
         
         $tpl->addTemplate("header.php", ['titulo' => "RESULTADOS"])
-            ->addTemplate("partes/menu.inc.php")
+            ->addTemplate("partes/menu/menu.inc.php")
             //->addTemplate("partes/banner.inc.php")
             ->addTemplate("home/informacoes_estaticas.php");
             $tpl->addTemplate("footer.php");
