@@ -85,3 +85,22 @@ if(!is_dir(__DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . '
         mkdir(__DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default', 0755);
 }
 
+$capsule = new Capsule;
+
+// Configura as credenciais do banco de dados
+$capsule->addConnection([
+    'driver'    => $config->db_driver,
+    'host'      => $config->db_host,
+    'database'  => $config->db_name,
+    'username'  => $config->db_user,
+    'password'  => $config->db_passwd,
+    'charset'   => $config->db_charset,
+    'collation' => $config->db_collation,
+    'prefix'    => $config->db_prefix,
+]);
+
+// Torna esta instância do Capsule disponível globalmente via métodos estáticos
+$capsule->setAsGlobal();
+
+// Inicializa o Eloquent ORM para que seus Models funcionem corretamente
+$capsule->bootEloquent();
